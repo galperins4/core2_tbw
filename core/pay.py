@@ -22,13 +22,13 @@ def broadcast(tx, ark):
 
     #broadcast to relay
     try:
-        transaction = ark.transport().create(tx)
+        transaction = ark.transaction().create(tx)
         records = [[j['recipientId'],j['amount'],j['id']] for j in tx]
         time.sleep(1)
     except BaseException:
         # fall back to delegate node to grab data needed
         bark = get_network(data, network, data['delegate_ip'])
-        transaction = bark.transport().create(tx)
+        transaction = bark.transaction().create(tx)
         records = [[j['recipientId'],j['amount'],j['id']] for j in tx]
         time.sleep(1)
     
