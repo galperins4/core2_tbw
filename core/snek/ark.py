@@ -11,7 +11,6 @@ class ArkDB:
         )
 		 
         self.PublicKey = pk
-        self.BlockPublicKey = '\\x' + self.PublicKey
 		
         self.cursor=self.connection.cursor()
 
