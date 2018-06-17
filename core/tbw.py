@@ -452,6 +452,9 @@ if __name__ == '__main__':
     username = get_dbname()
     arkdb = ArkDB(network[data['network']]['db'], username, network[data['network']]['db_pw'], data['publicKey'])
     
+    print(tbw_path)
+    quit()
+    
     # check to see if ark.db exists, if not initialize db, etc
     if os.path.exists(tbw_path / 'ark.db') == False:    
         snekdb = SnekDB(data['dbusername'])
