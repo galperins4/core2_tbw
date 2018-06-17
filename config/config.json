@@ -1,0 +1,32 @@
+{
+  "start_block": 0,
+  "network": "network",
+  "delegate_ip": "ip",
+  "delegate_fee": 0.0001,
+  "dbusername": "dbname",
+  "publicKey": "publicKey",
+  "interval": 211,
+  "voter_share": 0.50,
+  "passphrase": "passphrase",
+  "secondphrase": "None",
+  "voter_msg": "Delegate X - True Block Weight",
+  "block_check": 30,
+  "cover_tx_fees": "Y",
+  "vote_cap" : 0,
+  "vote_min" : 0,
+  "whitelist" : "N",
+  "whitelist_addr" : ["addr"],
+  "blacklist": "block or assign",
+  "blacklist_addr" : ["addr"],
+  "blacklist_assign" : "addr",
+  "fixed_deal" : "N",
+  "fixed_deal_amt" : {"addr1": 1, "addr2": 2, "addr3": 3},
+  "min_payment": 0.5,
+  "reach": 20,
+  "keep": {
+    "reserve": 0.50
+  },
+  "pay_addresses": {
+    "reserve": "addr1"
+  }
+}
