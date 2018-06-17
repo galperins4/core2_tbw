@@ -109,7 +109,7 @@ if __name__ == '__main__':
         unique_rowid = []
         
         # check for unprocessed payments
-		unprocessed_pay = snekdb.stagedArkPayment().fetchall()
+	unprocessed_pay = snekdb.stagedArkPayment().fetchall()
     
         # query not empty means unprocessed blocks
         if unprocessed_pay:
