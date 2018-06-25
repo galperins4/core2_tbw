@@ -4,12 +4,12 @@
 
 from tbw import parse_config
 from snek.snek import SnekDB
-from ark.ark import ArkClient
+from ark import ArkClient
 import random
 import time
 
 def get_network(d, n, ip="localhost"):
-
+### NEED TO UPDATE FOR API2
     return ArkClient(
         ip,
         n[d['network']]['port'],
@@ -22,13 +22,13 @@ def broadcast(tx, ark):
 
     #broadcast to relay
     try:
-        transaction = ark.transactions().create(tx)
+        transaction = ark.transactions.create(tx)
         records = [[j['recipientId'],j['amount'],j['id']] for j in tx]
         time.sleep(1)
     except BaseException:
         # fall back to delegate node to grab data needed
         bark = get_network(data, network, data['delegate_ip'])
-        transaction = bark.transactions().create(tx)
+        transaction = bark.transactions.create(tx)
         records = [[j['recipientId'],j['amount'],j['id']] for j in tx]
         time.sleep(1)
     
