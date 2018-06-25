@@ -12,8 +12,6 @@ bash install.sh
 ```
 
 ## Configuration & Usage
-Note: All coins are currently leveraging core_v1 folder
-
 After the repository has been cloned you need to open the `config.json` / `pool.json` and change it to your liking. Once this has been done navigate to core folder and execute `python3 tbw.py` to start true block weight script. After the initial start up, you can run the script via `python3 tbw.py` or the pm2 command `pm2 start apps.json`
 
 Important! - pay_addresses and keep keys should match in config.json. DO NOT delete the reserve key as it is required. All other's can be deleted or more added. In addition, payment is triggered to start based on when total blocks forged / interval is an integer (with no remainder). 
