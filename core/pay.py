@@ -65,7 +65,7 @@ if __name__ == '__main__':
     print(tx)
     client = ArkClient('http://127.0.0.1:4003/api/')
 
-    post_tx = client.transaction.create(tx)
+    post_tx = client.transactions.create(tx)
     print(post_tx)
 
 
