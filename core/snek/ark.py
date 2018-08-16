@@ -19,7 +19,7 @@ class ArkDB:
         #if i is yes, first run grab every block forged for history
         if i == 'yes':
             try:
-                self.cursor.execute(f"""SELECT "id","timestamp","reward","totalFee","height" FROM blocks WHERE "generatorPublicKey" = '{self.PublicKey}' ORDER BY "height" DESC""")
+                self.cursor.execute(f"""SELECT "id","timestamp","reward","total_fee","height" FROM blocks WHERE "generator_public_key" = '{self.PublicKey}' ORDER BY "height" DESC""")
                 return self.cursor.fetchall()
             except Exception as e:
                 print(e)
@@ -27,18 +27,10 @@ class ArkDB:
         #else just grab last 50 for normal processing
         else:
             try:
-                self.cursor.execute(f"""SELECT "id","timestamp","reward","totalFee","height" FROM blocks WHERE "generatorPublicKey" = '{self.PublicKey}' ORDER BY "height" DESC LIMIT 50""")
+                self.cursor.execute(f"""SELECT "id","timestamp","reward","total_fee","height" FROM blocks WHERE "generator_public_key" = '{self.PublicKey}' ORDER BY "height" DESC LIMIT 50""")
                 return self.cursor.fetchall()
             except Exception as e:
-                print(e)
-
-    #No SENDER ID. NEED TO GET SENDERPKEY TO LISTEN
-    #def listen_transactions(self, row):
-    #    try:
-    #        self.cursor.execute(f"""SELECT "id","senderId", "amount", "fee", "vendorField" FROM transactions WHERE "rowId" > {row} ORDER BY "rowId" DESC""")
-    #        return self.cursor.fetchall()
-    #    except Exception as e:
-    #        print(e)	    
+                print(e)   
 	    
     def last_transaction(self):
         try:
