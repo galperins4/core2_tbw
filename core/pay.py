@@ -63,10 +63,15 @@ if __name__ == '__main__':
     print(tx)
     quit()
 
+    client = ArkClient('http://127.0.0.1:4002/api/', api_version='v1')
+    delegates = client.delegates.all()
+    print(delegates)
+
+    # test = client.transport.createTransaction(tx)
+    # print test
 
 
 
-    # ark = get_network(data, network)
 
 
 
