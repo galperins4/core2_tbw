@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from crypto.conf import use_network
-from crypto.constants import TRANSACTION_TRANSFER
+from crypto.serializer import Serializer
 from crypto.transactions.builder.transfer import TransferBuilder
 from tbw import parse_config
 from snek.snek import SnekDB
@@ -62,8 +62,13 @@ if __name__ == '__main__':
     if secondphrase == 'None':
         secondphrase = None
     
-    tx = [build_transfer_transaction()]
+    tx = build_transfer_transaction()
     print(tx)
+
+    tx_v2 = Serializer(tx).serialize()
+    print(tx_v2)
+    quit()
+
     client = ArkClient('http://127.0.0.1:4003/api/')
 
     post_tx = client.transactions.create(tx)
