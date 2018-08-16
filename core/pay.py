@@ -40,7 +40,8 @@ def build_transfer_transaction():
     transaction = TransferBuilder(
         recipientId='DMzBk3g7ThVQPYmpYDTHBHiqYuTtZ9WdM3',
         amount=1000000,
-        vendorField='This is a transaction from Python'.encode(),
+        vendorField='Test'
+        # vendorField='This is a transaction from Python'.encode()
     )
     transaction.sign(passphrase.encode())
     # transaction.second_sign(secondphrase.encode())
