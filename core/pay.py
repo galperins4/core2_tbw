@@ -49,12 +49,4 @@ if __name__ == '__main__':
     post_tx = client.transactions.create(tx)
     print(post_tx)
 
-
-
-
-
-
-
-
-    
-'''
+  
