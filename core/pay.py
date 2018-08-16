@@ -43,8 +43,10 @@ def build_transfer_transaction():
         vendorField='This is a transaction from Python'.encode(),
     )
     transaction.sign(passphrase.encode())
+    # transaction.second_sign(secondphrase.encode())
     transaction_dict = transaction.to_dict()
     transaction.verify()  # if no exception is raised, it means the transaction is valid
+    # transaction.second_verify()
 
     return transaction_dict
 if __name__ == '__main__':
@@ -62,12 +64,10 @@ if __name__ == '__main__':
     tx = build_transfer_transaction()
     print(tx)
 
+    quit()
     client = ArkClient('http://127.0.0.1:4002/api/', api_version='v1')
-    delegates = client.delegates.all()
-    print(delegates)
-
-    # test = client.transport.createTransaction(tx)
-    # print test
+    post_tx = client.transport.createTransaction(tx)
+    print(post_tx)
 
 
 
