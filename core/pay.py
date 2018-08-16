@@ -61,7 +61,7 @@ if __name__ == '__main__':
     if secondphrase == 'None':
         secondphrase = None
     
-    tx = [build_transfer_transaction()]
+    tx = build_transfer_transaction()
     print(tx)
     client = ArkClient('http://127.0.0.1:4003/api/')
 
