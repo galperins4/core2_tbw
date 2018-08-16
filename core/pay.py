@@ -63,7 +63,7 @@ if __name__ == '__main__':
     
     tx = build_transfer_transaction()
     print(tx)
-    client = ArkClient('http://127.0.0.1:4003/api/')
+    client = ArkClient('http://127.0.0.1:4003/api/', api_version='v1')
 
     delegate = client.delegates.all()
     print(delegate)
