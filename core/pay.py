@@ -60,10 +60,7 @@ if __name__ == '__main__':
     
     tx = build_transfer_transaction()
     print(tx)
-    quit()
-
     client = ArkClient('http://127.0.0.1:4003/api/')
-
     post_tx = client.transactions.create(tx)
     print(post_tx)
 
