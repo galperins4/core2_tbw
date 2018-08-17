@@ -6,45 +6,43 @@ from snek.snek import SnekDB
 from ark import ArkClient
 import time
 
-'''
-def get_url(d, n, ip="localhost"):
-### NEED TO UPDATE FOR API2
-    return ArkClient(
-        ip,
-        n[d['network']]['port'],
-        n[d['network']]['nethash'],
-        n[d['network']]['version']
-    )
-'''
 
-def broadcast(tx, ark):
+dynamic_fee = 10000000
+
+def get_client(ip="localhost"):
+    port = network[data['network']]['port']
+    return ArkClient('http://{0}:{1}/api/'.format(ip, port))
+
+def broadcast(tx):
     records = []
 
     #broadcast to relay
     try:
-        transaction = ark.transactions.create(tx)
+        transaction = client.transactions.create(tx)
         records = [[j['recipientId'],j['amount'],j['id']] for j in tx]
         time.sleep(1)
     except BaseException:
+        pass
+        '''
         # fall back to delegate node to grab data needed
         bark = get_network(data, network, data['delegate_ip'])
         transaction = bark.transactions.create(tx)
         records = [[j['recipientId'],j['amount'],j['id']] for j in tx]
         time.sleep(1)
-    
+        '''
     snekdb.storeTransactions(records)
 
-def build_transfer_transaction():
+def build_transfer_transaction(address, amount, vendor, fee, pp, sp):
     use_network(data['network'])
     transaction = TransferBuilder(
-        recipientId='DMzBk3g7ThVQPYmpYDTHBHiqYuTtZ9WdM3',
-        amount=1000000,
-        vendorField='Test',
-        fee=10000000
+        recipientId=address,
+        amount=amount,
+        vendorField=vendor,
+        fee=fee
     )
-    transaction.sign(passphrase)
-    if secondphrase != None:
-        transaction.second_sign(secondphrase)
+    transaction.sign(pp)
+    if sp != None:
+        transaction.second_sign(sp)
 
     transaction_dict = transaction.to_dict()
 
@@ -53,33 +51,23 @@ if __name__ == '__main__':
    
     data, network = parse_config()
     snekdb = SnekDB(data['dbusername'])
-    
+    client = get_client()
+    client = ArkClient('http://127.0.0.1:4003/api/')
+
     # Get the passphrase from config.json
     passphrase = data['passphrase']
     # Get the second passphrase from config.json
     secondphrase = data['secondphrase']
     if secondphrase == 'None':
         secondphrase = None
-    
-    tx = [build_transfer_transaction()]
-    print(tx)
-    client = ArkClient('http://127.0.0.1:4003/api/')
-    post_tx = client.transactions.create(tx)
-    print(post_tx)
 
+    go()
 
-
-
-
-
-
-
-    '''
+def go():
     while True:
-        # get peers
         signed_tx = []
         unique_rowid = []
-        
+
         # check for unprocessed payments
         unprocessed_pay = snekdb.stagedArkPayment().fetchall()
     
@@ -87,16 +75,11 @@ if __name__ == '__main__':
         if unprocessed_pay:
             unique_rowid = [y[0] for y in unprocessed_pay]
             
-            for i in unprocessed_pay:              
-                #tx = crypto.sign(i[1], str(i[2]), i[3], passphrase, secondphrase)
-                # TEST SIGNED OBJECT
-                tx = "dummy"
+            for i in unprocessed_pay:
+                tx = build_transfer_transaction(i[1], (i[2]), i[3], dynamic_fee, passphrase, secondphrase)
                 signed_tx.append(tx)
             
-            signed_tx.append(test_tx)
-            signed_tx.append(test_tx_two)
-            
-            broadcast(signed_tx, ark)
+            broadcast(signed_tx)
             snekdb.processStagedPayment(unique_rowid)
 
             # payment run complete
@@ -106,4 +89,3 @@ if __name__ == '__main__':
         
         else:
             time.sleep(300)
-'''
