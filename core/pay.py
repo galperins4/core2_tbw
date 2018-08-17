@@ -6,9 +6,9 @@ from snek.snek import SnekDB
 from ark import ArkClient
 import time
 
-def get_client(ip="localhost"):
+def get_client(ip="localhost", api_version='v2'):
     port = network[data['network']]['port']
-    return ArkClient('http://{0}:{1}/api/'.format(ip, port))
+    return ArkClient('http://{0}:{1}/api/'.format(ip, port), api_version=api_version)
 
 def broadcast(tx):
     records = []
