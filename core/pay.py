@@ -6,7 +6,8 @@ from snek.snek import SnekDB
 from ark import ArkClient
 import time
 
-def get_network(d, n, ip="localhost"):
+'''
+def get_url(d, n, ip="localhost"):
 ### NEED TO UPDATE FOR API2
     return ArkClient(
         ip,
@@ -14,6 +15,7 @@ def get_network(d, n, ip="localhost"):
         n[d['network']]['nethash'],
         n[d['network']]['version']
     )
+'''
 
 def broadcast(tx, ark):
     records = []
@@ -58,7 +60,7 @@ if __name__ == '__main__':
     if secondphrase == 'None':
         secondphrase = None
     
-    tx = build_transfer_transaction()
+    tx = [build_transfer_transaction()]
     print(tx)
     client = ArkClient('http://127.0.0.1:4003/api/')
     post_tx = client.transactions.create(tx)
