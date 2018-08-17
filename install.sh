@@ -21,7 +21,6 @@ install_modules(){
 }
 ark(){
         install_modules
-        npm install arkjs@0.2.1
         pause 
 }
  
