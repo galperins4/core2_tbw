@@ -16,7 +16,7 @@
         "exec_mode": "fork",
         "exec_interpreter": "python3.6",
         "log_date_format": "YYYY-MM-DD HH:mm Z",
-	"out_file": "~/tbw/core/output/pay.log",
+	"out_file": "~/core2_tbw/core/output/pay.log",
 	"interpreter_args": "-u"
     },
     {
