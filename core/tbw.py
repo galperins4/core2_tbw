@@ -443,7 +443,7 @@ if __name__ == '__main__':
     global delegate_tx_fee
     global v_msg
     
-    delegate_tx_fee = data['delegate_fee']
+    delegate_tx_fee = data['override_fee']
     v_msg = len(data['voter_msg'])
 
     # initialize db connection
