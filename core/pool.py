@@ -1,7 +1,6 @@
 from flask import Flask, render_template
 import json
 from snek.snek import SnekDB
-from pay import get_client
 
 from pathlib import Path
 pool_path = Path().resolve().parent
@@ -14,6 +13,10 @@ def parse_pool():
         network = json.load(network_file)
         
     return data, network
+
+def get_client(ip="localhost"):
+    port = network[data['network']]['port']
+    return ArkClient('http://{0}:{1}/api/'.format(ip, port))
 
 app = Flask(__name__)
 
