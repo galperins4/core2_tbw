@@ -11,8 +11,6 @@ def get_client(ip="localhost", api_version='v2'):
     return ArkClient('http://{0}:{1}/api/'.format(ip, port), api_version=api_version)
 
 def broadcast(tx):
-    records = []
-
     #broadcast to relay
     try:
         transaction = client.transactions.create(tx)
