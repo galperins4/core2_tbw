@@ -1,7 +1,6 @@
 from flask import Flask, render_template
 import json
 from snek.snek import SnekDB
-from park.park import Park
 from pay import get_client
 
 from pathlib import Path
