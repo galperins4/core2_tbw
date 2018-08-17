@@ -37,10 +37,10 @@ def build_transfer_transaction():
     transaction = TransferBuilder(
         recipientId='DMzBk3g7ThVQPYmpYDTHBHiqYuTtZ9WdM3',
         amount=1000000,
-        vendorField='Test'.encode()
+        vendorField='Test'
     )
-    transaction.sign(passphrase.encode())
-    # transaction.second_sign(secondphrase.encode())
+    transaction.sign(passphrase)
+    # transaction.second_sign(secondphrase)
     transaction_dict = transaction.to_dict()
     transaction.verify()  # if no exception is raised, it means the transaction is valid
     # transaction.second_verify()
