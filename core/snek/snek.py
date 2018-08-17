@@ -118,14 +118,12 @@ class SnekDB:
         return self.cursor.execute("SELECT rowid, * FROM staging WHERE processed_at IS NULL LIMIT 20")
 
     def processStagedPayment(self, rows):
-		
-        #rows = tuple(rows)
         ts = datetime.now().strftime('%Y-%m-%d %H:%M:%S')		
         for i in rows:
             self.cursor.execute(f"UPDATE staging SET processed_at = '{ts}' WHERE rowid = {i}")	
 
         self.commit()
-	
+
     def deleteStagedPayment(self):
         self.cursor.execute("DELETE FROM staging WHERE processed_at NOT NULL")
         
@@ -147,17 +145,14 @@ class SnekDB:
         
     def updateDelegateBalance(self, address, balance):
         self.cursor.execute(f"UPDATE delegate_rewards SET u_balance = u_balance + {balance} WHERE address = '{address}'")
-	
         self.commit()
         
     def updateVoterPaidBalance (self, address):
         self.cursor.execute(f"UPDATE voters SET p_balance = p_balance + u_balance WHERE address = '{address}'")
         self.cursor.execute(f"UPDATE voters SET u_balance = u_balance - u_balance WHERE address = '{address}'")
-        
         self.commit()
         
     def updateDelegatePaidBalance (self, address, amount):
         self.cursor.execute(f"UPDATE delegate_rewards SET p_balance = p_balance + {amount} WHERE address = '{address}'")
         self.cursor.execute(f"UPDATE delegate_rewards SET u_balance = u_balance - {amount} WHERE address = '{address}'")
-        
         self.commit()
