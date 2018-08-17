@@ -1,17 +1,17 @@
 {
     "apps": [{
         "name": "tbw",
-        "script": "~/tbw/core/tbw.py",
+        "script": "~/core2_tbw/core/tbw.py",
         "instances": 1,
         "exec_mode": "fork",
         "exec_interpreter": "python3.6",
         "log_date_format": "YYYY-MM-DD HH:mm Z",
-	"out_file": "~/tbw/core/output/tbw.log",
+	"out_file": "~/core2_tbw/core/output/tbw.log",
 	"interpreter_args": "-u"
     },
     {
         "name": "pay",
-        "script": "~/tbw/core/pay.py",
+        "script": "~/core2_tbw/core/pay.py",
         "instances": 1,
         "exec_mode": "fork",
         "exec_interpreter": "python3.6",
@@ -21,7 +21,7 @@
     },
     {
         "name": "pool",
-        "script": "~/tbw/core/pool.py",
+        "script": "~/core2_tbw/core/pool.py",
         "instances": 1,
         "exec_mode": "fork",
         "exec_interpreter": "python3.6",
