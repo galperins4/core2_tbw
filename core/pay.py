@@ -46,7 +46,6 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp):
 def go():
     while True:
         signed_tx = []
-        unique_rowid = []
 
         # check for unprocessed payments
         unprocessed_pay = snekdb.stagedArkPayment().fetchall()
