@@ -2,6 +2,7 @@ from flask import Flask, render_template
 import json
 from snek.snek import SnekDB
 from park.park import Park
+from pay import get_client
 
 from pathlib import Path
 pool_path = Path().resolve().parent
@@ -15,45 +16,25 @@ def parse_pool():
         
     return data, network
 
-def get_network(d, n, ip="localhost"):
-
-    return Park(
-        ip,
-        n[d['network']]['port'],
-        n[d['network']]['nethash'],
-        n[d['network']]['version']
-    )
-
 app = Flask(__name__)
 
 @app.route('/')
 def index():    
     s = {} 
     pkey = data['pubkey']
-    params = {"publicKey": pkey}
-    dstats = park.delegates().delegate(params)
-    
-    s['forged'] = dstats['delegate']['producedblocks']
-    s['missed'] = dstats['delegate']['missedblocks']
-    s['rank'] = dstats['delegate']['rate']
-    s['productivity'] = dstats['delegate']['productivity']
-    if data['network'] in ['ark','dark','kapu','dkapu','persona','persona-t']:
+    dstats = client.delegates.get(pkey)
+
+    s['forged'] = dstats['data']['blocks']['produced']
+    s['missed'] = dstats['data']['blocks']['missed']
+    s['rank'] = dstats['data']['rank']
+    s['productivity'] = dstats['data']['production']['productivity']
+    if data['network'] in ['ark_mainnet','ark_devnet']:
         if s['rank'] <= 51:
             s['forging'] = 'Forging'
         else:
             s['forging'] = 'Standby'
-    elif data['network'] in ['lwf','lwf-t','oxy','oxy-t']:
-        if s['rank'] <= 201:
-            s['forging'] = 'Forging'
-        else:
-            s['forging'] = 'Standby'
-    elif data['network'] in ['shift','shift-t','ripa', 'onz','onz-t']:
-        if s['rank'] <= 101:
-            s['forging'] = 'Forging'
-        else:
-            s['forging'] = 'Standby'
 
-    s['votes'] = len(park.delegates().voters(pkey)['accounts'])
+    s['votes'] = dstats['data']['votes']
     
     voter_data = snekdb.voters().fetchall()
     
@@ -73,7 +54,7 @@ def payments():
 if __name__ == '__main__':
     data, network = parse_pool()
     snekdb = SnekDB(data['dbusername'])
-    park = get_network(data, network)
+    client = get_client()
     navbar = {
        'dname': data['delegate'],
        'proposal': data['proposal'],
