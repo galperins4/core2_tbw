@@ -6,9 +6,6 @@ from snek.snek import SnekDB
 from ark import ArkClient
 import time
 
-
-dynamic_fee = 10000000
-
 def get_client(ip="localhost"):
     port = network[data['network']]['port']
     return ArkClient('http://{0}:{1}/api/'.format(ip, port))
@@ -22,14 +19,12 @@ def broadcast(tx):
         records = [[j['recipientId'],j['amount'],j['id']] for j in tx]
         time.sleep(1)
     except BaseException:
-        pass
-        '''
         # fall back to delegate node to grab data needed
-        bark = get_network(data, network, data['delegate_ip'])
-        transaction = bark.transactions.create(tx)
+        backup_client = get_client(data['delegate_ip'])
+        transaction = backup_client.transactions.create(tx)
         records = [[j['recipientId'],j['amount'],j['id']] for j in tx]
         time.sleep(1)
-        '''
+
     snekdb.storeTransactions(records)
 
 def build_transfer_transaction(address, amount, vendor, fee, pp, sp):
@@ -80,6 +75,7 @@ if __name__ == '__main__':
     data, network = parse_config()
     snekdb = SnekDB(data['dbusername'])
     client = get_client()
+    dynamic_fee = data['override_fee']
 
     # Get the passphrase from config.json
     passphrase = data['passphrase']
