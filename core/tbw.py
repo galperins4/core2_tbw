@@ -415,15 +415,6 @@ def initialize():
     
     print("Initial Set Up Complete. Please re-run script!")
     quit()
-    
-def get_dbname():
-    ark_fork = ['ark','dark','kapu','dkapu','persona-t','ripa', 'persona']
-    if  data['network'] in ark_fork:
-        uname = data['dbusername']
-    else:
-        uname = network[data['network']]['db_user']
-        
-    return uname
 
 def block_counter():
     c = snekdb.processedBlocks().fetchall()
@@ -449,8 +440,7 @@ if __name__ == '__main__':
     # initialize db connection
     
     #check for special usernames needed for lisk forks
-    username = get_dbname()
-    arkdb = ArkDB(network[data['network']]['db'], username, network[data['network']]['db_pw'], data['publicKey'])
+    arkdb = ArkDB(network[data['network']]['db'], data['dbusername'], network[data['network']]['db_pw'], data['publicKey'])
     
     # check to see if ark.db exists, if not initialize db, etc
     if os.path.exists(tbw_path / 'ark.db') == False:    
