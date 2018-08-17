@@ -47,6 +47,34 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp):
     transaction_dict = transaction.to_dict()
 
     return transaction_dict
+
+def go():
+    while True:
+        signed_tx = []
+        unique_rowid = []
+
+        # check for unprocessed payments
+        unprocessed_pay = snekdb.stagedArkPayment().fetchall()
+
+        # query not empty means unprocessed blocks
+        if unprocessed_pay:
+            unique_rowid = [y[0] for y in unprocessed_pay]
+
+            for i in unprocessed_pay:
+                tx = build_transfer_transaction(i[1], (i[2]), i[3], dynamic_fee, passphrase, secondphrase)
+                signed_tx.append(tx)
+
+            broadcast(signed_tx)
+            snekdb.processStagedPayment(unique_rowid)
+
+            # payment run complete
+            print('Payment Run Completed!')
+            # sleep 5 minutes between 50tx blasts
+            time.sleep(300)
+
+        else:
+            time.sleep(300)
+
 if __name__ == '__main__':
    
     data, network = parse_config()
@@ -62,30 +90,3 @@ if __name__ == '__main__':
         secondphrase = None
 
     go()
-
-def go():
-    while True:
-        signed_tx = []
-        unique_rowid = []
-
-        # check for unprocessed payments
-        unprocessed_pay = snekdb.stagedArkPayment().fetchall()
-    
-        # query not empty means unprocessed blocks
-        if unprocessed_pay:
-            unique_rowid = [y[0] for y in unprocessed_pay]
-            
-            for i in unprocessed_pay:
-                tx = build_transfer_transaction(i[1], (i[2]), i[3], dynamic_fee, passphrase, secondphrase)
-                signed_tx.append(tx)
-            
-            broadcast(signed_tx)
-            snekdb.processStagedPayment(unique_rowid)
-
-            # payment run complete
-            print('Payment Run Completed!')
-            #sleep 5 minutes between 50tx blasts
-            time.sleep(300)
-        
-        else:
-            time.sleep(300)
