@@ -80,7 +80,6 @@ if __name__ == '__main__':
     data, network = parse_config()
     snekdb = SnekDB(data['dbusername'])
     client = get_client()
-    client = ArkClient('http://127.0.0.1:4003/api/')
 
     # Get the passphrase from config.json
     passphrase = data['passphrase']
