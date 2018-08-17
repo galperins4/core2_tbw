@@ -1,3 +1,4 @@
+from ark import ArkClient
 from flask import Flask, render_template
 import json
 from snek.snek import SnekDB
