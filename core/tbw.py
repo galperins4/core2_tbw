@@ -245,8 +245,8 @@ def process_voter_pmt(min):
                 snekdb.updateVoterPaidBalance(row[0])
             
             else:
-                net = row[1] - transaction_fee
-                #net = row[1] - get_del_fee(delegate_tx_fee)
+                #net = row[1] - transaction_fee
+                net = row[1] - delegate_override_fee
                 #only pay if net payment is greater than 0, accumulate rest
                 if net > 0:
                     snekdb.storePayRun(row[0], net, msg)
@@ -269,13 +269,13 @@ def fixed_deal():
             fix = v * atomic
             if data['cover_tx_fees'] == 'Y':
                 snekdb.storePayRun(k, fix, msg)
-                #accumulate fixed deals balances
-                res += (fix + transaction_fee)
-                #res += (fix + get_del_fee(delegate_tx_fee))
+                # accumulate fixed deals balances
+                # res += (fix + transaction_fee)
+                res += (fix + delegate_override_fee)
             
             else:
-                net_fix = fix - transaction_fee
-                #net_fix = fix - get_del_fee(delegate_tx_fee)
+                # net_fix = fix - transaction_fee
+                net_fix = fix - delegate_override_fee
                 snekdb.storePayRun(k, net_fix, msg)
                 #accumulate fixed deals balances
                 res += (net_fix)
@@ -304,8 +304,8 @@ def process_delegate_pmt(fee, adjust):
                 if data['cover_tx_fees'] == 'Y':
                     net_pay = del_pay_adjust - fee
                 else:
-                    net_pay = del_pay_adjust - transaction_fee
-                    #net_pay = del_pay_adjust - get_del_fee(delegate_tx_fee)
+                    # net_pay = del_pay_adjust - transaction_fee
+                    net_pay = del_pay_adjust - delegate_override_fee
     
             if net_pay <= 0:
                 # delete staged payments to prevent duplicates
@@ -324,8 +324,8 @@ def process_delegate_pmt(fee, adjust):
         else:
             if data['cover_tx_fees'] == 'N':
                 # update staging records
-                net = row[1] - transaction_fee
-                #net = row[1] - get_del_fee(delegate_tx_fee)
+                # net = row[1] - transaction_fee
+                net = row[1] - delegate_override_fee
                 if net > 0:
                     snekdb.storePayRun(row[0], net, del_address(row[0]))
                     # adjust sql balances
@@ -347,10 +347,10 @@ def payout():
     t_count = len([i for i in snekdb.voters() if i[1]>0])
     
     if data['cover_tx_fees'] == 'Y':
-        v_count = len([i for i in snekdb.voters() if i[1]>min])
+        v_count = len([i for i in snekdb.voters() if i[1] > min])
     else:
-        v_count = len([i for i in snekdb.voters() if (i[1]>min and (i[1]-transaction_fee)>0)])
-        #v_count = len([i for i in snekdb.voters() if (i[1]>min and (i[1]-get_del_fee(delegate_tx_fee))>0)])
+        # v_count = len([i for i in snekdb.voters() if (i[1]>min and (i[1]-transaction_fee)>0)])
+        v_count = len([i for i in snekdb.voters() if (i[1] > min and (i[1]-delegate_override_fee) > 0)])
     
     adj_factor = v_count / t_count
                    
@@ -359,8 +359,8 @@ def payout():
         
         tx_count = v_count+d_count
         # calculate tx fees needed to cover run in satoshis
-        tx_fees = tx_count * int(transaction_fee)
-        #tx_fees = tx_count * get_del_fee(delegate_tx_fee)
+        # tx_fees = tx_count * int(transaction_fee)
+        tx_fees = tx_count * delegate_override_fee
     
         # process delegate rewards
         process_delegate_pmt(tx_fees, adj_factor)
@@ -377,7 +377,7 @@ def interval_check(bc):
         for row in r:
             total += row[1]
                 
-        print("Total Voter Unpaid:",total)
+        print("Total Voter Unpaid:", total)
         
         if total > 0:
             return True
@@ -419,23 +419,22 @@ def initialize():
 def block_counter():
     c = snekdb.processedBlocks().fetchall()
     return len(c)
-
+'''
 def get_del_fee(c):
     s = v_msg + transfer_size
     f = int(s*c*atomic)
     return f
-
+'''
 if __name__ == '__main__':
     # check for folders needed
     manage_folders()  
     
     # get config data
     data, network = parse_config()
-    global delegate_tx_fee
-    global v_msg
+    # global v_msg
     
-    delegate_tx_fee = data['override_fee']
-    v_msg = len(data['voter_msg'])
+    delegate_override_fee = data['override_fee']
+    # v_msg = len(data['voter_msg'])
 
     # initialize db connection
     
