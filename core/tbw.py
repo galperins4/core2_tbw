@@ -9,8 +9,23 @@ import os.path
 
 tbw_path = Path().resolve().parent
 atomic = 100000000
-transaction_fee = .1 * atomic
 transfer_size = 80
+
+def get_node_configs():
+    envpath = '/home/'+data['dbusername']+'/.ark/config/'
+
+    # check if there is a network file
+    if os.path.exists(envpath+'network.json') == True:
+        with open(envpath+'network.json') as network_file:
+        network = json.load(network_file)
+    else:
+        network = None
+
+    # open delegate config file
+    with open(envpath+'delegates.json') as delegate_file:
+        delegate = json.load(delegate_file)
+
+    return network, delegate
 
 def parse_config():
     """
@@ -23,6 +38,9 @@ def parse_config():
         network = json.load(network_file)
 
     return data, network
+
+def dynamic_fee_calc():
+    pass
 
 def allocate(lb):
     
@@ -111,7 +129,6 @@ def white_list(voters):
             
     return w_adjusted_voters
 
-
 def black_list(voters):
     #block voters and distribute to voters
     if data["blacklist"] == "block":
@@ -180,7 +197,7 @@ def anti_dilute(voters):
     
     if b:
         
-        unpaid= {}
+        unpaid = {}
         for i in b:
             unpaid[i[0]] = i[1]
     
@@ -419,26 +436,52 @@ def initialize():
 def block_counter():
     c = snekdb.processedBlocks().fetchall()
     return len(c)
-'''
-def get_del_fee(c):
-    s = v_msg + transfer_size
-    f = int(s*c*atomic)
-    return f
-'''
+
+
+def get_dynamic_fee(t, s, c, min):
+    prelim_fee = int((t+s)*c)
+
+    #check to see if fee will be accepted on node
+    if prelim_fee < min:
+        return min
+    else:
+        return prelim_fee
+
 if __name__ == '__main__':
     # check for folders needed
     manage_folders()  
     
     # get config data
     data, network = parse_config()
-    # global v_msg
-    
-    delegate_override_fee = data['override_fee']
-    # v_msg = len(data['voter_msg'])
+
+    # get node config
+    net, delegate = get_node_configs()
+    if net == None or net['constants'][0]['fees']['dynamic']==False:
+        # standard transaction fees
+        transaction_fee = .1 * atomic
+    else:
+        # get size of transaction - S
+        standard_tx = 80
+        padding = 80
+        v_msg = len(data['voter_msg'])
+        tx_size = standard_tx+padding+v_msg
+
+        # get T
+        dynamicOffset = net['constants'][0]['dynamicOffsets']['transfer']
+
+        # get C
+        feeMultiplier = delegate['dynamicFees']['feeMultiplier']
+
+        # get minimum acceptable fee for node
+        minFee = delegate['dynamicFees']['minAcceptableFee']
+
+        transaction_fee = get_dynamic_fee(dynamicOffset, tx_size, feeMultiplier, minFee)
+
+    print(transaction_fee)
+    quit()
 
     # initialize db connection
-    
-    #check for special usernames needed for lisk forks
+    #get database
     arkdb = ArkDB(network[data['network']]['db'], data['dbusername'], network[data['network']]['db_pw'], data['publicKey'])
     
     # check to see if ark.db exists, if not initialize db, etc
