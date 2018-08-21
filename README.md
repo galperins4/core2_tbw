@@ -23,7 +23,6 @@ Python 3.6+ is required. In addition it is now required to run this alongside a 
 - start_block: script will start calculations only for blocks after specified start block
 - delegate IP: this serves as a back-up IP for the API to call to in case the localhost does not respond
 - dbusername: this is the postgresql database username nodeDB (usually your os username)
-- override_fee: this is the fee to set your tx fees at (overrides normal fee amount). If set too low, tx will not be accepted by network
 - publicKey: delegate public key
 - interval:  the interval you want to pay voters in blocks. A setting of 211 would pay ever 211 blocks (or 422 ark)
 - voter_share: percentage to share with voters (0.xx format)
