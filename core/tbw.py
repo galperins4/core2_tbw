@@ -17,7 +17,7 @@ def get_node_configs():
     # check if there is a network file
     if os.path.exists(envpath+'network.json') == True:
         with open(envpath+'network.json') as network_file:
-        network = json.load(network_file)
+            network = json.load(network_file)
     else:
         network = None
 
