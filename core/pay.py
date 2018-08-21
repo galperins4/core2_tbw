@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from crypto.conf import use_network
 from crypto.transactions.builder.transfer import TransferBuilder
-from tbw import parse_config, get_node_config, get_dynamic_fee
+from tbw import parse_config, get_node_configs, get_dynamic_fee
 from snek.snek import SnekDB
 from ark import ArkClient
 import time
