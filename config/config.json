@@ -2,7 +2,6 @@
   "start_block": 0,
   "network": "network",
   "delegate_ip": "ip",
-  "override_fee": 10000000,
   "dbusername": "dbname",
   "publicKey": "publicKey",
   "interval": 211,
