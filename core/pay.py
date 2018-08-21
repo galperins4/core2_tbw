@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from crypto.conf import use_network
 from crypto.transactions.builder.transfer import TransferBuilder
-from tbw import parse_config
+from tbw import parse_config, get_node_config, get_dynamic_fee
 from snek.snek import SnekDB
 from ark import ArkClient
 import time
@@ -53,7 +53,7 @@ def go():
             unique_rowid = [y[0] for y in unprocessed_pay]
 
             for i in unprocessed_pay:
-                tx = build_transfer_transaction(i[1], (i[2]), i[3], dynamic_fee, passphrase, secondphrase)
+                tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, passphrase, secondphrase)
                 signed_tx.append(tx)
 
             broadcast(signed_tx)
@@ -72,7 +72,29 @@ if __name__ == '__main__':
     data, network = parse_config()
     snekdb = SnekDB(data['dbusername'])
     client = get_client()
-    dynamic_fee = data['override_fee']
+
+    # get node config and fee
+    net, delegate = get_node_configs()
+    if net == None or net['constants'][0]['fees']['dynamic']==False:
+        # standard transaction fees
+        transaction_fee = int(.1 * atomic)
+    else:
+        # get size of transaction - S
+        standard_tx = 80
+        padding = 80
+        v_msg = len(data['voter_msg'])
+        tx_size = standard_tx+padding+v_msg
+
+        # get T
+        dynamicOffset = net['constants'][0]['dynamicOffsets']['transfer']
+
+        # get C
+        feeMultiplier = delegate['dynamicFees']['feeMultiplier']
+
+        # get minimum acceptable fee for node
+        minFee = delegate['dynamicFees']['minAcceptableFee']
+
+        transaction_fee = get_dynamic_fee(dynamicOffset, tx_size, feeMultiplier, minFee)
 
     # Get the passphrase from config.json
     passphrase = data['passphrase']

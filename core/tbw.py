@@ -453,7 +453,7 @@ if __name__ == '__main__':
     # get config data
     data, network = parse_config()
 
-    # get node config
+    # get node config and fee
     net, delegate = get_node_configs()
     if net == None or net['constants'][0]['fees']['dynamic']==False:
         # standard transaction fees
@@ -475,9 +475,6 @@ if __name__ == '__main__':
         minFee = delegate['dynamicFees']['minAcceptableFee']
 
         transaction_fee = get_dynamic_fee(dynamicOffset, tx_size, feeMultiplier, minFee)
-
-    print(transaction_fee)
-    quit()
 
     # initialize db connection
     #get database
