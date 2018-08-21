@@ -458,7 +458,7 @@ if __name__ == '__main__':
     net, delegate = get_node_configs()
     if net == None or net['constants'][0]['fees']['dynamic']==False:
         # standard transaction fees
-        transaction_fee = .1 * atomic
+        transaction_fee = int(.1 * atomic)
     else:
         # get size of transaction - S
         standard_tx = 80
