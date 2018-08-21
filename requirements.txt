@@ -1,4 +1,4 @@
-https://github.com/galperins4/python-client/archive/develop.zip
+https://github.com/ArkEcosystem/python-client/archive/develop.zip
 https://github.com/ArkEcosystem/python-crypto/archive/develop.zip
 psycopg2-binary==2.7.4
 flask==0.12.2
