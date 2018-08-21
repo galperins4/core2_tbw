@@ -9,7 +9,6 @@ import os.path
 
 tbw_path = Path().resolve().parent
 atomic = 100000000
-transfer_size = 80
 
 def get_node_configs():
     envpath = '/home/'+data['dbusername']+'/.ark/config/'
@@ -262,8 +261,8 @@ def process_voter_pmt(min):
                 snekdb.updateVoterPaidBalance(row[0])
             
             else:
-                #net = row[1] - transaction_fee
-                net = row[1] - delegate_override_fee
+                net = row[1] - transaction_fee
+                # net = row[1] - delegate_override_fee
                 #only pay if net payment is greater than 0, accumulate rest
                 if net > 0:
                     snekdb.storePayRun(row[0], net, msg)
@@ -287,12 +286,12 @@ def fixed_deal():
             if data['cover_tx_fees'] == 'Y':
                 snekdb.storePayRun(k, fix, msg)
                 # accumulate fixed deals balances
-                # res += (fix + transaction_fee)
-                res += (fix + delegate_override_fee)
+                res += (fix + transaction_fee)
+                # res += (fix + delegate_override_fee)
             
             else:
-                # net_fix = fix - transaction_fee
-                net_fix = fix - delegate_override_fee
+                net_fix = fix - transaction_fee
+                # net_fix = fix - delegate_override_fee
                 snekdb.storePayRun(k, net_fix, msg)
                 #accumulate fixed deals balances
                 res += (net_fix)
@@ -321,8 +320,8 @@ def process_delegate_pmt(fee, adjust):
                 if data['cover_tx_fees'] == 'Y':
                     net_pay = del_pay_adjust - fee
                 else:
-                    # net_pay = del_pay_adjust - transaction_fee
-                    net_pay = del_pay_adjust - delegate_override_fee
+                    net_pay = del_pay_adjust - transaction_fee
+                    # net_pay = del_pay_adjust - delegate_override_fee
     
             if net_pay <= 0:
                 # delete staged payments to prevent duplicates
@@ -341,8 +340,8 @@ def process_delegate_pmt(fee, adjust):
         else:
             if data['cover_tx_fees'] == 'N':
                 # update staging records
-                # net = row[1] - transaction_fee
-                net = row[1] - delegate_override_fee
+                net = row[1] - transaction_fee
+                # net = row[1] - delegate_override_fee
                 if net > 0:
                     snekdb.storePayRun(row[0], net, del_address(row[0]))
                     # adjust sql balances
@@ -366,8 +365,8 @@ def payout():
     if data['cover_tx_fees'] == 'Y':
         v_count = len([i for i in snekdb.voters() if i[1] > min])
     else:
-        # v_count = len([i for i in snekdb.voters() if (i[1]>min and (i[1]-transaction_fee)>0)])
-        v_count = len([i for i in snekdb.voters() if (i[1] > min and (i[1]-delegate_override_fee) > 0)])
+        v_count = len([i for i in snekdb.voters() if (i[1]>min and (i[1]-transaction_fee)>0)])
+        # v_count = len([i for i in snekdb.voters() if (i[1] > min and (i[1]-delegate_override_fee) > 0)])
     
     adj_factor = v_count / t_count
                    
@@ -376,8 +375,8 @@ def payout():
         
         tx_count = v_count+d_count
         # calculate tx fees needed to cover run in satoshis
-        # tx_fees = tx_count * int(transaction_fee)
-        tx_fees = tx_count * delegate_override_fee
+        tx_fees = tx_count * int(transaction_fee)
+        # tx_fees = tx_count * delegate_override_fee
     
         # process delegate rewards
         process_delegate_pmt(tx_fees, adj_factor)
