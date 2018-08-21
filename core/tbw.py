@@ -10,8 +10,8 @@ import os.path
 tbw_path = Path().resolve().parent
 atomic = 100000000
 
-def get_node_configs():
-    envpath = '/home/'+data['dbusername']+'/.ark/config/'
+def get_node_configs(u):
+    envpath = '/home/'+u+'/.ark/config/'
 
     # check if there is a network file
     if os.path.exists(envpath+'network.json') == True:
@@ -454,7 +454,7 @@ if __name__ == '__main__':
     data, network = parse_config()
 
     # get node config and fee
-    net, delegate = get_node_configs()
+    net, delegate = get_node_configs(data['dbusername'])
     if net == None or net['constants'][0]['fees']['dynamic']==False:
         # standard transaction fees
         transaction_fee = int(.1 * atomic)
