@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-from crypto.conf import use_network
-from crypto.transactions.builder.transfer import TransferBuilder
+from crypto.configuration.network import set_network
+from crypto.transactions.builder.transfer import Transfer
 from tbw import parse_config, get_node_configs, get_dynamic_fee
 from snek.snek import SnekDB
 from ark import ArkClient
@@ -26,8 +26,8 @@ def broadcast(tx):
     snekdb.storeTransactions(records)
 
 def build_transfer_transaction(address, amount, vendor, fee, pp, sp):
-    use_network(data['network'])
-    transaction = TransferBuilder(
+    set_network(data['network'])
+    transaction = Transfer(
         recipientId=address,
         amount=amount,
         vendorField=vendor,
