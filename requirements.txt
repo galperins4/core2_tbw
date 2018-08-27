@@ -1,4 +1,4 @@
-flask==0.12.2
+flask==0.12.3
 arkecosystem-crypto
 arkecosystem-client
 psycopg2-binary==2.7.4
