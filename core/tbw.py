@@ -67,7 +67,6 @@ def allocate(lb):
 
         # assign  shares to log and rewards tracking
         keep_addr = data['pay_addresses'][k]
-        log[keep_addr] = keep
         snekdb.updateDelegateBalance(keep_addr, keep)
         
         # increment delegate_check for double check
