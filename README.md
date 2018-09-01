@@ -4,10 +4,10 @@
 
 ```sh
 install and sync relay server
-https://github.com/galperins4/core2_tbw
-cd ~/tbw/config
+git clone https://github.com/galperins4/core2_tbw
+cd ~/core2_tbw/config
 fill out configs (see below)
-cd ~/tbw
+cd ~/core2_tbw
 bash install.sh
 ```
 
@@ -16,7 +16,7 @@ After the repository has been cloned you need to open the `config.json` / `pool.
 
 Important! - pay_addresses and keep keys should match in config.json. DO NOT delete the reserve key as it is required. All other's can be deleted or more added. In addition, payment is triggered to start based on when total blocks forged / interval is an integer (with no remainder). 
 
-Python 3.6+ is required. In addition it is now required to run this alongside a relay node given the DB interaction and little reliance on the API.
+Python 3.6+ is required.
 
 ## Available Configuration Options (TRUE BLOCK WEIGHT)
 - network: which network (options are ark_mainnet, ark_devnet)
