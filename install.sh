@@ -12,10 +12,10 @@ pause(){
 }
 
 install_modules(){
-  sudo apt-get install build-essential
   sudo apt-get install python3-pip
-  sudo -H pip3 install -r requirements.txt
+  pip3 install -r requirements.txt
 }
+
 ark(){
         install_modules
         pause 
@@ -42,7 +42,6 @@ swapblocks(){
         npm install https://github.com/lwfcoin/lwf-nano-js 
         pause
 }
-
 
 # function to display menus
 show_menus() {
