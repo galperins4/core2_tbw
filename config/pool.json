@@ -7,5 +7,5 @@
   "proposal": "https://xx.xx.xx/",
   "dbusername": "dbname",
   "pubkey": "pubkey",
-  "custom_ip": 5002
+  "custom_port": 5002
 }
