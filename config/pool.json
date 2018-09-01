@@ -6,5 +6,6 @@
   "coin": "ARK",
   "proposal": "https://xx.xx.xx/",
   "dbusername": "dbname",
-  "pubkey": "pubkey"
+  "pubkey": "pubkey",
+  "custom_ip": 5002
 }
