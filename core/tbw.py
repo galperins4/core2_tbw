@@ -44,7 +44,6 @@ def dynamic_fee_calc():
 def allocate(lb):
     
     # create temp log / export output for block  rewards
-    log = {}
     rewards_check = 0
     voter_check = 0
     delegate_check = 0
@@ -86,19 +85,29 @@ def allocate(lb):
         # filter out 0 balances for processing
         if bal > 0:
             share_weight = bal / approval  # calc share rate
-            
-            # calculate block reward
-            reward = int(share_weight * vshare)
-            
-            # populate log for block export records
-            log[i[0]] = reward
-            
+
+            # get custom share rate if applicable
+            customShare = snekdb.getVoterShare(i[0]).fetchall()
+
+            # get the difference between normal share and custom share
+            if customShare[0][0] == data['voter_share']:
+                reward = int(share_weight * vshare)
+                remainder_reward = 0
+            elif customShare[0][0] < data['voter_share']:
+                cshare = block_reward * customShare[0][0]
+                treward = int(share_weight * vshare)
+                reward = int(share_weight * cshare)
+                remainder_reward = int(treward - reward)
+            else:
+                pass
+
             # update reserve from blacklist assign
             if i[0] == data["blacklist_assign"]:
                 snekdb.updateDelegateBalance(i[0], reward)
             else:
                 #add voter reward to sql database
                 snekdb.updateVoterBalance(i[0], reward)
+                snekdb.updateDelegateBalance(keep_addr, remainder_reward)
 
             # voter and rewards check
             voter_check += 1
@@ -222,7 +231,7 @@ def get_voters():
         bl_adjust_two = voter_cap(bl_adjust)
         bl = voter_min(bl_adjust_two)
    
-    snekdb.storeVoters(bl)    
+    snekdb.storeVoters(bl, data['voter_share'])
     
     # anti-dulition
     block_voters = anti_dilute(bl)
