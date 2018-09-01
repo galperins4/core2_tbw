@@ -1,34 +1,42 @@
 #!/usr/bin/env python
-from crypto.configuration.network import set_network
+from crypto.configuration.network import set_custom_network
 from crypto.transactions.builder.transfer import Transfer
 from tbw import parse_config, get_node_configs, get_dynamic_fee
 from snek.snek import SnekDB
 from ark import ArkClient
+from datetime import datetime
 import time
 
 atomic = 100000000
+
 
 def get_client(ip="localhost", api_version='v2'):
     port = network[data['network']]['port']
     return ArkClient('http://{0}:{1}/api/'.format(ip, port), api_version=api_version)
 
+
 def broadcast(tx):
-    #broadcast to relay
+    # broadcast to relay
     try:
         transaction = client.transactions.create(tx)
-        records = [[j['recipientId'],j['amount'],j['id']] for j in tx]
+        records = [[j['recipientId'], j['amount'], j['id']] for j in tx]
         time.sleep(1)
     except BaseException:
         # fall back to delegate node to grab data needed
         backup_client = get_client(data['delegate_ip'])
         transaction = backup_client.transactions.create(tx)
-        records = [[j['recipientId'],j['amount'],j['id']] for j in tx]
+        records = [[j['recipientId'], j['amount'], j['id']] for j in tx]
         time.sleep(1)
 
     snekdb.storeTransactions(records)
 
+
 def build_transfer_transaction(address, amount, vendor, fee, pp, sp):
-    set_network(data['network'])
+    epoch = datetime(network[data['network']]['epoch'])
+    version = network[data['network']]['version']
+    wif = network[data['network']]['wif']
+    set_custom_network(epoch, version, wif)
+
     transaction = Transfer(
         recipientId=address,
         amount=amount,
@@ -36,12 +44,12 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp):
         fee=fee
     )
     transaction.sign(pp)
-    if sp != None:
+    if sp is not None:
         transaction.second_sign(sp)
 
     transaction_dict = transaction.to_dict()
-
     return transaction_dict
+
 
 def go():
     while True:
@@ -69,6 +77,7 @@ def go():
         else:
             time.sleep(300)
 
+
 if __name__ == '__main__':
    
     data, network = parse_config()
@@ -77,13 +86,13 @@ if __name__ == '__main__':
 
     # get node config and fee
     net, delegate = get_node_configs(data['dbusername'])
-    if net == None or net['constants'][0]['fees']['dynamic']==False:
+    if net is None or net['constants'][0]['fees']['dynamic'] is False:
         # standard transaction fees
         transaction_fee = int(.1 * atomic)
     else:
         # get size of transaction - S
-        standard_tx = 80
-        padding = 80
+        standard_tx = 153
+        padding = 7
         v_msg = len(data['voter_msg'])
         tx_size = standard_tx+padding+v_msg
 

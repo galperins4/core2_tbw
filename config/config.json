@@ -21,7 +21,6 @@
   "fixed_deal" : "N",
   "fixed_deal_amt" : {"addr1": 1, "addr2": 2, "addr3": 3},
   "min_payment": 0.5,
-  "reach": 20,
   "keep": {
     "reserve": 0.50
   },
