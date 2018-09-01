@@ -19,7 +19,7 @@ Important! - pay_addresses and keep keys should match in config.json. DO NOT del
 Python 3.6+ is required. In addition it is now required to run this alongside a relay node given the DB interaction and little reliance on the API.
 
 ## Available Configuration Options (TRUE BLOCK WEIGHT)
-- network: which network (options are ark_mainnet, ark_devnet, ark_testnet)
+- network: which network (options are ark_mainnet, ark_devnet)
 - start_block: script will start calculations only for blocks after specified start block
 - delegate IP: this serves as a back-up IP for the API to call to in case the localhost does not respond
 - dbusername: this is the postgresql database username nodeDB (usually your os username)
@@ -40,8 +40,7 @@ Python 3.6+ is required. In addition it is now required to run this alongside a 
 - blacklist_assign: if assign option is picked, this is the address those blacklisted shares go to. DO NOT SET to an account voting for said delegate. It is HIGHLY recommended this is set to the reserve address!
 - fixed_deal: use this if you have a fixed deal with a voter (e.g., 45 ark per day).
 - fixed_deal_amt: format is address:amount. The amount to pay should correspond to interval. 
-- min_payment: Minimum threshold for payment. If set to 1, any payout less than 1 ARK will be held until the next pay run and accumulate
-- reach: how many peers to broadcast payments to (Recommended - 20)
+- min_payment: Minimum threshold for payment. If set to 1, any payout less than 1 ARK will be held until the next pay run and accumulated
 - keep: there are the percentages for delegates to keep and distrubute among x accounts (Note: reserve is required! all others are optional)
 - pay_addresses: these are the addresses to go with the keep percentages (Note: reserve is required! all others are optional)
 
