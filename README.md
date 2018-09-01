@@ -52,6 +52,7 @@ Python 3.6+ is required. In addition it is now required to run this alongside a 
 - proposal: link to delegate proposal (if any)
 - dbusername: this is the postgresql database username nodeDB (usually your os username)
 - pubkey: delegate public key
+- custom_port: custom port for using custom voter share update functionality
 
 Note: Pool runs on port 5000
 
