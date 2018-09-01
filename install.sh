@@ -52,23 +52,6 @@ oxy(){
         pause
 }
 
-onz(){
-        install_modules
-        npm install https://github.com/OnzCoin/onz-js
-        pause
-}
-
-lisk(){
-        install_modules
-        npm install lisk-js
-        pause
-}
-
-shifts(){
-        install_modules
-        npm install shift-js
-        pause
-}
  
 # function to display menus
 show_menus() {
@@ -76,14 +59,10 @@ show_menus() {
 	echo "~~~~~~~~~~~~~~~~~~~~~"	
 	echo " M A I N - M E N U"
 	echo "~~~~~~~~~~~~~~~~~~~~~"
-	echo "1. Install ARK/KAPU"
+	echo "1. Install ARK"
 	echo "2. Install PERSONA"
         echo "3. Install RIPA"
-        echo "4. Install LWF"
-        echo "5. Install OXY"
-        echo "6. Install SHIFT"
-        echo "7. Install LISK"
-        echo "8. Install ONZ"
+        echo "4. Install SWAPBLOCKS"
 	echo "9. Exit"
 }
 read_options(){
@@ -93,11 +72,7 @@ read_options(){
 		1) ark ;;
 		2) persona ;;
                 3) ripa ;;
-                4) lwf ;;
-                5) oxy ;;
-                6) shifts ;;
-                7) lisk ;;
-                8) onz ;;
+                4) swapblocks ;;
                 9) exit 0;;
 		*) echo -e "${RED}Error...${STD}" && sleep 2
 	esac
