@@ -31,7 +31,7 @@ def broadcast(tx):
     snekdb.storeTransactions(records)
 
 
-def build_transfer_transaction(address, amount, vendor, fee, pp, sp):
+def build_network():
     e = network[data['network']]['epoch']
     t = [int(i) for i in e]
     epoch = datetime(t[0], t[1], t[2], t[3], t[4], t[5])
@@ -39,6 +39,8 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp):
     wif = network[data['network']]['wif']
     set_custom_network(epoch, version, wif)
 
+
+def build_transfer_transaction(address, amount, vendor, fee, pp, sp):
     transaction = Transfer(
         recipientId=address,
         amount=amount,
@@ -85,6 +87,7 @@ if __name__ == '__main__':
     data, network = parse_config()
     snekdb = SnekDB(data['dbusername'])
     client = get_client()
+    build_network()
 
     # get node config and fee
     net, delegate = get_node_configs(data['dbusername'])
