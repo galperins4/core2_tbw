@@ -1,5 +1,5 @@
 setuptools
-flask>=0.12.3
+flask
 arkecosystem-crypto
 arkecosystem-client
-psycopg2-binary==2.7.4
+psycopg2
