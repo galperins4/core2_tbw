@@ -32,7 +32,9 @@ def broadcast(tx):
 
 
 def build_transfer_transaction(address, amount, vendor, fee, pp, sp):
-    epoch = datetime(network[data['network']]['epoch'])
+    e = network[data['network']]['epoch']
+    t = [int(i) for i in e]
+    epoch = datetime(t[0], t[1], t[2], t[3], t[4], t[5])
     version = network[data['network']]['version']
     wif = network[data['network']]['wif']
     set_custom_network(epoch, version, wif)
