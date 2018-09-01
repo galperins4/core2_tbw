@@ -1,20 +1,20 @@
 {
     "ark_mainnet": {
         "epoch": ["2017", "3", "21", "13", "00", "00"],
-		"version": 23,
-		"wif": 170,
+	"version": 23,
+	"wif": 170,
         "port": 4001,
-		"db": "ark_mainnet",
+	"db": "ark_mainnet",
         "db_user": "null",
         "db_pw": "password"
     },
     "ark_devnet": {
-	    "epoch": ["2017", "3", "21", "13", "00", "00"],
-		"version": 30,
-		"wif": 170,
+	"epoch": ["2017", "3", "21", "13", "00", "00"],
+	"version": 30,
+	"wif": 170,
         "nethash": "",
         "port": 4003,
-		 "db": "ark_devnet",
+	 "db": "ark_devnet",
         "db_user": "null",
         "db_pw": "password"
     }
