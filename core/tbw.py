@@ -97,6 +97,7 @@ def allocate(lb):
                 treward = int(share_weight * vshare)
                 reward = int(share_weight * cshare)
                 remainder_reward = int(treward - reward)
+                delegate_check += remainder_reward
             else:
                 pass
 
