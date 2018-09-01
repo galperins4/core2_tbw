@@ -38,4 +38,4 @@ if __name__ == '__main__':
     data, network = parse_pool()
     snekdb = SnekDB(data['dbusername'])
     client = get_client()
-    app.run(host=data['pool_ip'], port='5002')
+    app.run(host=data['pool_ip'], port=5002)
