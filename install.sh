@@ -40,19 +40,13 @@ ripa(){
         pause
 }
 
-lwf(){
+swapblocks(){
         install_modules
         npm install https://github.com/lwfcoin/lwf-nano-js 
         pause
 }
 
-oxy(){
-        install_modules
-        npm install https://github.com/Oxycoin/oxy-nano-js
-        pause
-}
 
- 
 # function to display menus
 show_menus() {
 	clear
