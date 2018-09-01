@@ -27,5 +27,15 @@
         "exec_interpreter": "python3.6",
         "log_date_format": "YYYY-MM-DD HH:mm Z",
 	"interpreter_args": "-u"
-    }]
+    },    
+	{
+        "name": "custom",
+        "script": "~/core2_tbw/core/custom.py",
+        "instances": 1,
+        "exec_mode": "fork",
+        "exec_interpreter": "python3.6",
+        "log_date_format": "YYYY-MM-DD HH:mm Z",
+	"out_file": "~/core2_tbw/core/output/custom.log",
+	"interpreter_args": "-u"
+    },]
 }
