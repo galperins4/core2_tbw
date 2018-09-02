@@ -24,42 +24,49 @@ install(){
 initialize(){
         cd core
 	python3 tbw.py
+	cd ..
         pause
 }
 
 all(){
 	cd core
 	pm2 start apps.json
+	cd ..
 	pause
 }
 
 tbw(){
         cd core
 	pm2 start apps.json --only tbw
+	cd ..
         pause
 }
 
 pay(){
 	cd core
 	pm2 start apps.json --only pay
+	cd ..
         pause
 }
 
 custom(){
 	cd core
 	pm2 start apps.json --only custom
+	cd ..
         pause
 }
 
 pool(){
 	cd core
 	pm2 start apps.json --only pool
+	cd ..
         pause
 }
 
 stop(){
 	cd core
 	pm2 stop apps.json
+	cd  ..
 	pause
 }
 
