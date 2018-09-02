@@ -1,14 +1,17 @@
 #!/usr/bin/env python
 
-from snek.snek import SnekDB
-from snek.ark import ArkDB
-import time
-import json
+from util.sql import SnekDB
+from util.ark import ArkDB
+from util.dynamic import Dynamic
 from pathlib import Path
 import os.path
+import time
+import json
+
 
 tbw_path = Path().resolve().parent
 atomic = 100000000
+
 
 def get_node_configs(u):
     envpath = '/home/'+u+'/.ark/config/'
@@ -26,6 +29,7 @@ def get_node_configs(u):
 
     return network, delegate
 
+
 def parse_config():
     """
     Parse the config.json file and return the result.
@@ -38,8 +42,6 @@ def parse_config():
 
     return data, network
 
-def dynamic_fee_calc():
-    pass
 
 def allocate(lb):
     
@@ -94,7 +96,6 @@ def allocate(lb):
                 reward = int(share_weight * vshare)
                 remainder_reward = 0
             else:
-                # cshare = block_reward * customShare[0][0]
                 treward = int(share_weight * vshare)
                 reward = int(share_weight * cshare)
                 remainder_reward = int(treward - reward)
@@ -123,10 +124,6 @@ def allocate(lb):
     #mark as processed
     snekdb.markAsProcessed(lb[4])
 
-def manage_folders():
-    sub_names = ["error"]
-    for sub_name in sub_names:
-        os.makedirs(os.path.join('output', sub_name), exist_ok=True)
 
 def white_list(voters):
     w_adjusted_voters=[]
@@ -135,6 +132,7 @@ def white_list(voters):
             w_adjusted_voters.append((i[0], i[1]))
             
     return w_adjusted_voters
+
 
 def black_list(voters):
     #block voters and distribute to voters
@@ -164,6 +162,7 @@ def black_list(voters):
 
     return bl_adjusted_voters
 
+
 def voter_min(voters):
     min_wallet = int(data['vote_min'] * atomic)
     
@@ -178,6 +177,7 @@ def voter_min(voters):
         min_adjusted_voters = voters
         
     return min_adjusted_voters
+
 
 def voter_cap(voters):
 
@@ -196,6 +196,7 @@ def voter_cap(voters):
         cap_adjusted_voters = voters
 
     return cap_adjusted_voters
+
 
 def anti_dilute(voters):
     # get unpaid balances and wallets
@@ -217,6 +218,7 @@ def anti_dilute(voters):
     
     return undilute
 
+
 def get_voters():
 
     #get voters
@@ -237,6 +239,7 @@ def get_voters():
     
     return block_voters
 
+
 def get_rewards():
     
     rewards = []
@@ -244,6 +247,7 @@ def get_rewards():
         rewards.append(v)
     
     snekdb.storeRewards(rewards) 
+
 
 def del_address(addr):
     msg = "default"
@@ -253,6 +257,7 @@ def del_address(addr):
             msg = k + " - True Block Weight"
     
     return msg
+
 
 def process_voter_pmt(min):
     # process voters 
@@ -274,7 +279,8 @@ def process_voter_pmt(min):
                 if net > 0:
                     snekdb.storePayRun(row[0], net, msg)
                     snekdb.updateVoterPaidBalance(row[0])
-                
+
+
 def fixed_deal():
     res = 0
     private_deals = data['fixed_deal_amt']
@@ -302,6 +308,7 @@ def fixed_deal():
                 res += (net_fix)
             
     return res
+
 
 def process_delegate_pmt(fee, adjust):
     # process delegate first
@@ -358,23 +365,24 @@ def process_delegate_pmt(fee, adjust):
                     # adjust sql balances
                     snekdb.updateDelegatePaidBalance(row[0], row[1])
 
+
 def payout():
     min = int(data['min_payment'] * atomic)
 
     # count number of transactions greater than payout threshold
-    d_count = len([j for j in snekdb.rewards() if j[1]>0])
+    d_count = len([j for j in snekdb.rewards() if j[1] > 0])
     
     #get total possible payouts before adjusting for accumulated payments
-    t_count = len([i for i in snekdb.voters() if i[1]>0])
+    t_count = len([i for i in snekdb.voters() if i[1] > 0])
     
     if data['cover_tx_fees'] == 'Y':
         v_count = len([i for i in snekdb.voters() if i[1] > min])
     else:
-        v_count = len([i for i in snekdb.voters() if (i[1]>min and (i[1]-transaction_fee)>0)])
+        v_count = len([i for i in snekdb.voters() if (i[1] > min and (i[1]-transaction_fee) > 0)])
     
     adj_factor = v_count / t_count
                    
-    if v_count>0:
+    if v_count > 0:
         print('Payout started!')
         
         tx_count = v_count+d_count
@@ -386,6 +394,7 @@ def payout():
         
         # process voters 
         process_voter_pmt(min)
+
 
 def interval_check(bc):
     if bc % data['interval'] == 0:
@@ -402,7 +411,8 @@ def interval_check(bc):
             return True
         else: 
             return False
-        
+
+
 def initialize():
     print("First time setup - initializing SQL database....")
     # initalize sqldb object
@@ -435,11 +445,12 @@ def initialize():
     print("Initial Set Up Complete. Please re-run script!")
     quit()
 
+
 def block_counter():
     c = snekdb.processedBlocks().fetchall()
     return len(c)
 
-
+'''
 def get_dynamic_fee(t, s, c, min):
     prelim_fee = int((t+s)*c)
 
@@ -448,14 +459,19 @@ def get_dynamic_fee(t, s, c, min):
         return min
     else:
         return prelim_fee
-
+'''
 if __name__ == '__main__':
-    # check for folders needed
-    manage_folders()  
-    
+
     # get config data
     data, network = parse_config()
 
+    dynamic = Dynamic(data['dbusername'], data['voter_msg'])
+    dynamic.get_node_configs()
+    transaction_fee = dynamic.get_dynamic_fee()
+    print(transaction_fee)
+    quit()
+
+    '''
     # get node config and fee
     net, delegate = get_node_configs(data['dbusername'])
     if net == None or net['constants'][0]['fees']['dynamic']==False:
@@ -478,7 +494,7 @@ if __name__ == '__main__':
         minFee = delegate['dynamicFees']['minAcceptableFee']
 
         transaction_fee = get_dynamic_fee(dynamicOffset, tx_size, feeMultiplier, minFee)
-
+    '''
     # initialize db connection
     #get database
     arkdb = ArkDB(network[data['network']]['db'], data['dbusername'], network[data['network']]['db_pw'], data['publicKey'])

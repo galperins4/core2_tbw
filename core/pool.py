@@ -1,7 +1,7 @@
 from ark import ArkClient
 from flask import Flask, render_template
 import json
-from snek.snek import SnekDB
+from util.sql import SnekDB
 
 from pathlib import Path
 pool_path = Path().resolve().parent

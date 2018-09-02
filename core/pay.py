@@ -2,7 +2,7 @@
 from crypto.configuration.network import set_custom_network
 from crypto.transactions.builder.transfer import Transfer
 from tbw import parse_config, get_node_configs, get_dynamic_fee
-from snek.snek import SnekDB
+from util.sql import SnekDB
 from ark import ArkClient
 from datetime import datetime
 import time
