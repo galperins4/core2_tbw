@@ -8,11 +8,11 @@ git clone https://github.com/galperins4/core2_tbw
 cd ~/core2_tbw/config
 fill out configs (see below)
 cd ~/core2_tbw
-bash install.sh
+bash tbw.sh
 ```
 
 ## Configuration & Usage
-After the repository has been cloned you need to open the `config.json` / `pool.json` and change it to your liking. Once this has been done navigate to core folder and execute `python3 tbw.py` to start true block weight script. After the initial start up, you can run the script via `python3 tbw.py` or the pm2 command `pm2 start apps.json`
+After the repository has been cloned you need to open the `config.json` / `pool.json` and change it to your liking. Once this has been done navigate to core2_tbw folder and execute `bash tbw.sh` to get to the main menu script. Install required packages with option 1. Initialize tbw with option 2. You can then select options 3-7 to either run all modules of tbw or parts. 
 
 Important! - pay_addresses and keep keys should match in config.json. DO NOT delete the reserve key as it is required. All other's can be deleted or more added. In addition, payment is triggered to start based on when total blocks forged / interval is an integer (with no remainder). 
 
