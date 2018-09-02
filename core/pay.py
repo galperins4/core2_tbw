@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 from crypto.configuration.network import set_custom_network
 from crypto.transactions.builder.transfer import Transfer
-from tbw import parse_config, get_node_configs, get_dynamic_fee
+from tbw import parse_config
 from util.sql import SnekDB
+from util.dynamic import Dynamic
 from ark import ArkClient
 from datetime import datetime
 import time
@@ -91,6 +92,12 @@ if __name__ == '__main__':
     client = get_client()
     build_network()
 
+    dynamic = Dynamic(data['dbusername'], data['voter_msg'])
+    dynamic.get_node_configs()
+    transaction_fee = dynamic.get_dynamic_fee()
+
+
+    '''
     # get node config and fee
     net, delegate = get_node_configs(data['dbusername'])
     if net is None or net['constants'][0]['fees']['dynamic'] is False:
@@ -113,6 +120,8 @@ if __name__ == '__main__':
         minFee = delegate['dynamicFees']['minAcceptableFee']
 
         transaction_fee = get_dynamic_fee(dynamicOffset, tx_size, feeMultiplier, minFee)
+    '''
+
 
     # Get the passphrase from config.json
     passphrase = data['passphrase']
