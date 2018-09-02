@@ -130,17 +130,14 @@ class SnekDB:
     def stagedArkPayment(self):
         return self.cursor.execute("SELECT rowid, * FROM staging WHERE processed_at IS NULL LIMIT 120")
 
-
-    def stagedLiskPayment(self):
-        return self.cursor.execute("SELECT rowid, * FROM staging WHERE processed_at IS NULL LIMIT 20")
-
-
+    
     def processStagedPayment(self, rows):
         ts = datetime.now().strftime('%Y-%m-%d %H:%M:%S')		
         for i in rows:
             self.cursor.execute(f"UPDATE staging SET processed_at = '{ts}' WHERE rowid = {i}")
         self.commit()
 
+    
     def deleteStagedPayment(self):
         self.cursor.execute("DELETE FROM staging WHERE processed_at NOT NULL")
         
@@ -180,6 +177,7 @@ class SnekDB:
         self.cursor.execute(f"UPDATE delegate_rewards SET u_balance = u_balance - {amount} WHERE address = '{address}'")
         self.commit()
 
+    
     def updateVoterShare(self, address, share):
         self.cursor.execute("UPDATE voters SET share = {0} WHERE address = '{1}'".format(share, address))
         self.commit()
