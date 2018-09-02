@@ -18,12 +18,12 @@ def parse_config():
     Parse the config.json file and return the result.
     """
     with open(tbw_path / 'config/config.json') as data_file:
-        data = json.load(data_file)
+        d = json.load(data_file)
         
     with open(tbw_path / 'config/networks.json') as network_file:
-        network = json.load(network_file)
+        n = json.load(network_file)
 
-    return data, network
+    return d, n
 
 
 def allocate(lb):
@@ -263,35 +263,6 @@ def process_voter_pmt(min_amt):
                     snekdb.storePayRun(row[0], net, msg)
                     snekdb.updateVoterPaidBalance(row[0])
 
-'''
-def fixed_deal():
-    res = 0
-    private_deals = data['fixed_deal_amt']
-    
-    # check to make sure fixed payment addresses haven't unvoted 
-    fix_check = arkdb.voters()
-    tmp = {}
-    for i in fix_check:
-        tmp[i[0]] = i[1]
-    
-    for k, v in private_deals.items():
-        if k in tmp.keys() and tmp[k] > 0:
-            msg = "Goose Voter - True Block Weight-F"
-            # update staging records
-            fix = v * atomic
-            if data['cover_tx_fees'] == 'Y':
-                snekdb.storePayRun(k, fix, msg)
-                # accumulate fixed deals balances
-                res += (fix + transaction_fee)
-            
-            else:
-                net_fix = fix - transaction_fee
-                snekdb.storePayRun(k, net_fix, msg)
-                # accumulate fixed deals balances
-                res += (net_fix)
-            
-    return res
-'''
 
 def process_delegate_pmt(fee, adjust):
     # process delegate first
@@ -306,23 +277,6 @@ def process_delegate_pmt(fee, adjust):
                 net_pay = del_pay_adjust - fee
             else:
                 net_pay = del_pay_adjust - transaction_fee
-
-            '''
-            if data['fixed_deal'] == 'Y':
-                amt = fixed_deal()
-                if data['cover_tx_fees'] == 'Y':
-                    totalFees = amt + fee
-                else:
-                    totalFees = amt
-                
-                net_pay = del_pay_adjust - totalFees
-
-            else:
-                if data['cover_tx_fees'] == 'Y':
-                    net_pay = del_pay_adjust - fee
-                else:
-                    net_pay = del_pay_adjust - transaction_fee
-            '''
     
             if net_pay <= 0:
                 # delete staged payments to prevent duplicates
@@ -356,7 +310,7 @@ def process_delegate_pmt(fee, adjust):
 
 
 def payout():
-    min = int(data['min_payment'] * atomic)
+    minamt = int(data['min_payment'] * atomic)
 
     # count number of transactions greater than payout threshold
     d_count = len([j for j in snekdb.rewards() if j[1] > 0])
@@ -365,9 +319,9 @@ def payout():
     t_count = len([i for i in snekdb.voters() if i[1] > 0])
     
     if data['cover_tx_fees'] == 'Y':
-        v_count = len([i for i in snekdb.voters() if i[1] > min])
+        v_count = len([i for i in snekdb.voters() if i[1] > minamt])
     else:
-        v_count = len([i for i in snekdb.voters() if (i[1] > min and (i[1]-transaction_fee) > 0)])
+        v_count = len([i for i in snekdb.voters() if (i[1] > minamt and (i[1]-transaction_fee) > 0)])
     
     adj_factor = v_count / t_count
                    
@@ -382,7 +336,7 @@ def payout():
         process_delegate_pmt(tx_fees, adj_factor)
         
         # process voters 
-        process_voter_pmt(min)
+        process_voter_pmt(minamt)
 
 
 def interval_check(bc):
@@ -421,10 +375,10 @@ def initialize():
             snekdb.markAsProcessed(row[4])
         
     # set block count to rows imported
-    block_count = len(all_blocks)
+    b_count = len(all_blocks)
     p_count = block_counter()
                 
-    print("Imported block count:", block_count)
+    print("Imported block count:", b_count)
     print("Processed block count:", p_count)
     
     # initialize voters and delegate rewards accounts
