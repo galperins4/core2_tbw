@@ -13,23 +13,6 @@ tbw_path = Path().resolve().parent
 atomic = 100000000
 
 
-def get_node_configs(u):
-    envpath = '/home/'+u+'/.ark/config/'
-
-    # check if there is a network file
-    if os.path.exists(envpath+'network.json') == True:
-        with open(envpath+'network.json') as network_file:
-            network = json.load(network_file)
-    else:
-        network = None
-
-    # open delegate config file
-    with open(envpath+'delegates.json') as delegate_file:
-        delegate = json.load(delegate_file)
-
-    return network, delegate
-
-
 def parse_config():
     """
     Parse the config.json file and return the result.
@@ -88,11 +71,11 @@ def allocate(lb):
             share_weight = bal / approval  # calc share rate
 
             # get custom share rate if applicable
-            customShare = snekdb.getVoterShare(i[0]).fetchall()
-            cshare = block_reward * customShare[0][0]
+            custom_share = snekdb.getVoterShare(i[0]).fetchall()
+            cshare = block_reward * custom_share[0][0]
 
             # get the difference between normal share and custom share
-            if customShare[0][0] == data['voter_share']:
+            if custom_share[0][0] == data['voter_share']:
                 reward = int(share_weight * vshare)
                 remainder_reward = 0
             else:
@@ -105,7 +88,7 @@ def allocate(lb):
             if i[0] == data["blacklist_assign"]:
                 snekdb.updateDelegateBalance(i[0], reward)
             else:
-                #add voter reward to sql database
+                # add voter reward to sql database
                 snekdb.updateVoterBalance(i[0], reward)
                 snekdb.updateDelegateBalance(keep_addr, remainder_reward)
 
@@ -121,12 +104,12 @@ def allocate(lb):
     Voter + Delegate Rewards: {rewards_check + delegate_check}
     Total Block Rewards: {total_reward}""")
 
-    #mark as processed
+    # mark as processed
     snekdb.markAsProcessed(lb[4])
 
 
 def white_list(voters):
-    w_adjusted_voters=[]
+    w_adjusted_voters = []
     for i in voters:
         if i[0] in data["whitelist_addr"]:
             w_adjusted_voters.append((i[0], i[1]))
@@ -135,7 +118,7 @@ def white_list(voters):
 
 
 def black_list(voters):
-    #block voters and distribute to voters
+    # block voters and distribute to voters
     if data["blacklist"] == "block":
         bl_adjusted_voters = []
         for i in voters:
@@ -144,7 +127,7 @@ def black_list(voters):
             else:
                 bl_adjusted_voters.append((i[0], i[1]))
     
-    #block voters and keep in reserve account
+    # block voters and keep in reserve account
     elif data["blacklist"] == "assign":
         bl_adjusted_voters = []
         accum = 0
@@ -172,7 +155,7 @@ def voter_min(voters):
             if i[1] < min_wallet:
                 min_adjusted_voters.append((i[0], 0))
             else:
-                min_adjusted_voters.append((i[0],i[1]))
+                min_adjusted_voters.append((i[0], i[1]))
     else:
         min_adjusted_voters = voters
         
@@ -190,7 +173,7 @@ def voter_cap(voters):
             if i[1] > max_wallet and i[0] != data["blacklist_assign"]:
                 cap_adjusted_voters.append((i[0], max_wallet))
             else:
-                cap_adjusted_voters.append((i[0],i[1]))
+                cap_adjusted_voters.append((i[0], i[1]))
                 
     else:
         cap_adjusted_voters = voters
@@ -200,13 +183,13 @@ def voter_cap(voters):
 
 def anti_dilute(voters):
     # get unpaid balances and wallets
-    b = snekdb.voters().fetchall()
-    undilute =[]
+    b_dilute = snekdb.voters().fetchall()
+    undilute = []
     
     if b:
         
         unpaid = {}
-        for i in b:
+        for i in b_dilute:
             unpaid[i[0]] = i[1]
     
         for j in voters:
@@ -221,13 +204,13 @@ def anti_dilute(voters):
 
 def get_voters():
 
-    #get voters
+    # get voters
     initial_voters = arkdb.voters()
     
     if data['whitelist'] == 'Y':
         bl = white_list(initial_voters)
     else:
-        #process blacklist, voter cap, and voter min:
+        # process blacklist, voter cap, and voter min:
         bl_adjust = black_list(initial_voters)
         bl_adjust_two = voter_cap(bl_adjust)
         bl = voter_min(bl_adjust_two)
@@ -252,18 +235,18 @@ def get_rewards():
 def del_address(addr):
     msg = "default"
     
-    for k,v in data['pay_addresses'].items():
+    for k, v in data['pay_addresses'].items():
         if addr == v:
             msg = k + " - True Block Weight"
     
     return msg
 
 
-def process_voter_pmt(min):
+def process_voter_pmt(min_amt):
     # process voters 
     voters = snekdb.voters().fetchall()
     for row in voters:
-        if row[1] > min:               
+        if row[1] > min_amt:
                
             msg = data["voter_msg"]
             
@@ -280,7 +263,7 @@ def process_voter_pmt(min):
                     snekdb.storePayRun(row[0], net, msg)
                     snekdb.updateVoterPaidBalance(row[0])
 
-
+'''
 def fixed_deal():
     res = 0
     private_deals = data['fixed_deal_amt']
@@ -291,8 +274,8 @@ def fixed_deal():
     for i in fix_check:
         tmp[i[0]] = i[1]
     
-    for k,v in private_deals.items():
-        if k in tmp.keys() and tmp[k]>0:
+    for k, v in private_deals.items():
+        if k in tmp.keys() and tmp[k] > 0:
             msg = "Goose Voter - True Block Weight-F"
             # update staging records
             fix = v * atomic
@@ -304,11 +287,11 @@ def fixed_deal():
             else:
                 net_fix = fix - transaction_fee
                 snekdb.storePayRun(k, net_fix, msg)
-                #accumulate fixed deals balances
+                # accumulate fixed deals balances
                 res += (net_fix)
             
     return res
-
+'''
 
 def process_delegate_pmt(fee, adjust):
     # process delegate first
@@ -316,9 +299,15 @@ def process_delegate_pmt(fee, adjust):
     for row in delreward:
         if row[0] == data['pay_addresses']['reserve']:
             
-            #adjust reserve payment by factor to account for not all tx being paid due to tx fees or min payments
+            # adjust reserve payment by factor to account for not all tx being paid due to tx fees or min payments
             del_pay_adjust = int(row[1]*adjust)
-            
+
+            if data['cover_tx_fees'] == 'Y':
+                net_pay = del_pay_adjust - fee
+            else:
+                net_pay = del_pay_adjust - transaction_fee
+
+            '''
             if data['fixed_deal'] == 'Y':
                 amt = fixed_deal()
                 if data['cover_tx_fees'] == 'Y':
@@ -327,13 +316,13 @@ def process_delegate_pmt(fee, adjust):
                     totalFees = amt
                 
                 net_pay = del_pay_adjust - totalFees
-            
+
             else:
                 if data['cover_tx_fees'] == 'Y':
                     net_pay = del_pay_adjust - fee
                 else:
                     net_pay = del_pay_adjust - transaction_fee
-
+            '''
     
             if net_pay <= 0:
                 # delete staged payments to prevent duplicates
@@ -346,7 +335,7 @@ def process_delegate_pmt(fee, adjust):
             # update staging records
             snekdb.storePayRun(row[0], net_pay, del_address(row[0]))
             
-            #adjust sql balances
+            # adjust sql balances
             snekdb.updateDelegatePaidBalance(row[0], del_pay_adjust)
                 
         else:
@@ -372,7 +361,7 @@ def payout():
     # count number of transactions greater than payout threshold
     d_count = len([j for j in snekdb.rewards() if j[1] > 0])
     
-    #get total possible payouts before adjusting for accumulated payments
+    # get total possible payouts before adjusting for accumulated payments
     t_count = len([i for i in snekdb.voters() if i[1] > 0])
     
     if data['cover_tx_fees'] == 'Y':
@@ -450,16 +439,7 @@ def block_counter():
     c = snekdb.processedBlocks().fetchall()
     return len(c)
 
-'''
-def get_dynamic_fee(t, s, c, min):
-    prelim_fee = int((t+s)*c)
 
-    #check to see if fee will be accepted on node
-    if prelim_fee < min:
-        return min
-    else:
-        return prelim_fee
-'''
 if __name__ == '__main__':
 
     # get config data
@@ -469,36 +449,13 @@ if __name__ == '__main__':
     dynamic.get_node_configs()
     transaction_fee = dynamic.get_dynamic_fee()
 
-    '''
-    # get node config and fee
-    net, delegate = get_node_configs(data['dbusername'])
-    if net == None or net['constants'][0]['fees']['dynamic']==False:
-        # standard transaction fees
-        transaction_fee = int(.1 * atomic)
-    else:
-        # get size of transaction - S
-        standard_tx = 80
-        padding = 80
-        v_msg = len(data['voter_msg'])
-        tx_size = standard_tx+padding+v_msg
-
-        # get T
-        dynamicOffset = net['constants'][0]['dynamicOffsets']['transfer']
-
-        # get C
-        feeMultiplier = delegate['dynamicFees']['feeMultiplier']
-
-        # get minimum acceptable fee for node
-        minFee = delegate['dynamicFees']['minAcceptableFee']
-
-        transaction_fee = get_dynamic_fee(dynamicOffset, tx_size, feeMultiplier, minFee)
-    '''
     # initialize db connection
-    #get database
-    arkdb = ArkDB(network[data['network']]['db'], data['dbusername'], network[data['network']]['db_pw'], data['publicKey'])
+    # get database
+    arkdb = ArkDB(network[data['network']]['db'], data['dbusername'], network[data['network']]['db_pw'],
+                  data['publicKey'])
     
     # check to see if ark.db exists, if not initialize db, etc
-    if os.path.exists(tbw_path / 'ark.db') == False:    
+    if os.path.exists(tbw_path / 'ark.db') is False:
         snekdb = SnekDB(data['dbusername'])
         initialize()
     
@@ -522,12 +479,12 @@ if __name__ == '__main__':
         if unprocessed:
             for b in unprocessed:
                 
-                #allocate
+                # allocate
                 allocate(b)
-                #get new block count
+                # get new block count
                 block_count = block_counter()
                 
-                #increment count
+                # increment count
                 print('\n')
                 print(f"Current block count : {block_count}")
 

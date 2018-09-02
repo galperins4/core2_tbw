@@ -96,33 +96,6 @@ if __name__ == '__main__':
     dynamic.get_node_configs()
     transaction_fee = dynamic.get_dynamic_fee()
 
-
-    '''
-    # get node config and fee
-    net, delegate = get_node_configs(data['dbusername'])
-    if net is None or net['constants'][0]['fees']['dynamic'] is False:
-        # standard transaction fees
-        transaction_fee = int(.1 * atomic)
-    else:
-        # get size of transaction - S
-        standard_tx = 153
-        padding = 7
-        v_msg = len(data['voter_msg'])
-        tx_size = standard_tx+padding+v_msg
-
-        # get T
-        dynamicOffset = net['constants'][0]['dynamicOffsets']['transfer']
-
-        # get C
-        feeMultiplier = delegate['dynamicFees']['feeMultiplier']
-
-        # get minimum acceptable fee for node
-        minFee = delegate['dynamicFees']['minAcceptableFee']
-
-        transaction_fee = get_dynamic_fee(dynamicOffset, tx_size, feeMultiplier, minFee)
-    '''
-
-
     # Get the passphrase from config.json
     passphrase = data['passphrase']
     # Get the second passphrase from config.json
