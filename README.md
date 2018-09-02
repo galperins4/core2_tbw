@@ -70,6 +70,7 @@ Note: Pool runs on port 5000
 
 ### 0.1
 - ark core_v2 initial release
+- new custom voter share functionality
 
 ## Security
 
