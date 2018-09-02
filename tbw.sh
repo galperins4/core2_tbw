@@ -16,31 +16,51 @@ install_modules(){
   pip3 install -r requirements.txt
 }
 
-ark(){
+install(){
         install_modules
         pause 
 }
  
-persona(){
-        install_modules
-        mkdir node_modules
-        cd node_modules
-        git clone https://github.com/PersonaIam/persona-js
-        cd persona-js
-        npm install
+initialize(){
+        cd core
+	python3 tbw.py
         pause
 }
 
-ripa(){
-        install_modules
-        npm install https://github.com/RipaEx/ripa-js
+all(){
+	cd core
+	pm2 start apps.json
+	pause
+}
+
+tbw(){
+        cd core
+	pm2 start apps.json --only tbw
         pause
 }
 
-swapblocks(){
-        install_modules
-        npm install https://github.com/lwfcoin/lwf-nano-js 
+pay(){
+	cd core
+	pm2 start apps.json --only pay
         pause
+}
+
+custom(){
+	cd core
+	pm2 start apps.json --only custom
+        pause
+}
+
+pool(){
+	cd core
+	pm2 start apps.json --only pool
+        pause
+}
+
+stop(){
+	cd core
+	pm2 stop apps.json
+	pause
 }
 
 # function to display menus
@@ -49,20 +69,28 @@ show_menus() {
 	echo "~~~~~~~~~~~~~~~~~~~~~"	
 	echo " M A I N - M E N U"
 	echo "~~~~~~~~~~~~~~~~~~~~~"
-	echo "1. Install ARK"
-	echo "2. Install PERSONA"
-        echo "3. Install RIPA"
-        echo "4. Install SWAPBLOCKS"
+	echo "1. Install"
+	echo "2. Initialize"
+        echo "3. Start All"
+        echo "4. Start TBW Only"
+	echo "5. Start Pay Only"
+	echo "6. Start Custom Only"
+	echo "7. Start Pool Only"
+	echo "8. Stop All"
 	echo "9. Exit"
 }
 read_options(){
 	local choice
 	read -p "Enter choice [ 1 - 9] " choice
 	case $choice in
-		1) ark ;;
-		2) persona ;;
-                3) ripa ;;
-                4) swapblocks ;;
+		1) install ;;
+		2) initialize ;;
+                3) all ;;
+                4) tbw ;;
+		5) pay ;;
+		6) custom ;;
+		7) pool ;;
+		8) stop ;;
                 9) exit 0;;
 		*) echo -e "${RED}Error...${STD}" && sleep 2
 	esac
