@@ -87,19 +87,18 @@ def allocate(lb):
 
             # get custom share rate if applicable
             customShare = snekdb.getVoterShare(i[0]).fetchall()
+            cshare = block_reward * customShare[0][0]
 
             # get the difference between normal share and custom share
             if customShare[0][0] == data['voter_share']:
                 reward = int(share_weight * vshare)
                 remainder_reward = 0
-            elif customShare[0][0] < data['voter_share']:
-                cshare = block_reward * customShare[0][0]
+            else:
+                # cshare = block_reward * customShare[0][0]
                 treward = int(share_weight * vshare)
                 reward = int(share_weight * cshare)
                 remainder_reward = int(treward - reward)
                 delegate_check += remainder_reward
-            else:
-                pass
 
             # update reserve from blacklist assign
             if i[0] == data["blacklist_assign"]:
