@@ -186,7 +186,7 @@ def anti_dilute(voters):
     b_dilute = snekdb.voters().fetchall()
     undilute = []
     
-    if b:
+    if b_dilute:
         
         unpaid = {}
         for i in b_dilute:
