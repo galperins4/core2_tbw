@@ -18,8 +18,6 @@
   "blacklist": "block or assign",
   "blacklist_addr" : ["addr"],
   "blacklist_assign" : "addr",
-  "fixed_deal" : "N",
-  "fixed_deal_amt" : {"addr1": 1, "addr2": 2, "addr3": 3},
   "min_payment": 0.5,
   "keep": {
     "reserve": 0.50

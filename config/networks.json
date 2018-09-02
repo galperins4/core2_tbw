@@ -1,21 +1,56 @@
 {
     "ark_mainnet": {
-        "epoch": ["2017", "3", "21", "13", "00", "00"],
+    "epoch": ["2017", "3", "21", "13", "00", "00"],
 	"version": 23,
 	"wif": 170,
-        "port": 4001,
+    "port": 4001,
 	"db": "ark_mainnet",
-        "db_user": "null",
-        "db_pw": "password"
+    "db_user": "null",
+    "db_pw": "password"
     },
     "ark_devnet": {
 	"epoch": ["2017", "3", "21", "13", "00", "00"],
 	"version": 30,
 	"wif": 170,
-        "nethash": "",
-        "port": 4003,
-	 "db": "ark_devnet",
-        "db_user": "null",
-        "db_pw": "password"
+    "port": 4003,
+	"db": "ark_devnet",
+    "db_user": "null",
+    "db_pw": "password"
+    },
+	"persona_mainnet": {
+    "epoch": ["2018", "1", "1", "00", "00", "00"],
+	"version": 55,
+	"wif": 80,
+    "port": 4103,
+	"db": "persona_mainnet",
+    "db_user": "null",
+    "db_pw": "password"
+    },
+    "persona_testnet": {
+	"epoch": ["2018", "1", "1", "00", "00", "00"],
+	"version": 66,
+	"wif": 186,
+    "port": 4102,
+	"db": "persona_testnet",
+    "db_user": "null",
+    "db_pw": "password"
+    },
+	"swapblocks_mainnet": {
+    "epoch": ["2017", "3", "21", "13", "00", "00"],
+	"version": ,
+	"wif": ,
+    "port": 4101,
+	"db": "swapblocks",
+    "db_user": "null",
+    "db_pw": "password"
+    },
+    "swapblocks_testnet": {
+	"epoch": ["2017", "3", "21", "13", "00", "00"],
+	"version": ,
+	"wif": ,
+    "port": 4112,
+	"db": "test_swapblocks",
+    "db_user": "null",
+    "db_pw": "password"
     }
 }
