@@ -43,12 +43,12 @@ class Dynamic:
             v_msg = len(self.msg)
             tx_size = standard_tx + padding + v_msg
             # get T
-            dynamic_offset = net['constants'][0]['dynamicOffsets']['transfer']
+            dynamic_offset = self.network['constants'][0]['dynamicOffsets']['transfer']
             # get C
-            fee_multiplier = delegate['dynamicFees']['feeMultiplier']
+            fee_multiplier = self.delegate['dynamicFees']['feeMultiplier']
 
             # get minimum acceptable fee for node
-            min_fee = delegate['dynamicFees']['minAcceptableFee']
+            min_fee = self.delegate['dynamicFees']['minAcceptableFee']
             transaction_fee = self.calculate_dynamic_fee(dynamic_offset, tx_size, fee_multiplier, min_fee)
 
         return transaction_fee
