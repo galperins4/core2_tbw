@@ -1,4 +1,3 @@
-from ark import ArkClient
 from flask import Flask, jsonify, request
 import json
 from util.sql import SnekDB
@@ -15,11 +14,6 @@ def parse_pool():
         n = json.load(network_file)
         
     return d, n
-
-
-def get_client(ip="localhost"):
-    port = network[data['network']]['port']
-    return ArkClient('http://{0}:{1}/api/'.format(ip, port))
 
 
 app = Flask(__name__)
@@ -39,5 +33,4 @@ def share():
 if __name__ == '__main__':
     data, network = parse_pool()
     snekdb = SnekDB(data['dbusername'])
-    client = get_client()
     app.run(host=data['pool_ip'], port=data['custom_port'])
