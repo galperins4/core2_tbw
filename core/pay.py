@@ -78,11 +78,11 @@ def go():
 
             # payment run complete
             print('Payment Run Completed!')
-            # sleep 5 minutes between 50tx blasts
-            time.sleep(300)
+            # sleep 2.5 minutes between tx blasts
+            time.sleep(150)
 
         else:
-            time.sleep(300)
+            time.sleep(150)
 
 
 if __name__ == '__main__':
