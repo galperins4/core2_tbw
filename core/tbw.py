@@ -237,7 +237,7 @@ def del_address(addr):
     
     for k, v in data['pay_addresses'].items():
         if addr == v:
-            msg = k + " - True Block Weight"
+            msg = k + " - TBW v2"
     
     return msg
 
