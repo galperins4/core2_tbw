@@ -423,9 +423,10 @@ if __name__ == '__main__':
     # processing loop
     while True:
         # get last 50 blocks
-        blocks = arkdb.blocks()
+        # blocks = arkdb.blocks()
         # store blocks
-        snekdb.storeBlocks(blocks)
+        # snekdb.storeBlocks(blocks)
+
         # check for unprocessed blocks
         unprocessed = snekdb.unprocessedBlocks().fetchall()
           
@@ -445,7 +446,11 @@ if __name__ == '__main__':
                 check = interval_check(block_count)
                 if check:
                     payout()
-                     
+                    # look for possible missed webhooks
+                    # will process next go around
+                    check_blocks = arkdb.blocks('interval', data['interval'])
+                    snekdb.storeBlocks(check_blocks)
+
                 print('\n' + 'Waiting for the next block....' + '\n')
                 # sleep 5 seconds between allocations
                 time.sleep(5)
