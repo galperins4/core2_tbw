@@ -13,7 +13,7 @@ class ArkDB:
         self.PublicKey = pk
         self.cursor=self.connection.cursor()
 
-    def blocks(self, i='no'):
+    def blocks(self, i='no', val=1):
         
         #if i is yes, first run grab every block forged for history
         if i == 'yes':
@@ -22,7 +22,16 @@ class ArkDB:
                 return self.cursor.fetchall()
             except Exception as e:
                 print(e)
-                
+
+        # interval check to audit webhook for missing blocks
+        elif i == 'interval':
+            try:
+                self.cursor.execute(
+                    f"""SELECT "id","timestamp","reward","total_fee","height" FROM blocks WHERE "generator_public_key" = '{self.PublicKey}' ORDER BY "height" DESC LIMIT {val}""")
+                return self.cursor.fetchall()
+            except Exception as e:
+                print(e)
+
         #else just grab last 50 for normal processing
         else:
             try:
