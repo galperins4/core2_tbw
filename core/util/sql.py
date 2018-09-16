@@ -3,7 +3,7 @@ from datetime import datetime
 
 class SnekDB:
     def __init__(self, u):
-        self.connection=sqlite3.connect('/home/'+u+'/core2_tbw/ark.db')
+        self.connection=sqlite3.connect('/home/'+u+'/core2_tbw/ark.db', check_same_thread=False)
         self.cursor=self.connection.cursor()
 
 
