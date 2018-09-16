@@ -28,7 +28,7 @@ def webhook():
         
         print(block)
         # store block to get allocated by tbw
-        snekdb = SnekDB(data['dbusername'])
+        #snekdb = SnekDB(data['dbusername'])
         snekdb.storeBlocks(block)
         process()
 
@@ -470,7 +470,7 @@ if __name__ == '__main__':
     # set block count
     block_count = block_counter()
 
-    app.run(host=data['webhook_ip'], port=data['webhook_port'])
+    app.run(host=data['webhook_ip'], port=data['webhook_port']. threaded=True)
 
 
     '''
