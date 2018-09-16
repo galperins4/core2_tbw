@@ -449,7 +449,6 @@ def process():
 if __name__ == '__main__':
 
     data, network = parse_config()
-    snekdb = SnekDB(data['dbusername'])
     webhookToken = data['webhook_token']
     dynamic = Dynamic(data['dbusername'], data['voter_msg'])
     dynamic.get_node_configs()
