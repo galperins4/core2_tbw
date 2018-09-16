@@ -509,8 +509,8 @@ if __name__ == '__main__':
                     snekdb.storeBlocks(check_blocks)
 
                 print('\n' + 'Waiting for the next block....' + '\n')
-                # sleep 5 seconds between allocations
-                time.sleep(5)
+                # sleep 1 seconds between allocations
+                time.sleep(1)
 
         # pause 30 seconds between runs
         time.sleep(data["block_check"])
