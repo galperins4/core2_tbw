@@ -507,7 +507,7 @@ if __name__ == '__main__':
                     payout()
                     # look for possible missed webhooks
                     # will process next go around
-                    check_blocks = arkdb.blocks('interval', data['interval'])
+                    check_blocks = arkdb.blocks('interval', data['interval']*3)
                     snekdb.storeBlocks(check_blocks)
 
                 print('\n' + 'Waiting for the next block....' + '\n')
