@@ -428,7 +428,7 @@ def process():
             # allocate
             allocate(b)
             # get new block count
-            global block_count = block_counter()
+            block_count = block_counter()
 
             # increment count
             print('\n')
@@ -462,6 +462,8 @@ if __name__ == '__main__':
 
     # check for new rewards accounts to initialize if any changed
     snekdb = SnekDB(data['dbusername'])
+    arkdb = ArkDB(network[data['network']]['db'], data['dbusername'], network[data['network']]['db_pw'],
+                  data['publicKey'])
     get_rewards()
 
     # set block count
