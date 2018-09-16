@@ -470,7 +470,7 @@ if __name__ == '__main__':
     # set block count
     block_count = block_counter()
 
-    app.run(host=data['webhook_ip'], port=data['webhook_port']. threaded=True)
+    app.run(host=data['webhook_ip'], port=data['webhook_port'], threaded=True)
 
 
     '''
