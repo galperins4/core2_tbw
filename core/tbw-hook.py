@@ -23,8 +23,8 @@ def webhook():
 
     if token == webhookToken:
         # do something with the data like store in database
-        block = [hook_data['data']['id'], hook_data['data']['timestamp'], hook_data['data']['reward'],
-                 hook_data['data']['totalFee'], hook_data['data']['height']]
+        block = [[hook_data['data']['id'], hook_data['data']['timestamp'], hook_data['data']['reward'],
+                 hook_data['data']['totalFee'], hook_data['data']['height']]]
         
         print(block)
         # store block to get allocated by tbw
