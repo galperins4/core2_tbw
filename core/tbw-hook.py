@@ -28,7 +28,7 @@ def webhook():
         
         print(block)
         # store block to get allocated by tbw
-        #snekdb = SnekDB(data['dbusername'])
+        snekdb = SnekDB(data['dbusername'])
         snekdb.storeBlocks(block)
         process()
 
