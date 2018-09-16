@@ -454,6 +454,8 @@ if __name__ == '__main__':
     dynamic.get_node_configs()
     transaction_fee = dynamic.get_dynamic_fee()
     first, second = webhookToken[:len(webhookToken)//2], webhookToken[len(webhookToken)//2:]
+    arkdb = ArkDB(network[data['network']]['db'], data['dbusername'], network[data['network']]['db_pw'],
+                  data['publicKey'])
 
     if os.path.exists(tbw_path / 'ark.db') is False:
         snekdb = SnekDB(data['dbusername'])
@@ -461,8 +463,6 @@ if __name__ == '__main__':
 
     # check for new rewards accounts to initialize if any changed
     snekdb = SnekDB(data['dbusername'])
-    arkdb = ArkDB(network[data['network']]['db'], data['dbusername'], network[data['network']]['db_pw'],
-                  data['publicKey'])
     get_rewards()
 
     # set block count
