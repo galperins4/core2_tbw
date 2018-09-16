@@ -21,7 +21,7 @@
   "min_payment": 0.5,
   "webhook_token": "secretToken",
   "webhook_ip": "receivingIP",
-  "webhook_port": receivingPort",
+  "webhook_port": "receivingPort",
   "keep": {
     "reserve": 0.50
   },
