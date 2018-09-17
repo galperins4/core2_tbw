@@ -92,4 +92,4 @@ if __name__ == '__main__':
        'explorer': data['explorer'],
        'coin': data['coin']}
     
-    app.run(host=data['pool_ip'], port=data['custom_port'])
+    app.run(host=data['pool_ip'], port=data['pool_port'])
