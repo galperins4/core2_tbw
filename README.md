@@ -57,10 +57,9 @@ Python 3.6+ is required.
 - proposal: link to delegate proposal (if any)
 - dbusername: this is the postgresql database username nodeDB (usually your os username)
 - pubkey: delegate public key
-- custom_port: custom port for using custom voter share update / webhook functionality
+- pool_port: port for pool/webhooks
+- custom_port: custom port for using custom voter share update functionality
 - webhook_token: secret token for webhook
-
-Note: Pool runs on port 5000
 
 ## To Do
 
