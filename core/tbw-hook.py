@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-from flask import Flask, request
-from flask_api import status
 from util.sql import SnekDB
 from util.ark import ArkDB
 from util.dynamic import Dynamic
@@ -12,30 +10,6 @@ import json
 
 tbw_path = Path().resolve().parent
 atomic = 100000000
-app = Flask(__name__)
-
-
-@app.route('/webhook', methods=['POST'])
-def webhook():
-    hook_data = json.loads(request.data)
-    authorization = request.headers['Authorization']
-    token = authorization+second
-
-    if token == webhookToken:
-        # do something with the data like store in database
-        block = [[hook_data['data']['id'], hook_data['data']['timestamp'], hook_data['data']['reward'],
-                 hook_data['data']['totalFee'], hook_data['data']['height']]]
-        
-        print(block)
-        # store block to get allocated by tbw
-        # snekdb = SnekDB(data['dbusername'])
-        snekdb.storeBlocks(block)
-        process()
-
-        return "OK"
-
-    # Token does not match
-    return '', status.HTTP_401_UNAUTHORIZED
 
 
 def parse_config():
@@ -420,42 +394,45 @@ def block_counter():
 
 
 def process():
-    # check for unprocessed blocks
-    unprocessed = snekdb.unprocessedBlocks().fetchall()
+    while True:
+        # check for unprocessed blocks
+        unprocessed = snekdb.unprocessedBlocks().fetchall()
 
-    # query not empty means unprocessed blocks
-    if unprocessed:
-        for b in unprocessed:
+        # query not empty means unprocessed blocks
+        if unprocessed:
+            for b in unprocessed:
 
-            # allocate
-            allocate(b)
-            # get new block count
-            block_count = block_counter()
+                # allocate
+                allocate(b)
+                # get new block count
+                block_count = block_counter()
 
-            # increment count
-            print('\n')
-            print(f"Current block count : {block_count}")
+                # increment count
+                print('\n')
+                print(f"Current block count : {block_count}")
 
-            check = interval_check(block_count)
-            if check:
-                payout()
-                # look for possible missed webhooks
-                # will process next go around
-                check_blocks = arkdb.blocks('interval', data['interval'])
-                snekdb.storeBlocks(check_blocks)
+                check = interval_check(block_count)
+                if check:
+                    payout()
+                    # look for possible missed webhooks, will process next go around
+                    check_blocks = arkdb.blocks('interval', data['interval']*2)
+                    snekdb.storeBlocks(check_blocks)
 
-            print('\n' + 'Waiting for the next block....' + '\n')
-            # sleep 5 seconds between allocations
-            time.sleep(5)
+                print('\n' + 'Waiting for the next block....' + '\n')
+                # sleep 5 seconds between allocations
+                time.sleep(2)
+
+        # pause 30 seconds between runs
+        time.sleep(data["block_check"])
 
 if __name__ == '__main__':
 
     data, network = parse_config()
-    webhookToken = data['webhook_token']
+
     dynamic = Dynamic(data['dbusername'], data['voter_msg'])
     dynamic.get_node_configs()
     transaction_fee = dynamic.get_dynamic_fee()
-    first, second = webhookToken[:len(webhookToken)//2], webhookToken[len(webhookToken)//2:]
+
     arkdb = ArkDB(network[data['network']]['db'], data['dbusername'], network[data['network']]['db_pw'],
                   data['publicKey'])
 
@@ -469,51 +446,4 @@ if __name__ == '__main__':
 
     # set block count
     block_count = block_counter()
-
-    app.run(host=data['webhook_ip'], port=data['webhook_port'])
-
-
-    '''
-    # initialize db connection
-    # get database
-    arkdb = ArkDB(network[data['network']]['db'], data['dbusername'], network[data['network']]['db_pw'],
-                  data['publicKey'])
-
-    # processing loop
-    while True:
-        # get last 50 blocks
-        # blocks = arkdb.blocks()
-        # store blocks
-        # snekdb.storeBlocks(blocks)
-
-        # check for unprocessed blocks
-        unprocessed = snekdb.unprocessedBlocks().fetchall()
-          
-        # query not empty means unprocessed blocks
-        if unprocessed:
-            for b in unprocessed:
-                
-                # allocate
-                allocate(b)
-                # get new block count
-                block_count = block_counter()
-                
-                # increment count
-                print('\n')
-                print(f"Current block count : {block_count}")
-
-                check = interval_check(block_count)
-                if check:
-                    payout()
-                    # look for possible missed webhooks
-                    # will process next go around
-                    check_blocks = arkdb.blocks('interval', data['interval']*3)
-                    snekdb.storeBlocks(check_blocks)
-
-                print('\n' + 'Waiting for the next block....' + '\n')
-                # sleep 1 seconds between allocations
-                time.sleep(1)
-
-        # pause 30 seconds between runs
-        time.sleep(data["block_check"])
-    '''
+    process()

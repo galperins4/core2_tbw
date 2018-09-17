@@ -19,9 +19,6 @@
   "blacklist_addr" : ["addr"],
   "blacklist_assign" : "addr",
   "min_payment": 0.5,
-  "webhook_token": "secretToken",
-  "webhook_ip": "receivingIP",
-  "webhook_port": "receivingPort",
   "keep": {
     "reserve": 0.50
   },
