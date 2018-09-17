@@ -7,6 +7,7 @@
   "proposal": "https://xx.xx.xx/",
   "dbusername": "dbname",
   "pubkey": "pubkey",
+  "pool_port": 5000,
   "custom_port": 5004,
   "webhook_token": "secretToken"
 }
