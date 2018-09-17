@@ -42,7 +42,7 @@ def index():
             s['forging'] = 'Standby'
 
     s['votes'] = dstats['data']['votes']
-    
+    snekdb = SnekDB(data['dbusername'])
     voter_data = snekdb.voters().fetchall()
     
     return render_template('index.html', node=s, row=voter_data, n=navbar)
@@ -50,7 +50,7 @@ def index():
 
 @app.route('/payments')
 def payments():
-    
+    snekdb = SnekDB(data['dbusername'])
     data_out = snekdb.transactions().fetchall()
     tx_data = []
     for i in data_out:
