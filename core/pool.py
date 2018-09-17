@@ -72,6 +72,7 @@ def webhook():
                  hook_data['data']['totalFee'], hook_data['data']['height']]]
 
         # store block to get allocated by tbw
+        snekdb = SnekDB(data['dbusername'])
         snekdb.storeBlocks(block)
         return "OK"
 
@@ -81,7 +82,7 @@ def webhook():
 
 if __name__ == '__main__':
     data, network = parse_pool()
-    snekdb = SnekDB(data['dbusername'])
+    #snekdb = SnekDB(data['dbusername'])
     webhookToken = data['webhook_token']
     first, second = webhookToken[:len(webhookToken) // 2], webhookToken[len(webhookToken) // 2:]
     client = get_client()
