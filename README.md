@@ -49,7 +49,7 @@ Python 3.6+ is required.
 - keep: there are the percentages for delegates to keep and distrubute among x accounts (Note: reserve is required! all others are optional)
 - pay_addresses: these are the addresses to go with the keep percentages (Note: reserve is required! all others are optional)
 
-## Available Configuration Options (POOL)
+## Available Configuration Options (POOL / WEBHOOK)
 - network: which network (same as tbw options)
 - pool_ip: IP of the node the pool is installed on
 - explorer: The address of the explorer for the coin
@@ -57,7 +57,8 @@ Python 3.6+ is required.
 - proposal: link to delegate proposal (if any)
 - dbusername: this is the postgresql database username nodeDB (usually your os username)
 - pubkey: delegate public key
-- custom_port: custom port for using custom voter share update functionality
+- custom_port: custom port for using custom voter share update / webhook functionality
+- webhook_token: secret token for webhook
 
 Note: Pool runs on port 5000
 
