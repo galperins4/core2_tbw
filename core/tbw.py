@@ -423,9 +423,9 @@ if __name__ == '__main__':
     # processing loop
     while True:
         # get last 50 blocks
-        # blocks = arkdb.blocks()
+        blocks = arkdb.blocks()
         # store blocks
-        # snekdb.storeBlocks(blocks)
+        snekdb.storeBlocks(blocks)
 
         # check for unprocessed blocks
         unprocessed = snekdb.unprocessedBlocks().fetchall()
