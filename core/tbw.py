@@ -289,13 +289,13 @@ def process_delegate_pmt(fee, adjust):
                 
                     print("Not enough in reserve to cover transactions")
                     print("Update interval and restart")
-                    quit()
-                
-            # update staging records
-            snekdb.storePayRun(row[0], net_pay, del_address(row[0]))
+                    quit()    
+            else:
+                # update staging records
+                snekdb.storePayRun(row[0], net_pay, del_address(row[0]))
             
-            # adjust sql balances
-            snekdb.updateDelegatePaidBalance(row[0], del_pay_adjust)
+                # adjust sql balances
+                snekdb.updateDelegatePaidBalance(row[0], del_pay_adjust)
                 
         else:
             if data['cover_tx_fees'] == 'N':
