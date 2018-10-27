@@ -44,6 +44,7 @@ def index():
     s['votes'] = dstats['data']['votes']
     snekdb = SnekDB(data['dbusername'])
     voter_data = snekdb.voters().fetchall()
+    print(len(voter_data))
     
     return render_template('index.html', node=s, row=voter_data, n=navbar)
 
