@@ -41,10 +41,10 @@ def index():
         else:
             s['forging'] = 'Standby'
 
-    s['votes'] = dstats['data']['votes']
+    # s['votes'] = dstats['data']['votes']
     snekdb = SnekDB(data['dbusername'])
     voter_data = snekdb.voters().fetchall()
-    print(len(voter_data))
+    s['votes'] = len(voter_data)
     
     return render_template('index.html', node=s, row=voter_data, n=navbar)
 
