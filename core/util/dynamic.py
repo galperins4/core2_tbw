@@ -45,8 +45,12 @@ class Dynamic:
             # get T
             dynamic_offset = self.network['constants'][0]['fees']['dynamicFees']['addonBytes']['transfer']
             # get C
-            fee_multiplier = self.delegate['dynamicFees']['feeMultiplier']
-
+            del_fee_multiplier = self.delegate['dynamicFees']['feeMultiplier']
+            min_fee_pool = self.network['constants'][0]['fees']['dynamicFees']['minFeePool']
+            min_fee_broadcast = self.network['constants'][0]['fees']['dynamicFees']['minFeeBroadcast']
+            high_fee = [del_fee_multiplier, min_fee_pool, min_fee_broadcast]
+            fee_multiplier = max(high_fee)
+            
             # get minimum acceptable fee for node
             min_fee = self.delegate['dynamicFees']['minAcceptableFee']
             transaction_fee = self.calculate_dynamic_fee(dynamic_offset, tx_size, fee_multiplier, min_fee)
