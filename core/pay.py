@@ -74,15 +74,13 @@ def go():
                 signed_tx.append(tx)
                 time.sleep(0.25)
                 
-            print(signed_tx)
-            quit()
             broadcast(signed_tx)
             snekdb.processStagedPayment(unique_rowid)
 
             # payment run complete
             print('Payment Run Completed!')
-            # sleep 2.5 minutes between tx blasts
-            time.sleep(150)
+            # sleep 6 minutes between tx blasts
+            time.sleep(360)
 
         else:
             time.sleep(150)
