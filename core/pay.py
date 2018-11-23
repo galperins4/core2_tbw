@@ -73,7 +73,9 @@ def go():
                 tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, passphrase, secondphrase)
                 signed_tx.append(tx)
                 time.sleep(0.25)
-
+                
+            print(signed_tx)
+            quit()
             broadcast(signed_tx)
             snekdb.processStagedPayment(unique_rowid)
 
