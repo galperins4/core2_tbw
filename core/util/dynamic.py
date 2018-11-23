@@ -43,7 +43,7 @@ class Dynamic:
             v_msg = len(self.msg)
             tx_size = standard_tx + padding + v_msg
             # get T
-            dynamic_offset = self.network['constants'][0]['dynamicOffsets']['transfer']
+            dynamic_offset = self.network['constants'][0]['fees']['dynamicFees']['addonBytes']['transfer']
             # get C
             fee_multiplier = self.delegate['dynamicFees']['feeMultiplier']
 
