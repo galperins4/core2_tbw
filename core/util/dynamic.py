@@ -47,8 +47,8 @@ class Dynamic:
             # get C
             del_fee_multiplier = self.delegate['dynamicFees']['feeMultiplier']
             min_fee_pool = self.network['constants'][0]['fees']['dynamicFees']['minFeePool']
-            min_fee_broadcast = self.network['constants'][0]['fees']['dynamicFees']['minFeeBroadcast']
-            high_fee = [del_fee_multiplier, min_fee_pool, min_fee_broadcast]
+            #min_fee_broadcast = self.network['constants'][0]['fees']['dynamicFees']['minFeeBroadcast']
+            high_fee = [del_fee_multiplier, min_fee_pool]
             fee_multiplier = max(high_fee)
             
             # get minimum acceptable fee for node
