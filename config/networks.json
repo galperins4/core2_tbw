@@ -3,7 +3,7 @@
     "epoch": ["2017", "3", "21", "13", "00", "00"],
     "version": 23,
     "wif": 170,
-    "port": 4001,
+    "port": 4003,
     "db": "ark_mainnet",
     "db_user": "null",
     "db_pw": "password"
