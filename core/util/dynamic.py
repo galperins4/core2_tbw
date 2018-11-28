@@ -38,10 +38,9 @@ class Dynamic:
             transaction_fee = int(.1 * atomic)
         else:
             # get size of transaction - S
-            standard_tx = 80
-            padding = 80
+            standard_tx = 160
             v_msg = len(self.msg)
-            tx_size = standard_tx + padding + v_msg
+            tx_size = standard_tx + v_msg
             # get T
             dynamic_offset = self.network['constants'][0]['fees']['dynamicFees']['addonBytes']['transfer']
             # get C
