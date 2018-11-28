@@ -70,6 +70,10 @@ def go():
             unique_rowid = [y[0] for y in unprocessed_pay]
 
             for i in unprocessed_pay:
+                dynamic = Dynamic(data['dbusername'], i[3])
+                dynamic.get_node_configs()
+                transaction_fee = dynamic.get_dynamic_fee()
+            
                 tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, passphrase, secondphrase)
                 signed_tx.append(tx)
                 time.sleep(0.25)
@@ -93,9 +97,11 @@ if __name__ == '__main__':
     client = get_client()
     build_network()
 
+    '''
     dynamic = Dynamic(data['dbusername'], data['voter_msg'])
     dynamic.get_node_configs()
     transaction_fee = dynamic.get_dynamic_fee()
+    '''
 
     # Get the passphrase from config.json
     passphrase = data['passphrase']
