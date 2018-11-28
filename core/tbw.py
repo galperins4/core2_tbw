@@ -404,11 +404,9 @@ if __name__ == '__main__':
     # get config data
     data, network = parse_config()
 
-    '''
     dynamic = Dynamic(data['dbusername'], data['voter_msg'])
     dynamic.get_node_configs()
     transaction_fee = dynamic.get_dynamic_fee()
-    '''
     
     # initialize db connection
     # get database
@@ -429,8 +427,6 @@ if __name__ == '__main__':
 
     # processing loop
     while True:
-        # get last 50 blocks
-        #blocks = arkdb.blocks()
         # get last height imported
         l_height = snekdb.lastBlock().fetchall()
         blocks = arkdb.blocks(h=l_height[0][0])
