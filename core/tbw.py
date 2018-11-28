@@ -456,7 +456,7 @@ if __name__ == '__main__':
 
                 print('\n' + 'Waiting for the next block....' + '\n')
                 # sleep 5 seconds between allocations
-                time.sleep(5)
+                time.sleep(2)
 
         # pause 30 seconds between runs
         time.sleep(data["block_check"])
