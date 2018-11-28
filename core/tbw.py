@@ -433,6 +433,7 @@ if __name__ == '__main__':
         #blocks = arkdb.blocks()
         # get last height imported
         l_height = snekdb.lastBlock()
+        print(l_height)
         quit()
         blocks = arkdb.blocks(h=l_height)
         print(blocks)
