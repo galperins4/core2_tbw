@@ -9,7 +9,7 @@ class Dynamic:
         self.username = u
         self.msg = msg
         self.network = None
-        self.delegate = None
+        #self.delegate = None
 
     def get_node_configs(self):
         envpath = '/home/' + self.username + '/.ark/config/'
@@ -20,10 +20,14 @@ class Dynamic:
         else:
             self.network = None
         # open delegate config file
-        with open(envpath + 'delegates.json') as delegate_file:
-            self.delegate = json.load(delegate_file)
+        #with open(envpath + 'delegates.json') as delegate_file:
+            #self.delegate = json.load(delegate_file)
 
-    def calculate_dynamic_fee(self, t, s, c, min_accept):
+    #def calculate_dynamic_fee(self, t, s, c, min_accept):
+    def calculate_dynamic_fee(self, t, s, c):
+        fee = int((t+s)*c)
+        return fee
+        ''"
         prelim_fee = int((t + s) * c)
 
         # check to see if fee will be accepted on node
@@ -31,6 +35,7 @@ class Dynamic:
             return min_accept
         else:
             return prelim_fee
+        '''
 
     def get_dynamic_fee(self):
         if self.network is None or self.network['constants'][0]['fees']['dynamic'] is False:
@@ -44,11 +49,11 @@ class Dynamic:
             # get T
             dynamic_offset = self.network['constants'][0]['fees']['dynamicFees']['addonBytes']['transfer']
             # get C
-            del_fee_multiplier = self.delegate['dynamicFees']['feeMultiplier']
+            # del_fee_multiplier = self.delegate['dynamicFees']['feeMultiplier']
             min_fee_pool = self.network['constants'][0]['fees']['dynamicFees']['minFeePool']
             #min_fee_broadcast = self.network['constants'][0]['fees']['dynamicFees']['minFeeBroadcast']
-            high_fee = [del_fee_multiplier, min_fee_pool]
-            fee_multiplier = max(high_fee)
+            #high_fee = [del_fee_multiplier, min_fee_pool]
+            #fee_multiplier = max(high_fee)
             
             # get minimum acceptable fee for node
             min_fee = self.delegate['dynamicFees']['minAcceptableFee']
