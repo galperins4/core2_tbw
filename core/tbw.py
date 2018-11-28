@@ -404,10 +404,12 @@ if __name__ == '__main__':
     # get config data
     data, network = parse_config()
 
+    '''
     dynamic = Dynamic(data['dbusername'], data['voter_msg'])
     dynamic.get_node_configs()
     transaction_fee = dynamic.get_dynamic_fee()
-
+    ''''
+    
     # initialize db connection
     # get database
     arkdb = ArkDB(network[data['network']]['db'], data['dbusername'], network[data['network']]['db_pw'],
@@ -458,10 +460,6 @@ if __name__ == '__main__':
                 check = interval_check(block_count)
                 if check:
                     payout()
-                    # look for possible missed webhooks
-                    # will process next go around
-                    #check_blocks = arkdb.blocks('interval', data['interval'])
-                    #snekdb.storeBlocks(check_blocks)
 
                 print('\n' + 'Waiting for the next block....' + '\n')
                 # sleep 5 seconds between allocations
