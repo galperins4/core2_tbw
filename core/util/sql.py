@@ -119,6 +119,10 @@ class SnekDB:
         return self.cursor.execute("SELECT * FROM blocks")
 
 
+    def lastBlock(self): 
+        return self.cursor.execute("SELECT height from blocks ORDER BY height DESC LIMIT 1")
+    
+    
     def processedBlocks(self):
         return self.cursor.execute("SELECT * FROM blocks WHERE processed_at NOT NULL")
 
