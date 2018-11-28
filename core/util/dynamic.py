@@ -27,7 +27,7 @@ class Dynamic:
     def calculate_dynamic_fee(self, t, s, c):
         fee = int((t+s)*c)
         return fee
-        ''"
+        '''
         prelim_fee = int((t + s) * c)
 
         # check to see if fee will be accepted on node
@@ -50,13 +50,14 @@ class Dynamic:
             dynamic_offset = self.network['constants'][0]['fees']['dynamicFees']['addonBytes']['transfer']
             # get C
             # del_fee_multiplier = self.delegate['dynamicFees']['feeMultiplier']
-            min_fee_pool = self.network['constants'][0]['fees']['dynamicFees']['minFeePool']
+            fee_multiplier = self.network['constants'][0]['fees']['dynamicFees']['minFeePool']
+            #min_fee_pool = self.network['constants'][0]['fees']['dynamicFees']['minFeePool']
             #min_fee_broadcast = self.network['constants'][0]['fees']['dynamicFees']['minFeeBroadcast']
             #high_fee = [del_fee_multiplier, min_fee_pool]
             #fee_multiplier = max(high_fee)
             
             # get minimum acceptable fee for node
-            min_fee = self.delegate['dynamicFees']['minAcceptableFee']
-            transaction_fee = self.calculate_dynamic_fee(dynamic_offset, tx_size, fee_multiplier, min_fee)
+            #min_fee = self.delegate['dynamicFees']['minAcceptableFee']
+            transaction_fee = self.calculate_dynamic_fee(dynamic_offset, tx_size, fee_multiplier)
 
         return transaction_fee
