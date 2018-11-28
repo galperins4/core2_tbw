@@ -428,7 +428,14 @@ if __name__ == '__main__':
     # processing loop
     while True:
         # get last 50 blocks
-        blocks = arkdb.blocks()
+        #blocks = arkdb.blocks()
+        # get last height imported
+        l_height = snekdb.lastBlock()
+        quit()
+        blocks = arkdb.blocks(h=l_height)
+        print(blocks)
+        quit()
+        
         # store blocks
         snekdb.storeBlocks(blocks)
 
@@ -453,8 +460,8 @@ if __name__ == '__main__':
                     payout()
                     # look for possible missed webhooks
                     # will process next go around
-                    check_blocks = arkdb.blocks('interval', data['interval'])
-                    snekdb.storeBlocks(check_blocks)
+                    #check_blocks = arkdb.blocks('interval', data['interval'])
+                    #snekdb.storeBlocks(check_blocks)
 
                 print('\n' + 'Waiting for the next block....' + '\n')
                 # sleep 5 seconds between allocations
