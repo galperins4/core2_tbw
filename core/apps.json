@@ -1,7 +1,7 @@
 {
     "apps": [{
         "name": "tbw",
-        "script": "~/core2_tbw/core/tbw.py",
+        "script": "tbw.py",
         "instances": 1,
         "exec_mode": "fork",
         "exec_interpreter": "python3.6",
@@ -10,7 +10,7 @@
     },
     {
         "name": "pay",
-        "script": "~/core2_tbw/core/pay.py",
+        "script": "pay.py",
         "instances": 1,
         "exec_mode": "fork",
         "exec_interpreter": "python3.6",
@@ -19,7 +19,7 @@
     },
     {
         "name": "pool",
-        "script": "~/core2_tbw/core/pool.py",
+        "script": "pool.py",
         "instances": 1,
         "exec_mode": "fork",
         "exec_interpreter": "python3.6",
@@ -28,7 +28,7 @@
     },    
 	{
         "name": "custom",
-        "script": "~/core2_tbw/core/custom.py",
+        "script": "custom.py",
         "instances": 1,
         "exec_mode": "fork",
         "exec_interpreter": "python3.6",
