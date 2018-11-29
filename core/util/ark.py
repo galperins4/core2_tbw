@@ -6,22 +6,7 @@ class ArkDB:
         self.user=u
         self.password=pw
         self.PublicKey=pk
-        
-        
-        
-        '''
-        self.connection = psycopg2.connect(
-            dbname = db,
-            user = u,
-            password= pw,
-            host='localhost',
-            port='5432'
-        )
-        '''
-
-        #self.PublicKey = pk
-        #self.cursor=self.connection.cursor()
-
+    
     
     def open_connection(self):
         self.connection = psycopg2.connect(
