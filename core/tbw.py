@@ -364,8 +364,9 @@ def interval_check(bc):
 
 def initialize():
     print("First time setup - initializing SQL database....")
-    # initalize sqldb object
+    # initalize sqldb and arkdb connection object
     snekdb.setup()
+    arkdb.open_connection()
     
     # connect to DB and grab all blocks
     print("Importing all prior forged blocks...")
@@ -391,6 +392,7 @@ def initialize():
     get_voters()
     get_rewards()
     
+    arkdb.close_connection()
     print("Initial Set Up Complete. Please re-run script!")
     quit()
 
@@ -428,6 +430,7 @@ if __name__ == '__main__':
 
     # processing loop
     while True:
+        arkdb.open_connection()
         # get last height imported
         l_height = snekdb.lastBlock().fetchall()
         blocks = arkdb.blocks(h=l_height[0][0])
@@ -459,5 +462,6 @@ if __name__ == '__main__':
                 # sleep 5 seconds between allocations
                 time.sleep(2)
 
+        arkdb.close_connection()
         # pause 30 seconds between runs
         time.sleep(data["block_check"])
