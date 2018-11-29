@@ -23,7 +23,7 @@ class ArkDB:
         #self.cursor=self.connection.cursor()
 
     
-    def open_connection():
+    def open_connection(self):
         self.connection = psycopg2.connect(
             dbname = self.db,
             user = self.user,
@@ -34,7 +34,7 @@ class ArkDB:
         self.cursor=self.connection.cursor()
     
     
-    def close_connection():
+    def close_connection(self):
         self.cursor.close()
         self.connection.close()
     
