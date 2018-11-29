@@ -2,6 +2,14 @@ import psycopg2
 
 class ArkDB:
     def __init__(self, db, u, pw, pk):
+        self.db=db
+        self.user=u
+        self.password=pw
+        self.PublicKey=pk
+        
+        
+        
+        '''
         self.connection = psycopg2.connect(
             dbname = db,
             user = u,
@@ -9,10 +17,28 @@ class ArkDB:
             host='localhost',
             port='5432'
         )
+        '''
 
-        self.PublicKey = pk
+        #self.PublicKey = pk
+        #self.cursor=self.connection.cursor()
+
+    
+    def open_connection():
+        self.connection = psycopg2.connect(
+            dbname = self.db,
+            user = self.user,
+            password= self.password,
+            host='localhost',
+            port='5432')
+            
         self.cursor=self.connection.cursor()
-
+    
+    
+    def close_connection():
+        self.cursor.close()
+        self.connection.close()
+    
+    
     def blocks(self, i='no', val=1, h=None):
         
         #if i is yes, first run grab every block forged for history
