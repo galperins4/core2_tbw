@@ -43,7 +43,7 @@ class Dynamic:
             transaction_fee = int(.1 * atomic)
         else:
             # get size of transaction - S
-            standard_tx = 160
+            standard_tx = 230
             v_msg = len(self.msg)
             tx_size = standard_tx + v_msg
             # get T
