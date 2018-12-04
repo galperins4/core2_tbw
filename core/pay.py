@@ -97,12 +97,6 @@ if __name__ == '__main__':
     client = get_client()
     build_network()
 
-    '''
-    dynamic = Dynamic(data['dbusername'], data['voter_msg'])
-    dynamic.get_node_configs()
-    transaction_fee = dynamic.get_dynamic_fee()
-    '''
-
     # Get the passphrase from config.json
     passphrase = data['passphrase']
     # Get the second passphrase from config.json
