@@ -24,6 +24,7 @@ def share():
     req_data = request.get_json()
     address = req_data['address']
     new_share = req_data["share"]
+    snekdb = SnekDB(data['dbusername'])
     snekdb.updateVoterShare(address, new_share)
 
     msg = {"success": "share updated"}
@@ -32,5 +33,5 @@ def share():
 
 if __name__ == '__main__':
     data, network = parse_pool()
-    snekdb = SnekDB(data['dbusername'])
+    #snekdb = SnekDB(data['dbusername'])
     app.run(host=data['pool_ip'], port=data['custom_port'])
