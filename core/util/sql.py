@@ -132,7 +132,7 @@ class SnekDB:
 
 
     def stagedArkPayment(self, lim=40):
-        return self.cursor.execute("SELECT rowid, * FROM staging WHERE processed_at IS NULL LIMIT {lim}")
+        return self.cursor.execute(f"SELECT rowid, * FROM staging WHERE processed_at IS NULL LIMIT {lim}")
 
     
     def processStagedPayment(self, rows):
