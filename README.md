@@ -20,7 +20,7 @@ To use custom voter shares, the following 2 options are available:
 1) Directly update the column "share" column in the voters table of ark.db
 2) Turn on custom.py and send a POST request to the http://ip:port/updateShare endpoint. See below for example: `{"address":"DKahhVFVJfqCcCmaQHuYzAVFKcWjBu5i6Z", "share":0.10}`
 
-IMPORTANT: If at any time you change you share rate you must stop tbw, update your config.json and run the following command `python3 tbw.py --update_share`
+IMPORTANT: If at any time you change you share rate you must stop tbw, update your config.json and run the following command `python3 tbw.py --shareChange`
 
 Python 3.6+ is required.
 
