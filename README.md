@@ -20,6 +20,7 @@ To use custom voter shares, the following 2 options are available:
 1) Directly update the column "share" column in the voters table of ark.db
 2) Turn on custom.py and send a POST request to the http://ip:port/updateShare endpoint. See below for example: `{"address":"DKahhVFVJfqCcCmaQHuYzAVFKcWjBu5i6Z", "share":0.10}`
 
+IMPORTANT: If at any time you change you share rate you must stop tbw, update your config.json and run the following command `python3 tbw.py --update_share`
 
 Python 3.6+ is required.
 
@@ -43,8 +44,6 @@ Python 3.6+ is required.
 - blacklist: Options are block or assign. Block zero's out blocked accounts which then distributes their earnings to voters. Assign does the same but assigns weight to a designated account. 
 - blacklist_addr: comma seperated list of addresses to block from voter payments
 - blacklist_assign: if assign option is picked, this is the address those blacklisted shares go to. DO NOT SET to an account voting for said delegate. It is HIGHLY recommended this is set to the reserve address!
-- fixed_deal: use this if you have a fixed deal with a voter (e.g., 45 ark per day).
-- fixed_deal_amt: format is address:amount. The amount to pay should correspond to interval. 
 - min_payment: Minimum threshold for payment. If set to 1, any payout less than 1 ARK will be held until the next pay run and accumulated
 - keep: there are the percentages for delegates to keep and distrubute among x accounts (Note: reserve is required! all others are optional)
 - pay_addresses: these are the addresses to go with the keep percentages (Note: reserve is required! all others are optional)
@@ -67,6 +66,10 @@ Python 3.6+ is required.
 - Additional exception handling
 
 ## Changelog
+
+### 0.2
+- add function to adjust share rates if global value is changed
+- add environment check to determine max tx to submit per broadcast
 
 ### 0.1
 - ark core_v2 initial release
