@@ -19,10 +19,6 @@ class Dynamic:
                 self.network = json.load(network_file)
         else:
             self.network = None
-            
-
-    def get_env_dir(self):
-        return  '/home/' + self.username + '/.ark/.env'
         
         
     def calculate_dynamic_fee(self, t, s, c):
