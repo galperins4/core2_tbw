@@ -483,7 +483,7 @@ if __name__ == '__main__':
     else:
         # some options passed
         option = sys.argv[1]
-        if option == "--share change":
+        if option == "--shareChange":
             share_change()
         else:
             print("Flag input not recognized. Closing script")
