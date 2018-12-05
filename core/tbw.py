@@ -7,6 +7,7 @@ from pathlib import Path
 import os.path
 import time
 import json
+import sys
 
 
 tbw_path = Path().resolve().parent
@@ -402,6 +403,10 @@ def block_counter():
     return len(c)
 
 
+def share_change():
+    pass
+
+
 if __name__ == '__main__':
 
     # get config data
@@ -428,40 +433,50 @@ if __name__ == '__main__':
     # set block count        
     block_count = block_counter()
 
-    # processing loop
-    while True:
-        arkdb.open_connection()
-        # get last height imported
-        l_height = snekdb.lastBlock().fetchall()
-        blocks = arkdb.blocks(h=l_height[0][0])
+    # no arguments - run as normal
+    if len(sys.argv) == 1
+        # processing loop
+        while True:
+            arkdb.open_connection()
+            # get last height imported
+            l_height = snekdb.lastBlock().fetchall()
+            blocks = arkdb.blocks(h=l_height[0][0])
         
-        # store blocks
-        snekdb.storeBlocks(blocks)
+            # store blocks
+            snekdb.storeBlocks(blocks)
 
-        # check for unprocessed blocks
-        unprocessed = snekdb.unprocessedBlocks().fetchall()
+            # check for unprocessed blocks
+            unprocessed = snekdb.unprocessedBlocks().fetchall()
           
-        # query not empty means unprocessed blocks
-        if unprocessed:
-            for b in unprocessed:
+            # query not empty means unprocessed blocks
+            if unprocessed:
+                for b in unprocessed:
                 
-                # allocate
-                allocate(b)
-                # get new block count
-                block_count = block_counter()
+                    # allocate
+                    allocate(b)
+                    # get new block count
+                    block_count = block_counter()
                 
-                # increment count
-                print('\n')
-                print(f"Current block count : {block_count}")
+                    # increment count
+                    print('\n')
+                    print(f"Current block count : {block_count}")
 
-                check = interval_check(block_count)
-                if check:
-                    payout()
+                    check = interval_check(block_count)
+                    if check:
+                        payout()
 
-                print('\n' + 'Waiting for the next block....' + '\n')
-                # sleep 5 seconds between allocations
-                time.sleep(2)
+                    print('\n' + 'Waiting for the next block....' + '\n')
+                    # sleep 2 seconds between allocations
+                    time.sleep(2)
 
-        arkdb.close_connection()
-        # pause 30 seconds between runs
-        time.sleep(data["block_check"])
+            arkdb.close_connection()
+            # pause 30 seconds between runs
+            time.sleep(data["block_check"])
+    else:
+        # some options passed
+        option = sys.argv[1]
+        if option == "--share change":
+            share_change()
+        else:
+            print("Flag input not recognized. Closing script")
+        quit()
