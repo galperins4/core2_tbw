@@ -66,7 +66,6 @@ def go():
 
         # get max blast tx and check for unprocessed payments
         max_tx = os.getenv("ARK_TRANSACTION_POOL_MAX_PER_REQUEST")
-        print(max_tx)
         if max_tx == None:
             unprocessed_pay = snekdb.stagedArkPayment().fetchall()
         else:
@@ -106,7 +105,6 @@ if __name__ == '__main__':
     
     #get dot path for load_env and load
     dot = '/home/'+data['dbusername']+'/.ark/.env'
-    print(dot)
     load_dotenv(dot)
     
     # Get the passphrase from config.json
