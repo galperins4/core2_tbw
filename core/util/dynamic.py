@@ -9,7 +9,7 @@ class Dynamic:
         self.username = u
         self.msg = msg
         self.network = None
-        #self.delegate = None
+        self.dot = None
 
     def get_node_configs(self):
         envpath = '/home/' + self.username + '/.ark/config/'
@@ -21,6 +21,10 @@ class Dynamic:
             self.network = None
             
 
+    def get_env_dir(self):
+        return  '/home/' + self.username + '/.ark/.env'
+        
+        
     def calculate_dynamic_fee(self, t, s, c):
         fee = int((t+s)*c)
         return fee
