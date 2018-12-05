@@ -64,8 +64,12 @@ def go():
     while True:
         signed_tx = []
 
-        # check for unprocessed payments
-        unprocessed_pay = snekdb.stagedArkPayment().fetchall()
+        # get max blast tx and check for unprocessed payments
+        max_tx = os.getenv('ARK_TRANSACTION_POOL_MAX_PER_REQUEST')
+        if max_tx == None:
+            unprocessed_pay = snekdb.stagedArkPayment().fetchall()
+        else:
+            unprocessed_pay = snekdb.stagedArkPayment(int(max_tx)).fetchall()
 
         # query not empty means unprocessed blocks
         if unprocessed_pay:
@@ -98,7 +102,11 @@ if __name__ == '__main__':
     snekdb = SnekDB(data['dbusername'])
     client = get_client()
     build_network()
-
+    
+    #get dot path for load_env and load
+    dot = 'home/'+data['dbusername']+'/.ark/.env'
+    load_dotenv(dot)
+    
     # Get the passphrase from config.json
     passphrase = data['passphrase']
     # Get the second passphrase from config.json
