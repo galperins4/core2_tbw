@@ -106,6 +106,7 @@ if __name__ == '__main__':
     
     #get dot path for load_env and load
     dot = 'home/'+data['dbusername']+'/.ark/.env'
+    print(dot)
     load_dotenv(dot)
     
     # Get the passphrase from config.json
