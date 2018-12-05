@@ -7,6 +7,8 @@ from util.dynamic import Dynamic
 from ark import ArkClient
 from datetime import datetime
 import time
+import os
+from dotenv import load_dotenv
 
 atomic = 100000000
 
