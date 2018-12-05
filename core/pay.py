@@ -105,7 +105,7 @@ if __name__ == '__main__':
     build_network()
     
     #get dot path for load_env and load
-    dot = 'home/'+data['dbusername']+'/.ark/.env'
+    dot = '/home/'+data['dbusername']+'/.ark/.env'
     print(dot)
     load_dotenv(dot)
     
