@@ -442,7 +442,7 @@ if __name__ == '__main__':
     block_count = block_counter()
 
     # no arguments - run as normal
-    if len(sys.argv) == 1
+    if len(sys.argv) == 1:
         # processing loop
         while True:
             arkdb.open_connection()
