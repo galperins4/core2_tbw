@@ -404,8 +404,16 @@ def block_counter():
 
 
 def share_change():
-    pass
-
+    # get old share rate
+    old = float(input("Enter old share rate in the following format (0.xx): "))
+    #get voters
+    v = snekdb.voters().fetchall()
+    for i in v:
+        # look for matches on old value
+        if i[3] == old:
+            #update share rate
+            snekdb.updateVoterShare(i[0],data['voter_share'])
+    quit()
 
 if __name__ == '__main__':
 
