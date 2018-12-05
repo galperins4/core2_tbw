@@ -65,7 +65,8 @@ def go():
         signed_tx = []
 
         # get max blast tx and check for unprocessed payments
-        max_tx = os.getenv('ARK_TRANSACTION_POOL_MAX_PER_REQUEST')
+        max_tx = os.getenv("ARK_TRANSACTION_POOL_MAX_PER_REQUEST")
+        print(max_tx)
         if max_tx == None:
             unprocessed_pay = snekdb.stagedArkPayment().fetchall()
         else:
