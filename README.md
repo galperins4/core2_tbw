@@ -70,6 +70,7 @@ Python 3.6+ is required.
 ### 0.2
 - add function to adjust share rates if global value is changed
 - add environment check to determine max tx to submit per broadcast
+- increased tx blast spacing to prevent tx pool from being filled too quickly
 
 ### 0.1
 - ark core_v2 initial release
