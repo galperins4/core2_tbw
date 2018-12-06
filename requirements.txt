@@ -1,4 +1,5 @@
 wheel
+python-dotenv
 psycopg2
 flask
 flask-API
