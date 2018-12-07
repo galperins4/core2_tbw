@@ -1,223 +1,102 @@
 <!DOCTYPE html>
-<html >
+
+<html>
+
 <head>
-  <!-- Site made with Mobirise Website Builder v4.6.5, https://mobirise.com -->
+
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="generator" content="Mobirise v4.6.5, mobirise.com">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-  <meta name="description" content="">
-  <title>Home</title>
+
+  <title>{{n['dname']}} Dashboard</title>
   
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/mobirise-icons.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/tether.min.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-reboot.min.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-reboot.min.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/dropdown-style.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/data-tables.bootstrap4.min.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/theme-style.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/mbr-additional.css') }}">  
-  
+  <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+
+
 </head>
+
 <body>
-  <section class="menu cid-qLo4vYYBDU" once="menu" id="menu1-0">
 
-    
-
-    <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </button>
-        <div class="menu-logo">
-            <div class="navbar-brand">
-                
-                <span class="navbar-caption-wrap"><a class="navbar-caption text-white display-4" href={{n['proposal']}}>
-                        {{n['dname']}} pool</a></span>
-            </div>
-        </div>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true"><li class="nav-item dropdown">
-                    <a class="text-white display-4" href="/">Home</a>
-                </li><li class="nav-item">
-                    <a class="text-white display-4" href="payments">Payments</a>
-                </li></ul>
-            
-        </div>
-    </nav>
-</section>
-
-<section class="engine"><a href="https://mobirise.ws/k">develop your own website</a></section><section class="tabs3 cid-qLobJCLwFO" id="tabs3-i">
-
-    <div class="container">
-        
-        
-    </div>
-    <div class="container-fluid">
-        <div class="row tabcont">
-            <ul class="nav nav-tabs pt-3 mt-5" role="tablist">
-                <li class="nav-item mbr-fonts-style"><a class="nav-link active show display-7" role="tab" data-toggle="tab" href="#tabs3-i_tab0" aria-selected="true">
-                        Delegate</a></li>
-                <li class="nav-item mbr-fonts-style"><a class="nav-link  active show display-7" role="tab" data-toggle="tab" href="#tabs3-i_tab1" aria-selected="true">Node Stats</a></li>
-                <li class="nav-item mbr-fonts-style"><a class="nav-link active show display-7" role="tab" data-toggle="tab" href="#tabs3-i_tab2" aria-selected="true">Blockchain</a></li>
-                
-                
-                
-            </ul>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="row px-1">
-            <div class="tab-content">
-                <div id="tab1" class="tab-pane in active mbr-table" role="tabpanel">
-                    <div class="row tab-content-row">
-                        <div class="col-xs-12 col-md-6">
-                            
-                            <h4 class="mbr-element-title  align-center mbr-fonts-style pb-2 display-5">
-                                Rank</h4>
-                            <p class="mbr-section-text  align-center mbr-fonts-style display-7">
-                                {{node['rank']}}</p>
-                        </div>
-
-                        <div class="col-xs-12 col-md-6">
-                            
-                            <h4 class="mbr-element-title  align-center mbr-fonts-style pb-2 display-5">
-                                Voters</h4>
-                            <p class="mbr-section-text  align-center mbr-fonts-style display-7">
-                                {{node['votes']}}</p>
-                        </div>
-
-                        
-
-                        
-                    </div>
-                </div>
-
-                <div id="tab2" class="tab-pane  mbr-table" role="tabpanel">
-                    <div class="row tab-content-row">
-                        <div class="col-xs-12 col-md-6">
-                            
-                            <h4 class="mbr-element-title  align-center mbr-fonts-style pb-2 display-5">Status</h4>
-                            <p class="mbr-section-text  align-center mbr-fonts-style display-7">{{node['forging']}}</p>
-                        </div>
-
-                        <div class="col-xs-12 col-md-6">
-                            
-                            <h4 class="mbr-element-title  align-center mbr-fonts-style pb-2 display-5">
-                                Productivity</h4>
-                            <p class="mbr-section-text  align-center mbr-fonts-style display-7">{{node['productivity']}}</p>
-                        </div>
-
-                        
-
-                        
-                    </div>
-                </div>
-
-                <div id="tab3" class="tab-pane  mbr-table" role="tabpanel">
-                    <div class="row tab-content-row">
-                        <div class="col-xs-12 col-md-6">
-                            
-                            <h4 class="mbr-element-title  align-center mbr-fonts-style pb-2 display-5">
-                                Mined Blocks</h4>
-                            <p class="mbr-section-text  align-center mbr-fonts-style display-7">
-                                {{node['forged']}}</p>
-                        </div>
-
-                        <div class="col-xs-12 col-md-6">
-                            
-                            <h4 class="mbr-element-title  align-center mbr-fonts-style pb-2 display-5">
-                                Missed Blocks</h4>
-                            <p class="mbr-section-text  align-center mbr-fonts-style display-7">
-                                {{node['missed']}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="section-table cid-qLo6FpEke4" id="table1-1">
-
-  
-  
-  <div class="container container-table">
-      <h2 class="mbr-section-title mbr-fonts-style align-center pb-3 display-2">Wallet Balances</h2>
-      
-      <div class="table-wrapper">
         <div class="container">
-          <div class="row search">
-            <div class="col-md-6"></div>
-            <div class="col-md-6">
-                <div class="dataTables_filter">
-                  <label class="searchInfo mbr-fonts-style display-7">Search:</label>
-                  <input class="form-control input-sm" disabled="">
+
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+              <a class="navbar-brand" href={{n['proposal']}} target="_blank">Proposal</a>
+              <a class="nav-link" href="/">Home</a>
+              <a class="nav-link" href="payments">Payments</a>
+            </nav>
+
+            <h1><center>Delegate Status</center></h1>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="alert alert-success" role="alert">Status: {{node['forging']}}</div>
+                </div>
+                <div class="col-md-4">
+                    <div class="alert alert-success" role="alert">Rank: {{node['rank']}}</div>
+                </div>
+                <div class="col-md-4">
+                    <div class="alert alert-info" role="alert">Voters: {{node['votes']}}</div>
                 </div>
             </div>
-          </div>
-        </div>
 
-        <div class="container scroll">
-          <table class="table isSearch" cellspacing="0">
-            <thead>
-              <tr class="table-heads ">
-                  
-                  
-                  
-                  
-              <th class="head-item mbr-fonts-style display-7">
-                      Address</th><th class="head-item mbr-fonts-style display-7">
-                      Pending ({{n['coin']}})</th><th class="head-item mbr-fonts-style display-7">
-                      Paid ({{n['coin']}})</th></tr>
-            </thead>
-
-            <tbody>
-            {% for r in row %} 
-				<tr> 
-					<td class="body-item mbr-fonts-style display-7"><a href="{{ n['explorer'] }}address/{{ r[0] }}">{{ r[0] }}</a></td>
-					<td class="body-item mbr-fonts-style display-7">{{ r[1]/100000000 }}</td>
-					<td class="body-item mbr-fonts-style display-7">{{ r[2]/100000000 }}</td>
-                </tr>
-			{% endfor %}
-			</tbody>
-          </table>
-        </div>
-        <div class="container table-info-container">
-          <div class="row info">
-            <div class="col-md-6">
-              <div class="dataTables_info mbr-fonts-style display-7">
-                <span class="infoBefore">Showing</span>
-                <span class="inactive infoRows"></span>
-                <span class="infoAfter">entries</span>
-                <span class="infoFilteredBefore">(filtered from</span>
-                <span class="inactive infoRows"></span>
-                <span class="infoFilteredAfter"> total entries)</span>
-              </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="alert alert-success" role="alert">Productivity: {{node['productivity']}}</div>
+                </div>
+                <div class="col-md-4">
+                    <div class="alert alert-success" role="alert">Mined Blocks: {{node['forged']}}</div>
+                </div>
+                <div class="col-md-4">
+                    <div class="alert alert-danger" role="alert">Missed Blocks: {{node['missed']}}</div>
+                </div>
             </div>
-            <div class="col-md-6"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-</section>
 
-  <script src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
-  <script src="{{url_for('static', filename='js/popper.min.js')}}"></script>
-  <script src="{{url_for('static', filename='js/tether.min.js')}}"></script>
-  <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
-  <script src="{{url_for('static', filename='js/mbr-tabs.js')}}"></script>
-  <script src="{{url_for('static', filename='js/jquery.touch-swipe.min.js')}}"></script>
-  <script src="{{url_for('static', filename='js/jquery.data-tables.min.js')}}"></script>
-  <script src="{{url_for('static', filename='js/data-tables.bootstrap4.min.js')}}"></script>
-  <script src="{{url_for('static', filename='js/script.js')}}"></script>
-  
-  
+            <h1><center>Pool Ledger</center></h1>
+
+            <input type="text" id="input" onkeyup="Filter()" placeholder="Search by Address...">
+
+            <table class="table table-striped table-hover table-bordered" id="table">
+                <thead>
+                    <tr class="header">
+                        <th>Address</th>
+                        <th>Pending ({{n['coin']}})</th>
+                        <th>Paid ({{n['coin']}})</th>
+                </thead>
+                <tbody>
+                  {% for r in row %}
+                    <tr>
+                        <td><a href="{{ n['explorer'] }}address/{{ r[0] }}" target="_blank">{{ r[0] }}</a></td>
+                        <td>{{ r[1]/100000000 }}</td>
+                        <td>{{ r[2]/100000000 }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+
+<script>
+function Filter() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("input");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("table");
+  tr = table.getElementsByTagName("tr");
+
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    } 
+  }
+}
+</script>
+
 </body>
+
 </html>
