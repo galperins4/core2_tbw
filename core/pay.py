@@ -81,7 +81,7 @@ def go():
                 transaction_fee = dynamic.get_dynamic_fee()
             
                 tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, passphrase, secondphrase)
-                print(tx)
+                print(tx['id'])
                 quit()
                 signed_tx.append(tx)
                 time.sleep(0.25)
