@@ -74,8 +74,6 @@ def go():
         # query not empty means unprocessed blocks
         if unprocessed_pay:
             unique_rowid = [y[0] for y in unprocessed_pay]
-            print(unique_rowid)
-            quit()
 
             for i in unprocessed_pay:
                 dynamic = Dynamic(data['dbusername'], i[3])
@@ -83,6 +81,8 @@ def go():
                 transaction_fee = dynamic.get_dynamic_fee()
             
                 tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, passphrase, secondphrase)
+                print(tx)
+                quit()
                 signed_tx.append(tx)
                 time.sleep(0.25)
                 
