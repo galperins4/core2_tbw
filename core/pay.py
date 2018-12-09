@@ -74,19 +74,20 @@ def go():
         # query not empty means unprocessed blocks
         if unprocessed_pay:
             unique_rowid = [y[0] for y in unprocessed_pay]
-
+            check = {}
+            
             for i in unprocessed_pay:
                 dynamic = Dynamic(data['dbusername'], i[3])
                 dynamic.get_node_configs()
                 transaction_fee = dynamic.get_dynamic_fee()
             
                 tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, passphrase, secondphrase)
-                print(tx)
-                print(i[0], tx['id'])
-                quit()
+                check[tx['id]] = i[0]
                 signed_tx.append(tx)
                 time.sleep(0.25)
                 
+            print(check)
+            quit()
             broadcast(signed_tx)
             snekdb.processStagedPayment(unique_rowid)
 
