@@ -74,6 +74,8 @@ def go():
         # query not empty means unprocessed blocks
         if unprocessed_pay:
             unique_rowid = [y[0] for y in unprocessed_pay]
+            print(unique_rowid)
+            quit()
 
             for i in unprocessed_pay:
                 dynamic = Dynamic(data['dbusername'], i[3])
