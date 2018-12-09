@@ -63,6 +63,18 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp):
     return transaction_dict
 
 
+def non_accept_check(c, a):
+    removal_check = []
+    for k,v in c.items():
+        if k not in a:
+            removal_check.append(v)
+            print("TransactionID not accepted: ", k)
+        else:
+            print("TransactionID accepted: ", k)
+    
+    return removal_check
+            
+
 def go():
     while True:
         signed_tx = []
@@ -90,8 +102,14 @@ def go():
                 time.sleep(0.25)
                      
             accepted = broadcast(signed_tx)
-            print(accepted)
+            for_removal = non_accept_check(check, accepted)
             
+            # remove non-accepted transactions from being marked as completed
+            if len(for_removal) > 0:
+                for i in for_removal:
+                    print("Removing RowId: ", i)
+                    unique_rowid.remove(i)
+                    
             snekdb.processStagedPayment(unique_rowid)
 
             # payment run complete
