@@ -86,8 +86,8 @@ def go():
                 signed_tx.append(tx)
                 time.sleep(0.25)
                 
-            print(check.keys())
-            quit()
+            #print(check.keys())
+
             broadcast(signed_tx)
             snekdb.processStagedPayment(unique_rowid)
 
