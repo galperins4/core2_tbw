@@ -115,7 +115,7 @@ def go():
             # payment run complete
             print('Payment Run Completed!')
             # sleep 10 minutes between tx blasts
-            time.sleep(600)
+            time.sleep(30)
 
         else:
             time.sleep(150)
