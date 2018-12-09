@@ -19,6 +19,7 @@ def get_client(ip="localhost", api_version='v2'):
 
 
 def broadcast(tx):
+    
     # broadcast to relay
     try:
         transaction = client.transactions.create(tx)
@@ -34,6 +35,8 @@ def broadcast(tx):
         time.sleep(1)
 
     snekdb.storeTransactions(records)
+    
+    return transaction['data']['accept']
 
 
 def build_network():
@@ -85,10 +88,10 @@ def go():
                 check[tx['id']] = i[0]
                 signed_tx.append(tx)
                 time.sleep(0.25)
-                
-            #print(check.keys())
-
-            broadcast(signed_tx)
+                     
+            accepted = broadcast(signed_tx)
+            print(accepted)
+            
             snekdb.processStagedPayment(unique_rowid)
 
             # payment run complete
