@@ -68,10 +68,11 @@ def non_accept_check(c, a):
     for k,v in c.items():
         if k not in a:
             removal_check.append(v)
-            print("TransactionID not accepted: ", k)
+            #print("TransactionID not accepted: ", k)
             snekdb.deleteTransactionRecord(k)
         else:
-            print("TransactionID accepted: ", k)
+            #print("TransactionID accepted: ", k)
+            pass
     
     return removal_check
             
@@ -116,7 +117,7 @@ def go():
             # payment run complete
             print('Payment Run Completed!')
             # sleep 10 minutes between tx blasts
-            time.sleep(1)
+            time.sleep(600)
 
         else:
             time.sleep(150)
