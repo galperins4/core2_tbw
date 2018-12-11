@@ -69,6 +69,7 @@ def non_accept_check(c, a):
         if k not in a:
             removal_check.append(v)
             print("TransactionID not accepted: ", k)
+            snekdb.deleteTransactionRecord(k)
         else:
             print("TransactionID accepted: ", k)
     
