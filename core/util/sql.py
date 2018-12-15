@@ -147,7 +147,13 @@ class SnekDB:
         
         self.commit()
 
+        
+    def deleteTransactionRecord(self, txid):
+        self.cursor.execute(f"DELETE FROM transactions WHERE id = '{txid}'")
+        
+        self.commit()
 
+        
     def voters(self):
         return self.cursor.execute("SELECT * FROM voters ORDER BY u_balance DESC")
 

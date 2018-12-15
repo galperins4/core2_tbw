@@ -19,6 +19,7 @@ def get_client(ip="localhost", api_version='v2'):
 
 
 def broadcast(tx):
+    
     # broadcast to relay
     try:
         transaction = client.transactions.create(tx)
@@ -34,6 +35,8 @@ def broadcast(tx):
         time.sleep(1)
 
     snekdb.storeTransactions(records)
+    
+    return transaction['data']['accept']
 
 
 def build_network():
@@ -60,6 +63,20 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp):
     return transaction_dict
 
 
+def non_accept_check(c, a):
+    removal_check = []
+    for k,v in c.items():
+        if k not in a:
+            removal_check.append(v)
+            #print("TransactionID not accepted: ", k)
+            snekdb.deleteTransactionRecord(k)
+        else:
+            #print("TransactionID accepted: ", k)
+            pass
+    
+    return removal_check
+            
+
 def go():
     while True:
         signed_tx = []
@@ -74,17 +91,27 @@ def go():
         # query not empty means unprocessed blocks
         if unprocessed_pay:
             unique_rowid = [y[0] for y in unprocessed_pay]
-
+            check = {}
+            
             for i in unprocessed_pay:
                 dynamic = Dynamic(data['dbusername'], i[3])
                 dynamic.get_node_configs()
                 transaction_fee = dynamic.get_dynamic_fee()
             
                 tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, passphrase, secondphrase)
+                check[tx['id']] = i[0]
                 signed_tx.append(tx)
                 time.sleep(0.25)
-                
-            broadcast(signed_tx)
+                     
+            accepted = broadcast(signed_tx)
+            for_removal = non_accept_check(check, accepted)
+            
+            # remove non-accepted transactions from being marked as completed
+            if len(for_removal) > 0:
+                for i in for_removal:
+                    print("Removing RowId: ", i)
+                    unique_rowid.remove(i)
+                    
             snekdb.processStagedPayment(unique_rowid)
 
             # payment run complete
