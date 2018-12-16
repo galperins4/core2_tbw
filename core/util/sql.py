@@ -163,7 +163,7 @@ class SnekDB:
 
 
     def transactions(self):
-        return self.cursor.execute("SELECT * FROM transactions")
+        return self.cursor.execute("SELECT * FROM transactions ORDER BY processed_at DESC LIMIT 1000")
 
 
     def updateVoterBalance(self, address, balance):
