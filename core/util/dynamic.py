@@ -39,7 +39,7 @@ class Dynamic:
     def scan_file(self,f):
         check = False
 
-        for count,i in enumerate(lines):
+        for count,i in enumerate(f):
             # check for dynamic fees
             if "dynamicFees" in i:
                 check = True
