@@ -49,10 +49,10 @@ class Dynamic:
                     check = False
             # check for minPoolFee
             elif "minFeePool" in i:
-                mfp = self.parser(i)
+                mfp = int(self.parser(i))
             # check for transfer bytes
             elif "transfer" in i:
-                o = self.parser(i)
+                o = int(self.parser(i))
     
         return e, mfp, o
     
