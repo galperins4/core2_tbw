@@ -67,6 +67,10 @@ Python 3.6+ is required.
 
 ## Changelog
 
+### 0.3
+- updated for Typescript and changes to dynamic fee location
+- Added support for Qcredit Core2
+
 ### 0.2
 - add function to adjust share rates if global value is changed
 - add environment check to determine max tx to submit per broadcast
