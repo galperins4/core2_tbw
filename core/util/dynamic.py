@@ -61,12 +61,6 @@ class Dynamic:
         enabled, fee_multiplier, dynamic_offset = self.scan_file(self.plugins)
         if enabled is "false":
             transaction_fee = int(.1 * atomic)
-            
-        '''
-        if self.network is None or self.network['constants'][0]['fees']['dynamic'] is False:
-            # standard transaction fees
-            transaction_fee = int(.1 * atomic)
-        '''
         else:
             # get size of transaction - S
             standard_tx = 230
