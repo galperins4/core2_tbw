@@ -16,15 +16,6 @@ class Dynamic:
         lines = [line.rstrip('\n') for line in open(plugin_file)]
         self.plugins = lines
 
-        '''
-        envpath = '/home/' + self.username + '/.ark/config/'
-        # check if there is a network file
-        if os.path.exists(envpath + 'network.json') is True:
-            with open(envpath + 'network.json') as network_file:
-                self.network = json.load(network_file)
-        else:
-            self.network = None
-        '''
     
     def parser(self, line):
         temp = line.split(':')[1]
@@ -66,10 +57,6 @@ class Dynamic:
             standard_tx = 230
             v_msg = len(self.msg)
             tx_size = standard_tx + v_msg
-            # get T
-            #dynamic_offset = self.network['constants'][0]['fees']['dynamicFees']['addonBytes']['transfer']
-            # get C
-            #fee_multiplier = self.network['constants'][0]['fees']['dynamicFees']['minFeePool']
             #calculate transaction fee
             transaction_fee = self.calculate_dynamic_fee(dynamic_offset, tx_size, fee_multiplier)
 
