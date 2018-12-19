@@ -52,5 +52,14 @@
     "db": "test_swapblocks",
     "db_user": "null",
     "db_pw": "password"
+    },
+    "qredit_mainnet": {
+    "epoch": ["2017", "3", "21", "13", "00", "00"],
+    "version": 58,
+    "wif": 187,
+    "port": 4101,
+    "db": "qredit_db",
+    "db_user": "null",
+    "db_pw": "password"
     }
 }
