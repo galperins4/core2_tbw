@@ -64,7 +64,7 @@ def payments():
     if poolVersion == 'original':
        return render_template('payments.html', row=tx_data, n=navbar)
     else:
-       return render_template('geop_payments.html', row=tx_data, n=navbar)
+       return render_template('geops_payments.html', row=tx_data, n=navbar)
         
 
 @app.route('/webhook', methods=['POST'])
