@@ -9,5 +9,6 @@
   "pubkey": "pubkey",
   "pool_port": 5000,
   "custom_port": 5004,
-  "webhook_token": "secretToken"
+  "webhook_token": "secretToken",
+  "pool_version": "original"
 }
