@@ -46,7 +46,10 @@ def index():
     voter_data = snekdb.voters().fetchall()
     s['votes'] = len(voter_data)
     
-    return render_template('index.html', node=s, row=voter_data, n=navbar)
+    if poolVersion == "original":
+        return render_template('index.html', node=s, row=voter_data, n=navbar)
+    else:
+        return render_template('geops_index.html', node=s, row=voter_data, n=navbar)
 
 
 @app.route('/payments')
@@ -57,9 +60,12 @@ def payments():
     for i in data_out:
         data_list = [i[0], int(i[1]), i[2], i[3]]
         tx_data.append(data_list)
- 
-    return render_template('payments.html', row=tx_data, n=navbar)
-
+    
+    if poolVersion == 'original':
+       return render_template('payments.html', row=tx_data, n=navbar)
+    else:
+       return render_template('geops_payments.html', row=tx_data, n=navbar)
+        
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -85,6 +91,7 @@ if __name__ == '__main__':
     data, network = parse_pool()
     #snekdb = SnekDB(data['dbusername'])
     webhookToken = data['webhook_token']
+    poolVersion = data['pool_version']
     first, second = webhookToken[:len(webhookToken) // 2], webhookToken[len(webhookToken) // 2:]
     client = get_client()
     navbar = {
