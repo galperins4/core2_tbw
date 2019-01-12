@@ -15,7 +15,7 @@ atomic = 100000000
 
 def get_client(ip="localhost", api_version='v2'):
     port = network[data['network']]['port']
-    return ArkClient('http://{0}:{1}/api'.format(ip, port), api_version=api_version)
+    return ArkClient('http://{0}:{1}/api'.format(ip, port))
 
 
 def broadcast(tx):
