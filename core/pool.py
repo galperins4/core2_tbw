@@ -43,9 +43,9 @@ def index():
 
     # s['votes'] = dstats['data']['votes']
     snekdb = SnekDB(data['dbusername'])
-    #voter_data = snekdb.voters().fetchall()
-    voter_data = client.delegates.voter_balances(data['delegate'])
-    s['votes'] = len(voter_data['data'])
+    voter_data = snekdb.voters().fetchall()
+    voter_count = client.delegates.voter_balances(data['delegate'])
+    s['votes'] = len(voter_count['data'])
     
     if poolVersion == "original":
         return render_template('index.html', node=s, row=voter_data, n=navbar)
