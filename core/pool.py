@@ -19,7 +19,7 @@ def parse_pool():
 
 def get_client(ip="localhost"):
     port = network[data['network']]['port']
-    return ArkClient('http://{0}:{1}/api/'.format(ip, port))
+    return ArkClient('http://{0}:{1}/api'.format(ip, port))
 
 
 app = Flask(__name__)
