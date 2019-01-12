@@ -1,4 +1,4 @@
-from ark import ArkClient
+from client import ArkClient
 from flask import Flask, render_template, request
 from flask_api import status
 import json
@@ -43,8 +43,9 @@ def index():
 
     # s['votes'] = dstats['data']['votes']
     snekdb = SnekDB(data['dbusername'])
-    voter_data = snekdb.voters().fetchall()
-    s['votes'] = len(voter_data)
+    #voter_data = snekdb.voters().fetchall()
+    voter_data = client.delegates.voter_balances(data['delegate'])
+    s['votes'] = len(voter_data['data'])
     
     if poolVersion == "original":
         return render_template('index.html', node=s, row=voter_data, n=navbar)
@@ -89,7 +90,6 @@ def webhook():
 
 if __name__ == '__main__':
     data, network = parse_pool()
-    #snekdb = SnekDB(data['dbusername'])
     webhookToken = data['webhook_token']
     poolVersion = data['pool_version']
     first, second = webhookToken[:len(webhookToken) // 2], webhookToken[len(webhookToken) // 2:]
