@@ -39,6 +39,7 @@ Python 3.6+ is required.
 - cover_tx_fees: Use this to indicate if you want to cover transaction fees (Y) or not (N)
 - vote_cap: Use this if you cap voters for how much they can earn with votes. For example 10000 will mean any wallet over 10K will only be paid based on 10K weight
 - vote_min: Use this if you have a minumum wallet balance to be eligible for payments
+- fixed: Use this for fixed deals. This amount will be spread evenly over the set interval
 - whitelist: Y or N. Enable payment to only whitelisted addresses
 - whitelist_addr: comma seperated list of addresses to allow voter payments to
 - blacklist: Options are block or assign. Block zero's out blocked accounts which then distributes their earnings to voters. Assign does the same but assigns weight to a designated account. 
@@ -52,6 +53,7 @@ Python 3.6+ is required.
 - network: which network (same as tbw options)
 - pool_ip: IP of the node the pool is installed on
 - explorer: The address of the explorer for the coin
+- delegate: delegate name
 - coin: which coin (e.g., ARK, KAPU)
 - proposal: link to delegate proposal (if any)
 - dbusername: this is the postgresql database username nodeDB (usually your os username)
@@ -59,6 +61,7 @@ Python 3.6+ is required.
 - pool_port: port for pool/webhooks
 - custom_port: custom port for using custom voter share update functionality
 - webhook_token: secret token for webhook
+- pool_version: Set the pool website version - options are "original" or "geops"
 
 ## To Do
 
@@ -69,7 +72,9 @@ Python 3.6+ is required.
 
 ### 0.3
 - updated for Typescript and changes to dynamic fee location
-- Added support for Qcredit Core2
+- Added support for Qcredit, Ripa, and Phantom Core2
+- Added back fixed deal support
+- Added new pool website option (credits to Ark Delegate Geops)
 
 ### 0.2
 - add function to adjust share rates if global value is changed
