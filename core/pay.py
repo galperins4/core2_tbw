@@ -99,8 +99,8 @@ def go():
                 transaction_fee = dynamic.get_dynamic_fee()
                 
                 # fixed processing
-                if i[0] in data['fixed'].keys():
-                    fixed_amt = int(data['fixed'][i[0]] * atomic)
+                if i[1] in data['fixed'].keys():
+                    fixed_amt = int(data['fixed'][i[1]] * atomic)
                     tx = build_transfer_transaction(i[1], (fixed_amt), i[3], transaction_fee, passphrase, secondphrase)
                 else:           
                     tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, passphrase, secondphrase)
