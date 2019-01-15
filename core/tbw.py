@@ -71,7 +71,7 @@ def allocate(lb):
         if bal > 0:
             share_weight = bal / approval  # calc share rate
 
-            '''
+            
             # fixed processing
             if i[0] in data['fixed'].keys():
                 fixed_amt = data['fixed'][i[0]] * atomic
@@ -79,20 +79,20 @@ def allocate(lb):
                 treward = int(round((share_weight * vshare)))
                 remainder_reward = int(treward - reward)
                 delegate_check += remainder_reward
-            '''
-            # get custom share rate if applicable
-            custom_share = snekdb.getVoterShare(i[0]).fetchall()
-            cshare = block_reward * custom_share[0][0]
-
-            # get the difference between normal share and custom share
-            if custom_share[0][0] == data['voter_share']:
-                reward = int(share_weight * vshare)
-                remainder_reward = 0
             else:
-                treward = int(share_weight * vshare)
-                reward = int(share_weight * cshare)
-                remainder_reward = int(treward - reward)
-                delegate_check += remainder_reward
+                # get custom share rate if applicable
+                custom_share = snekdb.getVoterShare(i[0]).fetchall()
+                cshare = block_reward * custom_share[0][0]
+
+                # get the difference between normal share and custom share
+                if custom_share[0][0] == data['voter_share']:
+                    reward = int(share_weight * vshare)
+                    remainder_reward = 0
+                else:
+                    treward = int(share_weight * vshare)
+                    reward = int(share_weight * cshare)
+                    remainder_reward = int(treward - reward)
+                    delegate_check += remainder_reward
 
             # update reserve from blacklist assign
             if i[0] == data["blacklist_assign"]:
