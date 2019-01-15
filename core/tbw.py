@@ -75,8 +75,8 @@ def allocate(lb):
             # fixed processing
             if i[0] in data['fixed'].keys():
                 fixed_amt = data['fixed'][i[0]] * atomic
-                reward = int(round((fixed_amt/data['interval'])))
-                treward = int(round((share_weight * vshare)))
+                reward = int(fixed_amt/data['interval'])
+                treward = int(share_weight * vshare)
                 remainder_reward = int(treward - reward)
                 delegate_check += remainder_reward
             else:
