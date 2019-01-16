@@ -70,8 +70,6 @@ def allocate(lb):
         # filter out 0 balances for processing
         if bal > 0:
             share_weight = bal / approval  # calc share rate
-
-            
             # fixed processing
             if i[0] in data['fixed'].keys():
                 fixed_amt = data['fixed'][i[0]] * atomic
