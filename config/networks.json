@@ -58,7 +58,7 @@
     "version": 58,
     "wif": 187,
     "port": 4101,
-    "db": "qredit_db",
+    "db": "qredit_mainnet",
     "db_user": "null",
     "db_pw": "password"
     },
