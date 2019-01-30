@@ -1,27 +1,13 @@
-from client import ArkClient
+#from client import ArkClient
 from flask import Flask, render_template, request
 from flask_api import status
-import json
+#import json
 from util.sql import SnekDB
 from util.util import Util
 
 from pathlib import Path
 pool_path = Path().resolve().parent
 
-'''
-def parse_pool():
-
-    with open(pool_path / 'config/pool.json') as data_file:
-        d = json.load(data_file)
-    with open(pool_path / 'config/networks.json') as network_file:
-        n = json.load(network_file)
-    return d, n
-'''
-'''
-def get_client(ip="localhost"):
-    port = network[data['network']]['port']
-    return ArkClient('http://{0}:{1}/api'.format(ip, port))
-'''
 
 app = Flask(__name__)
 
