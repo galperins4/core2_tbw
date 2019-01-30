@@ -4,8 +4,6 @@ from pathlib import Path
 
 class Util():
     def __init__(self):
-        #self.network = network
-        #self.coin = coin
         self.home = str(Path.home())
         self.tbw = self.home+'/core2_tbw/config'
         
