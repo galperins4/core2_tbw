@@ -1,5 +1,6 @@
 import os.path
 import json
+from util import Util
 
 atomic = 100000000
 
@@ -12,7 +13,11 @@ class Dynamic:
         self.dot = None
 
     def get_node_configs(self):
-        plugin_file = '/home/' + self.username + '/.ark/config/plugins.js'
+        u = Util()
+        plugin_file = u.core+'/plugins.js'
+        
+        
+        #plugin_file = '/home/' + self.username + '/.ark/config/plugins.js'
         lines = [line.rstrip('\n') for line in open(plugin_file)]
         self.plugins = lines
 
