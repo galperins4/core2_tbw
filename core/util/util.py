@@ -14,7 +14,7 @@ class Util():
         coin = net[0]
         network = net[1]
        
-        self.core = self.home'/.config/'+coin+"-core/"+network
+        self.core = self.home+'/.config/'+coin+"-core/"+network
         
 
     def get_client(self, ip="localhost"):
