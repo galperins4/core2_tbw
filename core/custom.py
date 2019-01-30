@@ -35,4 +35,7 @@ def share():
 if __name__ == '__main__':
     u = Util()
     data, network = u.parse_pool()
+    print(data['pool_ip'])
+    print(data['custom_port'])
+    quit()
     app.run(host=data['pool_ip'], port=data['custom_port'])
