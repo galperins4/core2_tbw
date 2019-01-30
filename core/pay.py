@@ -1,23 +1,15 @@
 #!/usr/bin/env python
 from crypto.configuration.network import set_custom_network
 from crypto.transactions.builder.transfer import Transfer
-#from tbw import parse_config
 from util.sql import SnekDB
 from util.dynamic import Dynamic
 from util.util import Util
-#from client import ArkClient
 from datetime import datetime
 import time
 import os
 from dotenv import load_dotenv
 
 atomic = 100000000
-
-'''
-def get_client(ip="localhost", api_version='v2'):
-    port = network[data['network']]['port']
-    return ArkClient('http://{0}:{1}/api'.format(ip, port))
-'''
 
 def broadcast(tx):
     
