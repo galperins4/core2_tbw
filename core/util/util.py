@@ -10,8 +10,7 @@ class Util():
         
         self.data, self.network = self.parse_configs()
         net = self.data['network'].split('_')
-        coin = net[0]
-        network = net[1]
+        coin, network = net[0], net[1]
        
         self.core = self.home+'/.config/'+coin+"-core/"+network
         
