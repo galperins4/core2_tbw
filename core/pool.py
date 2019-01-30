@@ -8,7 +8,7 @@ from util.util import Util
 from pathlib import Path
 pool_path = Path().resolve().parent
 
-
+'''
 def parse_pool():
 
     with open(pool_path / 'config/pool.json') as data_file:
@@ -16,12 +16,12 @@ def parse_pool():
     with open(pool_path / 'config/networks.json') as network_file:
         n = json.load(network_file)
     return d, n
-
-
+'''
+'''
 def get_client(ip="localhost"):
     port = network[data['network']]['port']
     return ArkClient('http://{0}:{1}/api'.format(ip, port))
-
+'''
 
 app = Flask(__name__)
 
@@ -90,11 +90,12 @@ def webhook():
 
 
 if __name__ == '__main__':
-    data, network = parse_pool()
+    u = Util()
+    data, network = u.parse_pool()
     webhookToken = data['webhook_token']
     poolVersion = data['pool_version']
     first, second = webhookToken[:len(webhookToken) // 2], webhookToken[len(webhookToken) // 2:]
-    client = get_client()
+    client = u.get_client()
     navbar = {
        'dname': data['delegate'],
        'proposal': data['proposal'],
