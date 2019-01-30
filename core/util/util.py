@@ -1,11 +1,10 @@
 import json
 import os
 from pathlib import Path
-from dotenv import load_dotenv
 
 
 class Util():
-    def __init__(self, coin network):
+    def __init__(self, coin, network):
         self.network = network
         self.coin = coin
         self.home = str(Path.home())
