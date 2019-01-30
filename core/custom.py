@@ -6,7 +6,7 @@ from util.util import Util
 from pathlib import Path
 pool_path = Path().resolve().parent
 
-
+'''
 def parse_pool():
 
     with open(pool_path / 'config/pool.json') as data_file:
@@ -15,7 +15,7 @@ def parse_pool():
         n = json.load(network_file)
         
     return d, n
-
+'''
 
 app = Flask(__name__)
 
@@ -33,6 +33,6 @@ def share():
 
 
 if __name__ == '__main__':
-    data, network = parse_pool()
-    #snekdb = SnekDB(data['dbusername'])
+    u = Util()
+    data, network = u.parse_pool()
     app.run(host=data['pool_ip'], port=data['custom_port'])
