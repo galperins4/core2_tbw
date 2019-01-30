@@ -6,13 +6,11 @@ from util.util import Util
 from pathlib import Path
 import os.path
 import time
-#import json
 import sys
 
 
 tbw_path = Path().resolve().parent
 atomic = 100000000
-
 
 
 def allocate(lb):
