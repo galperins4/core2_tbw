@@ -3,14 +3,14 @@ from util.sql import SnekDB
 from util.ark import ArkDB
 from util.dynamic import Dynamic
 from util.util import Util
-#from pathlib import Path
+from pathlib import Path
 import os.path
 import time
 #import json
 import sys
 
 
-#tbw_path = Path().resolve().parent
+tbw_path = Path().resolve().parent
 atomic = 100000000
 
 
