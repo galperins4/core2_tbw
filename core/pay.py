@@ -4,6 +4,7 @@ from crypto.transactions.builder.transfer import Transfer
 from tbw import parse_config
 from util.sql import SnekDB
 from util.dynamic import Dynamic
+from util.util import Util
 from client import ArkClient
 from datetime import datetime
 import time
