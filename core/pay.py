@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 from crypto.configuration.network import set_custom_network
 from crypto.transactions.builder.transfer import Transfer
-from tbw import parse_config
+#from tbw import parse_config
 from util.sql import SnekDB
 from util.dynamic import Dynamic
 from util.util import Util
-from client import ArkClient
+#from client import ArkClient
 from datetime import datetime
 import time
 import os
@@ -131,13 +131,14 @@ def go():
 
 if __name__ == '__main__':
    
-    data, network = parse_config()
+    u = Util()
+    data, network = u.parse_config()
     snekdb = SnekDB(data['dbusername'])
-    client = get_client()
+    client = u.get_client()
     build_network()
     
     #get dot path for load_env and load
-    dot = '/home/'+data['dbusername']+'/.ark/.env'
+    dot = u.core+'/.env'
     load_dotenv(dot)
     
     # Get the passphrase from config.json
