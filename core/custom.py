@@ -6,17 +6,6 @@ from util.util import Util
 from pathlib import Path
 pool_path = Path().resolve().parent
 
-'''
-def parse_pool():
-
-    with open(pool_path / 'config/pool.json') as data_file:
-        d = json.load(data_file)
-    with open(pool_path / 'config/networks.json') as network_file:
-        n = json.load(network_file)
-        
-    return d, n
-'''
-
 app = Flask(__name__)
 
 
