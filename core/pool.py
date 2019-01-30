@@ -1,12 +1,7 @@
-#from client import ArkClient
 from flask import Flask, render_template, request
 from flask_api import status
-#import json
 from util.sql import SnekDB
 from util.util import Util
-
-from pathlib import Path
-pool_path = Path().resolve().parent
 
 
 app = Flask(__name__)
