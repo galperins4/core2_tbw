@@ -57,7 +57,7 @@
     "epoch": ["2017", "3", "21", "13", "00", "00"],
     "version": 58,
     "wif": 187,
-    "port": 4101,
+    "port": 4103,
     "db": "qredit_mainnet",
     "db_user": "null",
     "db_pw": "password"
