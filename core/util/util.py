@@ -8,8 +8,8 @@ class Util():
         self.home = str(Path.home())
         self.tbw = self.home+'/core2_tbw/config'
         
-        data, network = self.parse_configs()
-        net = data['network'].split('_')
+        self.data, self.network = self.parse_configs()
+        net = self.data['network'].split('_')
         coin = net[0]
         network = net[1]
        
@@ -17,7 +17,7 @@ class Util():
         
 
     def get_client(self, ip="localhost"):
-        port = network[data['network']]['port']
+        port = self.network[self.data['network']]['port']
         return ArkClient('http://{0}:{1}/api'.format(ip, port))
 
 
