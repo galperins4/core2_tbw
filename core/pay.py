@@ -132,7 +132,7 @@ def go():
 if __name__ == '__main__':
    
     u = Util()
-    data, network = u.parse_config()
+    data, network = u.parse_configs()
     snekdb = SnekDB(data['dbusername'])
     client = u.get_client()
     build_network()
