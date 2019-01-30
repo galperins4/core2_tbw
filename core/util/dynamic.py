@@ -1,6 +1,6 @@
 import os.path
 import json
-from util import Util
+from .util import Util
 
 atomic = 100000000
 
