@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 import json
 from util.sql import SnekDB
+from util.util import Util
 
 from pathlib import Path
 pool_path = Path().resolve().parent
