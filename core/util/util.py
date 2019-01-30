@@ -1,5 +1,4 @@
-import json
-import os
+from client import ArkClient
 from pathlib import Path
 
 
@@ -21,8 +20,9 @@ class Util():
         return core_config_path, tbw_config_path
         
     
-    def get_client(self):
-        pass
+    def get_client(ip="localhost"):
+        port = network[data['network']]['port']
+        return ArkClient('http://{0}:{1}/api'.format(ip, port))
 
 
     def parse_configs(self):
@@ -30,4 +30,9 @@ class Util():
     
     
     def parse_pool(self):
-        pass
+        with open((self.tbw+'/pool.json')) as data_file:
+            d = json.load(data_file)
+        with open((self.tbw+'/networks.json')) as network_file:
+            n = json.load(network_file)
+        
+        return d, n
