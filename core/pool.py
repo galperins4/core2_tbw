@@ -1,4 +1,4 @@
-from ark import ArkClient
+from client import ArkClient
 from flask import Flask, render_template, request
 from flask_api import status
 import json
