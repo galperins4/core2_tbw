@@ -15,9 +15,6 @@ class Dynamic:
     def get_node_configs(self):
         u = Util()
         plugin_file = u.core+'/plugins.js'
-        
-        
-        #plugin_file = '/home/' + self.username + '/.ark/config/plugins.js'
         lines = [line.rstrip('\n') for line in open(plugin_file)]
         self.plugins = lines
 
