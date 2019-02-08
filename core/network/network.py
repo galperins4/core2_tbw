@@ -1,12 +1,12 @@
 import os
 from dotenv import load_dotenv
+from pathlib import Path
 
 class Network():
     def __init__(self, network):
         self.network = network
-        print(self.network)
-        quit()
-        load_dotenv(self.network)
+        env_path = Path('.') / self.network
+        load_dotenv(env_path)
         self.load_network()
         
         
