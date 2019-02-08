@@ -88,7 +88,7 @@ def go():
             
             for i in unprocessed_pay:
                 dynamic = Dynamic(data['dbusername'], i[3])
-                dynamic.get_node_configs()
+                dynamic.get_fee_configs()
                 transaction_fee = dynamic.get_dynamic_fee()
                 
                 # fixed processing
