@@ -23,7 +23,7 @@ def broadcast(tx):
         time.sleep(1)
     except BaseException:
         # fall back to delegate node to grab data needed
-        backup_client = get_client(data['delegate_ip'])
+        backup_client = u.get_client(network.api_port, data['delegate_ip'])
         transaction = backup_client.transactions.create(tx)
         print(transaction)
         records = [[j['recipientId'], j['amount'], j['id']] for j in tx]
