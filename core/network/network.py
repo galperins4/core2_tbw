@@ -6,6 +6,8 @@ class Network():
     def __init__(self, network):
         self.network = network
         env_path = Path('.') / self.network
+        print(env_path)
+        quit()
         load_dotenv(env_path)
         self.load_network()
         
