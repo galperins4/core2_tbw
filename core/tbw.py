@@ -1,12 +1,14 @@
 #!/usr/bin/env python
+import os.path
+import time
+import sys
+#from config.config import Config
+from network.network import Network
 from util.sql import SnekDB
 from util.ark import ArkDB
 from util.dynamic import Dynamic
 from util.util import Util
 from pathlib import Path
-import os.path
-import time
-import sys
 
 
 tbw_path = Path().resolve().parent
@@ -411,8 +413,10 @@ def share_change():
 if __name__ == '__main__':
 
     u = Util()
+    
     # get config data
     data, network = u.parse_configs()
+    ntest = Network(data['network'])
 
     dynamic = Dynamic(data['dbusername'], data['voter_msg'])
     dynamic.get_node_configs()
@@ -420,8 +424,10 @@ if __name__ == '__main__':
     
     # initialize db connection
     # get database
-    arkdb = ArkDB(network[data['network']]['db'], data['dbusername'], network[data['network']]['db_pw'],
-                  data['publicKey'])
+    #arkdb = ArkDB(network[data['network']]['db'], data['dbusername'], network[data['network']]['db_pw'],
+    #              data['publicKey'])
+    
+    arkdb = ArkDB(ntest.database, data['dbusername'], ntest.database_user, data['publicKey'])
     
     # check to see if ark.db exists, if not initialize db, etc
     if os.path.exists(tbw_path / 'ark.db') is False:
