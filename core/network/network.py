@@ -6,7 +6,7 @@ class Network():
     def __init__(self, network):
         self.home = str(Path.home())
         self.network = network
-        env_path = self.home / 'core2_tbw/core/network' / self.network
+        env_path = self.home + '/core2_tbw/core/network/' + self.network
         print(env_path)
         quit()
         env_path = Path('.') / self.network
