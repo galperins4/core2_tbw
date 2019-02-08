@@ -126,7 +126,7 @@ if __name__ == '__main__':
     data, network = u.parse_configs()
     ntest = Network(data['network'])
     snekdb = SnekDB(data['dbusername'])
-    client = u.get_client(api_port=ntest.api_port)
+    client = u.get_client(ntest.api_port)
     build_network()
     
     #get dot path for load_env and load
