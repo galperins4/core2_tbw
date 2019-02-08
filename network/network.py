@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-class Network():
+class Network:
     def __init__(self, network):
         self.network = network
         load_dotenv(self.network)
