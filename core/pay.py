@@ -66,7 +66,7 @@ def non_accept_check(c, a):
     return removal_check
             
 
-def go():
+def share():
     while True:
         signed_tx = []
 
@@ -136,5 +136,4 @@ if __name__ == '__main__':
     secondphrase = data['secondphrase']
     if secondphrase == 'None':
         secondphrase = None
-
-    go()
+    share()
