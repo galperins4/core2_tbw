@@ -12,7 +12,7 @@ class Dynamic:
         self.network = None
         self.dot = None
 
-    def get_node_configs(self):
+    def get_fee_configs(self):
         u = Util()
         plugin_file = u.core+'/plugins.js'
         lines = [line.rstrip('\n') for line in open(plugin_file)]
