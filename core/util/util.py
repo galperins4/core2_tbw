@@ -15,7 +15,7 @@ class Util():
         #self.core = self.home+'/.config/'+coin+'-core/'+network
         
         
-    def get_client(self, ip="localhost", api_port):
+    def get_client(self, api_port, ip="localhost"):
         #port = self.network[self.data['network']]['port']
         return ArkClient('http://{0}:{1}/api'.format(ip, api_port))
 
