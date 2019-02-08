@@ -427,7 +427,7 @@ if __name__ == '__main__':
     #arkdb = ArkDB(network[data['network']]['db'], data['dbusername'], network[data['network']]['db_pw'],
     #              data['publicKey'])
     
-    arkdb = ArkDB(ntest.database, data['dbusername'], ntest.database_user, data['publicKey'])
+    arkdb = ArkDB(ntest.database, data['dbusername'], ntest.database_password, data['publicKey'])
     
     # check to see if ark.db exists, if not initialize db, etc
     if os.path.exists(tbw_path / 'ark.db') is False:
