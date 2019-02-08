@@ -127,6 +127,7 @@ if __name__ == '__main__':
    
     u = Util()
     data, network = u.parse_configs()
+    ntest = Network(data['network'])
     snekdb = SnekDB(data['dbusername'])
     client = u.get_client()
     build_network()
