@@ -12,7 +12,7 @@ class Util():
         net = self.data['network'].split('_')
         coin, network = net[0], net[1]
     
-        #self.core = self.home+'/.config/'+coin+'-core/'+network
+        self.core = self.home+'/.config/'+coin+'-core/'+network
         
         
     def get_client(self, api_port, ip="localhost"):
