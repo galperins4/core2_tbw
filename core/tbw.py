@@ -3,7 +3,7 @@ import os.path
 import time
 import sys
 #from config.config import Config
-from ..network.network import Network
+from .network.network import Network
 from util.sql import SnekDB
 from util.ark import ArkDB
 from util.dynamic import Dynamic
