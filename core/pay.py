@@ -35,13 +35,10 @@ def broadcast(tx):
 
 
 def build_network():
-    #e = network[data['network']]['epoch']
-    e = ntest.epoch
+    e = network.epoch
     t = [int(i) for i in e]
     epoch = datetime(t[0], t[1], t[2], t[3], t[4], t[5])
-    #version = network[data['network']]['version']
-    #wif = network[data['network']]['wif']
-    set_custom_network(epoch, ntest.version, ntest.wif)
+    set_custom_network(epoch, network.version, network.wif)
 
 
 def build_transfer_transaction(address, amount, vendor, fee, pp, sp):
@@ -123,10 +120,10 @@ def go():
 if __name__ == '__main__':
    
     u = Util()
-    data, network = u.parse_configs()
-    ntest = Network(data['network'])
+    data = u.parse_configs()
+    network = Network(data['network'])
     snekdb = SnekDB(data['dbusername'])
-    client = u.get_client(ntest.api_port)
+    client = u.get_client(network.api_port)
     build_network()
     
     #get dot path for load_env and load
