@@ -8,7 +8,7 @@ class Util():
         self.home = str(Path.home())
         self.tbw = self.home+'/core2_tbw/config'
         
-        self.data, self.network = self.parse_configs()
+        self.data = self.parse_configs()
         net = self.data['network'].split('_')
         coin, network = net[0], net[1]
     
@@ -23,16 +23,16 @@ class Util():
     def parse_configs(self):
         with open((self.tbw+'/config.json')) as data_file:
             d = json.load(data_file)
-        with open((self.tbw+'/networks.json')) as network_file:
-            n = json.load(network_file)
+        #with open((self.tbw+'/networks.json')) as network_file:
+        #    n = json.load(network_file)
 
-        return d, n    
+        return d    
     
     
     def parse_pool(self):
         with open((self.tbw+'/pool.json')) as data_file:
             d = json.load(data_file)
-        with open((self.tbw+'/networks.json')) as network_file:
-            n = json.load(network_file)
+        #with open((self.tbw+'/networks.json')) as network_file:
+        #    n = json.load(network_file)
         
-        return d, n
+        return d
