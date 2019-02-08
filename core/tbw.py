@@ -422,10 +422,6 @@ if __name__ == '__main__':
     transaction_fee = dynamic.get_dynamic_fee()
     
     # initialize db connection
-    # get database
-    #arkdb = ArkDB(network[data['network']]['db'], data['dbusername'], network[data['network']]['db_pw'],
-    #              data['publicKey'])
-    
     arkdb = ArkDB(network.database, data['dbusername'], network.database_password, data['publicKey'])
     
     # check to see if ark.db exists, if not initialize db, etc
