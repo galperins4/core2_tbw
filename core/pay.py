@@ -35,12 +35,13 @@ def broadcast(tx):
 
 
 def build_network():
-    e = network[data['network']]['epoch']
+    #e = network[data['network']]['epoch']
+    e = ntest.epoch
     t = [int(i) for i in e]
     epoch = datetime(t[0], t[1], t[2], t[3], t[4], t[5])
-    version = network[data['network']]['version']
-    wif = network[data['network']]['wif']
-    set_custom_network(epoch, version, wif)
+    #version = network[data['network']]['version']
+    #wif = network[data['network']]['wif']
+    set_custom_network(epoch, ntest.version, ntest.wif)
 
 
 def build_transfer_transaction(address, amount, vendor, fee, pp, sp):
@@ -63,11 +64,7 @@ def non_accept_check(c, a):
     for k,v in c.items():
         if k not in a:
             removal_check.append(v)
-            #print("TransactionID not accepted: ", k)
             snekdb.deleteTransactionRecord(k)
-        else:
-            #print("TransactionID accepted: ", k)
-            pass
     
     return removal_check
             
