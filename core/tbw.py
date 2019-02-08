@@ -419,7 +419,7 @@ if __name__ == '__main__':
     ntest = Network(data['network'])
 
     dynamic = Dynamic(data['dbusername'], data['voter_msg'])
-    dynamic.get_node_configs()
+    dynamic.get_fee_configs()
     transaction_fee = dynamic.get_dynamic_fee()
     
     # initialize db connection
