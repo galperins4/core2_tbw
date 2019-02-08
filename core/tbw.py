@@ -412,11 +412,10 @@ def share_change():
 
 if __name__ == '__main__':
 
-    u = Util()
-    
     # get config data
-    data, network = u.parse_configs()
-    ntest = Network(data['network'])
+    u = Util()
+    data = u.parse_configs()
+    network = Network(data['network'])
 
     dynamic = Dynamic(data['dbusername'], data['voter_msg'])
     dynamic.get_fee_configs()
@@ -427,7 +426,7 @@ if __name__ == '__main__':
     #arkdb = ArkDB(network[data['network']]['db'], data['dbusername'], network[data['network']]['db_pw'],
     #              data['publicKey'])
     
-    arkdb = ArkDB(ntest.database, data['dbusername'], ntest.database_password, data['publicKey'])
+    arkdb = ArkDB(network.database, data['dbusername'], network.database_password, data['publicKey'])
     
     # check to see if ark.db exists, if not initialize db, etc
     if os.path.exists(tbw_path / 'ark.db') is False:
