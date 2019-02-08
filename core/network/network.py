@@ -4,7 +4,10 @@ from pathlib import Path
 
 class Network():
     def __init__(self, network):
+        self.home = str(Path.home())
         self.network = network
+        print(self.home)
+        quit()
         env_path = Path('.') / self.network
         print(env_path)
         quit()
