@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 class Network():
     def __init__(self, network):
         self.network = network
+        print(self.network)
+        quit()
         load_dotenv(self.network)
         self.load_network()
         
