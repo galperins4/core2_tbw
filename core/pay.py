@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from crypto.configuration.network import set_custom_network
 from crypto.transactions.builder.transfer import Transfer
 #from config.config import Config
-from network.network import Network
+from .network.network import Network
 from util.sql import SnekDB
 from util.dynamic import Dynamic
 from util.util import Util
