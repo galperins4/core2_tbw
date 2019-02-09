@@ -415,7 +415,7 @@ if __name__ == '__main__':
     network = Network(data.network)
     #u = Util(data.network)
     
-    dynamic = Dynamic(data.database_user, data.voter_msg)
+    dynamic = Dynamic(data.database_user, data.voter_msg, data.network)
     dynamic.get_fee_configs()
     transaction_fee = dynamic.get_dynamic_fee()
     
