@@ -9,11 +9,10 @@ class Dynamic():
     def __init__(self, u, msg, network):
         self.username = u
         self.msg = msg
-        self.network = None
-        self.dot = None
+        self.network = network
 
     def get_fee_configs(self):
-        u = Util(network)
+        u = Util(self.network)
         plugin_file = u.core+'/plugins.js'
         lines = [line.rstrip('\n') for line in open(plugin_file)]
         self.plugins = lines
