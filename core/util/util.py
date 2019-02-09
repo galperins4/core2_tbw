@@ -13,4 +13,4 @@ class Util():
         
         
     def get_client(self, api_port, ip="localhost"):
-        return ArkClient('http://{0}:{1}/api'.format(ip, api_port)
+        return ArkClient('http://{0}:{1}/api'.format(ip, api_port))
