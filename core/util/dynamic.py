@@ -6,14 +6,14 @@ atomic = 100000000
 
 
 class Dynamic():
-    def __init__(self, u, msg):
+    def __init__(self, u, msg, network):
         self.username = u
         self.msg = msg
         self.network = None
         self.dot = None
 
     def get_fee_configs(self):
-        u = Util()
+        u = Util(network)
         plugin_file = u.core+'/plugins.js'
         lines = [line.rstrip('\n') for line in open(plugin_file)]
         self.plugins = lines
