@@ -416,6 +416,12 @@ if __name__ == '__main__':
     u = Util()
     #data = u.parse_configs()
     data = Config()
+    print(data.network)
+    print(data.blacklist)
+    print(data.whitelist)
+    print(data.fixed)
+    print(data.keep)
+    print(data.pay_addresses)
     quit()
     network = Network(data['network'])
 
