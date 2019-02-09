@@ -9,6 +9,9 @@ class Config():
         load_dotenv(env_path)
         self.load_tbw_config()
         self.load_pool_config()
+        self.format_fixed()
+        self.format_keep()
+        self.format_payaddr()
     
     
     def load_tbw_config(self):
@@ -46,3 +49,15 @@ class Config():
         self.pool_port = os.getenv("POOL_PORT")
         self.custom_port = os.getenv("CUSTOM_PORT")
         self.pool_version = os.getenv("POOL_VERSION")
+        
+        
+    def format_fixed(self):
+        pass
+    
+    
+    def format_keep(self):
+        pass
+    
+    
+    def format_payaddr(self):
+        pass
