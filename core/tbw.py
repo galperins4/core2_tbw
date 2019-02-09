@@ -410,8 +410,6 @@ if __name__ == '__main__':
     # get config data
     data = Config()
     network = Network(data.network)
-    print (data.blacklist)
-    quit()
     
     dynamic = Dynamic(data.database_user, data.voter_msg, data.network)
     dynamic.get_fee_configs()
