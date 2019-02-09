@@ -412,8 +412,6 @@ if __name__ == '__main__':
 
     # get config data
     data = Config()
-    print(type(data.start_block))
-    quit()
     network = Network(data.network)
     
     dynamic = Dynamic(data.database_user, data.voter_msg, data.network)
