@@ -11,6 +11,7 @@ class Dynamic():
         self.msg = msg
         self.network = network
 
+
     def get_fee_configs(self):
         u = Util(self.network)
         plugin_file = u.core+'/plugins.js'
