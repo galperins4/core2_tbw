@@ -411,10 +411,10 @@ def share_change():
 if __name__ == '__main__':
 
     # get config data
-    u = Util()
     data = Config()
-    network = Network(data['network'])
-
+    network = Network(data.network)
+    #u = Util(data.network)
+    
     dynamic = Dynamic(data.database_user, data.voter_msg)
     dynamic.get_fee_configs()
     transaction_fee = dynamic.get_dynamic_fee()
