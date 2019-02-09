@@ -5,7 +5,7 @@ from .util import Util
 atomic = 100000000
 
 
-class Dynamic:
+class Dynamic():
     def __init__(self, u, msg):
         self.username = u
         self.msg = msg
