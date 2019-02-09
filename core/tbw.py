@@ -12,7 +12,6 @@ from pathlib import Path
 
 
 tbw_path = Path().resolve().parent
-atomic = 100000000
 
 
 def allocate(lb):
@@ -33,21 +32,21 @@ def allocate(lb):
     total_reward = block_reward+fee_reward
 
     # calculate delegate/reserve/other shares
-    for k, v in data['keep'].items():
+    for k, v in data.keep.items():
         if k == 'reserve':
             keep = (int(block_reward * v)) + fee_reward
         else:
             keep = (int(block_reward * v))
 
         # assign  shares to log and rewards tracking
-        keep_addr = data['pay_addresses'][k]
+        keep_addr = data.pay_addresses[k]
         snekdb.updateDelegateBalance(keep_addr, keep)
         
         # increment delegate_check for double check
         delegate_check += keep
 
     # calculate voter share
-    vshare = block_reward * data['voter_share']
+    vshare = block_reward * data.voter_share
 
     # loop through the current voters and assign share
     for i in block_voters:
@@ -59,9 +58,9 @@ def allocate(lb):
         if bal > 0:
             share_weight = bal / approval  # calc share rate
             # fixed processing
-            if i[0] in data['fixed'].keys():
-                fixed_amt = data['fixed'][i[0]] * atomic
-                reward = int(fixed_amt/data['interval'])
+            if i[0] in data.fixed.keys():
+                fixed_amt = data.fixed[i[0]] * data.atomic
+                reward = int(fixed_amt/data.interval)
                 treward = int(share_weight * vshare)
                 remainder_reward = int(treward - reward)
                 delegate_check += remainder_reward
@@ -71,7 +70,7 @@ def allocate(lb):
                 cshare = block_reward * custom_share[0][0]
 
                 # get the difference between normal share and custom share
-                if custom_share[0][0] == data['voter_share']:
+                if custom_share[0][0] == data.voter_share:
                     reward = int(share_weight * vshare)
                     remainder_reward = 0
                 else:
@@ -81,7 +80,7 @@ def allocate(lb):
                     delegate_check += remainder_reward
 
             # update reserve from blacklist assign
-            if i[0] == data["blacklist_assign"]:
+            if i[0] == data.blacklist_assign:
                 snekdb.updateDelegateBalance(i[0], reward)
             else:
                 # add voter reward to sql database
@@ -107,7 +106,7 @@ def allocate(lb):
 def white_list(voters):
     w_adjusted_voters = []
     for i in voters:
-        if i[0] in data["whitelist_addr"]:
+        if i[0] in data.whitelist_addr:
             w_adjusted_voters.append((i[0], i[1]))
             
     return w_adjusted_voters
@@ -115,26 +114,26 @@ def white_list(voters):
 
 def black_list(voters):
     # block voters and distribute to voters
-    if data["blacklist"] == "block":
+    if data.blacklist == "block":
         bl_adjusted_voters = []
         for i in voters:
-            if i[0] in data["blacklist_addr"]:
+            if i[0] in data.blacklist_addr:
                 bl_adjusted_voters.append((i[0], 0))
             else:
                 bl_adjusted_voters.append((i[0], i[1]))
     
     # block voters and keep in reserve account
-    elif data["blacklist"] == "assign":
+    elif data.blacklist == "assign":
         bl_adjusted_voters = []
         accum = 0
         
         for i in voters:
-            if i[0] in data["blacklist_addr"]:
+            if i[0] in data.blacklist_addr:
                 accum += i[1]
             else:
                 bl_adjusted_voters.append((i[0], i[1]))
         
-        bl_adjusted_voters.append((data["blacklist_assign"], accum))
+        bl_adjusted_voters.append((data.blacklist_assign, accum))
 
     else:
         bl_adjusted_voters = voters
@@ -143,7 +142,7 @@ def black_list(voters):
 
 
 def voter_min(voters):
-    min_wallet = int(data['vote_min'] * atomic)
+    min_wallet = int(data.vote_min * data.atomic)
     
     if min_wallet > 0:
         min_adjusted_voters = []
@@ -161,12 +160,12 @@ def voter_min(voters):
 def voter_cap(voters):
 
     # cap processing
-    max_wallet = int(data['vote_cap'] * atomic)
+    max_wallet = int(data.vote_cap * atomic)
     
     if max_wallet > 0:
         cap_adjusted_voters = []
         for i in voters:
-            if i[1] > max_wallet and i[0] != data["blacklist_assign"]:
+            if i[1] > max_wallet and i[0] != data.blacklist_assign:
                 cap_adjusted_voters.append((i[0], max_wallet))
             else:
                 cap_adjusted_voters.append((i[0], i[1]))
@@ -203,7 +202,7 @@ def get_voters():
     # get voters
     initial_voters = arkdb.voters()
     
-    if data['whitelist'] == 'Y':
+    if data.whitelist == 'Y':
         bl = white_list(initial_voters)
     else:
         # process blacklist, voter cap, and voter min:
@@ -211,7 +210,7 @@ def get_voters():
         bl_adjust_two = voter_cap(bl_adjust)
         bl = voter_min(bl_adjust_two)
    
-    snekdb.storeVoters(bl, data['voter_share'])
+    snekdb.storeVoters(bl, data.voter_share)
     
     # anti-dulition
     block_voters = anti_dilute(bl)
@@ -222,7 +221,7 @@ def get_voters():
 def get_rewards():
     
     rewards = []
-    for k, v in data['pay_addresses'].items():
+    for k, v in data.pay_addresses.items():
         rewards.append(v)
     
     snekdb.storeRewards(rewards) 
@@ -231,10 +230,9 @@ def get_rewards():
 def del_address(addr):
     msg = "default"
     
-    for k, v in data['pay_addresses'].items():
+    for k, v in data.pay_addresses.items():
         if addr == v:
             msg = k
-            #msg = k + " - TBW v2"
     
     return msg
 
@@ -245,9 +243,9 @@ def process_voter_pmt(min_amt):
     for row in voters:
         if row[1] > min_amt:
                
-            msg = data["voter_msg"]
+            msg = data.voter_msg
             
-            if data['cover_tx_fees'] == "Y":
+            if data.cover_tx_fees == "Y":
                 # update staging records
                 snekdb.storePayRun(row[0], row[1], msg)
                 # adjust sql balances
@@ -265,19 +263,19 @@ def process_delegate_pmt(fee, adjust):
     # process delegate first
     delreward = snekdb.rewards().fetchall()        
     for row in delreward:
-        if row[0] == data['pay_addresses']['reserve']:
+        if row[0] == data.pay_addresses['reserve']:
             
             # adjust reserve payment by factor to account for not all tx being paid due to tx fees or min payments
             del_pay_adjust = int(row[1]*adjust)
 
-            if data['cover_tx_fees'] == 'Y':
+            if data.cover_tx_fees == 'Y':
                 net_pay = del_pay_adjust - fee
             else:
                 net_pay = del_pay_adjust - transaction_fee
     
             if net_pay <= 0:
                 # check if 100% share node
-                if data['voter_share'] == 1.00 and data['cover_tx_fees'] == 'N':
+                if data.voter_share == 1.00 and data.cover_tx_fees == 'N':
                     # do nothing
                     pass
                 else:
@@ -295,7 +293,7 @@ def process_delegate_pmt(fee, adjust):
                 snekdb.updateDelegatePaidBalance(row[0], del_pay_adjust)
                 
         else:
-            if data['cover_tx_fees'] == 'N':
+            if data.cover_tx_fees == 'N':
                 # update staging records
                 net = row[1] - transaction_fee
 
@@ -312,7 +310,7 @@ def process_delegate_pmt(fee, adjust):
 
 
 def payout():
-    minamt = int(data['min_payment'] * atomic)
+    minamt = int(data.min_payment * data.atomic)
 
     # count number of transactions greater than payout threshold
     d_count = len([j for j in snekdb.rewards() if j[1] > 0])
@@ -320,7 +318,7 @@ def payout():
     # get total possible payouts before adjusting for accumulated payments
     t_count = len([i for i in snekdb.voters() if i[1] > 0])
     
-    if data['cover_tx_fees'] == 'Y':
+    if data.cover_tx_fees == 'Y':
         v_count = len([i for i in snekdb.voters() if i[1] > minamt])
     else:
         v_count = len([i for i in snekdb.voters() if (i[1] > minamt and (i[1]-transaction_fee) > 0)])
@@ -342,7 +340,7 @@ def payout():
 
 
 def interval_check(bc):
-    if bc % data['interval'] == 0:
+    if bc % data.interval == 0:
         # check if there is an unpaid balance for voters
         total = 0
         # get voter balances
@@ -374,7 +372,7 @@ def initialize():
         
     # mark all blocks as processed
     for row in all_blocks:
-        if row[4] <= data['start_block']:
+        if row[4] <= data.start_block:
             snekdb.markAsProcessed(row[4])
         
     # set block count to rows imported
@@ -407,36 +405,30 @@ def share_change():
         # look for matches on old value
         if i[3] == old:
             #update share rate
-            snekdb.updateVoterShare(i[0],data['voter_share'])
+            snekdb.updateVoterShare(i[0],data.voter_share)
     quit()
 
 if __name__ == '__main__':
 
     # get config data
     u = Util()
-    #data = u.parse_configs()
     data = Config()
-    print(data.network)
-    print(data.fixed)
-    print(data.keep)
-    print(data.pay_addresses)
-    quit()
     network = Network(data['network'])
 
-    dynamic = Dynamic(data['dbusername'], data['voter_msg'])
+    dynamic = Dynamic(data.database_user, data.voter_msg)
     dynamic.get_fee_configs()
     transaction_fee = dynamic.get_dynamic_fee()
     
     # initialize db connection
-    arkdb = ArkDB(network.database, data['dbusername'], network.database_password, data['publicKey'])
+    arkdb = ArkDB(network.database, data.database_user, network.database_password, data.public_key)
     
     # check to see if ark.db exists, if not initialize db, etc
     if os.path.exists(tbw_path / 'ark.db') is False:
-        snekdb = SnekDB(data['dbusername'])
+        snekdb = SnekDB(data.database_user)
         initialize()
     
     # check for new rewards accounts to initialize if any changed
-    snekdb = SnekDB(data['dbusername'])
+    snekdb = SnekDB(data.database_user)
     get_rewards()
 
     # set block count        
@@ -480,7 +472,7 @@ if __name__ == '__main__':
 
             arkdb.close_connection()
             # pause 30 seconds between runs
-            time.sleep(data["block_check"])
+            time.sleep(data.block_check)
     else:
         # some options passed
         option = sys.argv[1]
