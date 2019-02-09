@@ -1,6 +1,6 @@
 import psycopg2
 
-class ArkDB:
+class ArkDB():
     def __init__(self, db, u, pw, pk):
         self.db=db
         self.user=u
