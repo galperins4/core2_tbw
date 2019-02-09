@@ -5,7 +5,6 @@ from pathlib import Path
 class Config():
     def __init__(self):
         self.home = str(Path.home())
-        self.network = network
         env_path = self.home + '/core2_tbw/core/config/config'
         load_dotenv(env_path)
         self.load_tbw_config()
