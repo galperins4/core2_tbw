@@ -2,7 +2,7 @@
 import os.path
 import time
 import sys
-#from config.config import Config
+from config.config import Config
 from network.network import Network
 from util.sql import SnekDB
 from util.ark import ArkDB
@@ -414,7 +414,9 @@ if __name__ == '__main__':
 
     # get config data
     u = Util()
-    data = u.parse_configs()
+    #data = u.parse_configs()
+    data = Config()
+    quit()
     network = Network(data['network'])
 
     dynamic = Dynamic(data['dbusername'], data['voter_msg'])
