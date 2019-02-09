@@ -412,7 +412,7 @@ if __name__ == '__main__':
 
     # get config data
     data = Config()
-    print(data.start_block)
+    print(type(data.start_block))
     quit()
     network = Network(data.network)
     
