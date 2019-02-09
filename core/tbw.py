@@ -417,8 +417,6 @@ if __name__ == '__main__':
     #data = u.parse_configs()
     data = Config()
     print(data.network)
-    print(data.blacklist_addr)
-    print(data.whitelist_addr)
     print(data.fixed)
     print(data.keep)
     print(data.pay_addresses)
