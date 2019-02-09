@@ -11,7 +11,7 @@ from util.util import Util
 from pathlib import Path
 
 
-tbw_path = Path().resolve().parent
+#tbw_path = Path().resolve().parent
 
 
 def allocate(lb):
@@ -423,6 +423,9 @@ if __name__ == '__main__':
     arkdb = ArkDB(network.database, data.database_user, network.database_password, data.public_key)
     
     # check to see if ark.db exists, if not initialize db, etc
+    tbw_path = config.home + '/core2_tbw'
+    print(tbw_path)
+    quit()
     if os.path.exists(tbw_path / 'ark.db') is False:
         snekdb = SnekDB(data.database_user)
         initialize()
