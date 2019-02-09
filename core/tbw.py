@@ -11,9 +11,6 @@ from util.util import Util
 from pathlib import Path
 
 
-#tbw_path = Path().resolve().parent
-
-
 def allocate(lb):
     
     # create temp log / export output for block  rewards
@@ -160,7 +157,7 @@ def voter_min(voters):
 def voter_cap(voters):
 
     # cap processing
-    max_wallet = int(data.vote_cap * atomic)
+    max_wallet = int(data.vote_cap * data.atomic)
     
     if max_wallet > 0:
         cap_adjusted_voters = []
