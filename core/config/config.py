@@ -7,7 +7,7 @@ class Config():
         self.home = str(Path.home())
         env_path = self.home + '/core2_tbw/core/config/config'
         load_dotenv(env_path)
-        self.atomic = os.getenv("ATOMIC")
+        self.atomic = int(os.getenv("ATOMIC"))
         self.load_tbw_config()
         self.load_pool_config()
         self.format_fixed()
