@@ -75,7 +75,7 @@ def share():
 
         # get max blast tx and check for unprocessed payments
         max_tx = os.getenv("CORE_TRANSACTION_POOL_MAX_PER_REQUEST")
-        if max_tx == None:
+        if max_tx is None:
             unprocessed_pay = snekdb.stagedArkPayment().fetchall()
         else:
             unprocessed_pay = snekdb.stagedArkPayment(int(max_tx)).fetchall()
@@ -93,7 +93,7 @@ def share():
                 # fixed processing
                 if i[1] in data.fixed.keys():
                     fixed_amt = int(data.fixed[i[1]] * data.atomic)
-                    tx = build_transfer_transaction(i[1], (fixed_amt), i[3], transaction_fee, data.passphrase, data.secondphrase)
+                    tx = build_transfer_transaction(i[1], fixed_amt, i[3], transaction_fee, data.passphrase, data.secondphrase)
                 else:           
                     tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, data.passphrase, data.secondphrase)
                 check[tx['id']] = i[0]

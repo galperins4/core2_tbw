@@ -3,7 +3,7 @@ from client import ArkClient
 from pathlib import Path
 
 
-class Util():
+class Util:
     def __init__(self, n):
         self.home = str(Path.home())
         net = n.split('_')
