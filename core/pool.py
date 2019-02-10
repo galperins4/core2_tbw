@@ -23,7 +23,6 @@ def index():
         else:
             s['forging'] = 'Standby'
 
-    # s['votes'] = dstats['data']['votes']
     snekdb = SnekDB(data['dbusername'])
     voter_data = snekdb.voters().fetchall()
     voter_count = client.delegates.voter_balances(data['delegate'])

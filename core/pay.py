@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 
 atomic = 100000000
 
+
 def broadcast(tx):
     
     # broadcast to relay
@@ -90,7 +91,7 @@ def go():
                 dynamic = Dynamic(data['dbusername'], i[3])
                 dynamic.get_node_configs()
                 transaction_fee = dynamic.get_dynamic_fee()
-                
+
                 # fixed processing
                 if i[1] in data['fixed'].keys():
                     fixed_amt = int(data['fixed'][i[1]] * atomic)
