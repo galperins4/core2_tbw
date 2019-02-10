@@ -125,7 +125,7 @@ if __name__ == '__main__':
     data = Config()
     network = Network(data.network)
     u = Util(data.network)
-    snekdb = SnekDB(data.database_user)
+    snekdb = SnekDB(data.database_user, data.network)
     client = u.get_client(network.api_port)
     build_network()
     
