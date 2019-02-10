@@ -4,14 +4,13 @@ import os
 from dotenv import load_dotenv
 from crypto.configuration.network import set_custom_network
 from crypto.transactions.builder.transfer import Transfer
-#from config.config import Config
+from config.config import Config
 from network.network import Network
 from util.sql import SnekDB
 from util.dynamic import Dynamic
 from util.util import Util
 from datetime import datetime
 
-atomic = 100000000
 
 def broadcast(tx):
     
@@ -49,6 +48,10 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp):
         fee=fee
     )
     transaction.sign(pp)
+    
+    if sp == 'None':
+        sp = None
+    
     if sp is not None:
         transaction.second_sign(sp)
 
@@ -83,16 +86,16 @@ def share():
             check = {}
             
             for i in unprocessed_pay:
-                dynamic = Dynamic(data['dbusername'], i[3])
+                dynamic = Dynamic(data.database_user, i[3])
                 dynamic.get_fee_configs()
                 transaction_fee = dynamic.get_dynamic_fee()
                 
                 # fixed processing
-                if i[1] in data['fixed'].keys():
-                    fixed_amt = int(data['fixed'][i[1]] * atomic)
-                    tx = build_transfer_transaction(i[1], (fixed_amt), i[3], transaction_fee, passphrase, secondphrase)
+                if i[1] in data.fixed.keys():
+                    fixed_amt = int(data.fixed[i[1]] * data.atomic)
+                    tx = build_transfer_transaction(i[1], (fixed_amt), i[3], transaction_fee, data.passphrase, data.secondphrase)
                 else:           
-                    tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, passphrase, secondphrase)
+                    tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, data.passphrase, data.secondphrase)
                 check[tx['id']] = i[0]
                 signed_tx.append(tx)
                 time.sleep(0.25)
@@ -119,21 +122,14 @@ def share():
 
 if __name__ == '__main__':
    
-    u = Util()
-    data = u.parse_configs()
-    network = Network(data['network'])
-    snekdb = SnekDB(data['dbusername'])
+    data = Config()
+    network = Network(data.network)
+    u = Util(data.network)
+    snekdb = SnekDB(data.database_user)
     client = u.get_client(network.api_port)
     build_network()
     
     #get dot path for load_env and load
     dot = u.core+'/.env'
     load_dotenv(dot)
-    
-    # Get the passphrase from config.json
-    passphrase = data['passphrase']
-    # Get the second passphrase from config.json
-    secondphrase = data['secondphrase']
-    if secondphrase == 'None':
-        secondphrase = None
-    share()
+    share(
