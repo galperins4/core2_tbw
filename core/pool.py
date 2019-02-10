@@ -24,7 +24,7 @@ def index():
         else:
             s['forging'] = 'Standby'
 
-    snekdb = SnekDB(data.database_user)
+    snekdb = SnekDB(data.database_user, data.network)
     voter_data = snekdb.voters().fetchall()
     voter_count = client.delegates.voter_balances(data.delegate)
     s['votes'] = len(voter_count['data'])
@@ -37,7 +37,7 @@ def index():
 
 @app.route('/payments')
 def payments():
-    snekdb = SnekDB(data.database_user)
+    snekdb = SnekDB(data.database_user, data.network)
     data_out = snekdb.transactions().fetchall()
     tx_data = []
     for i in data_out:
