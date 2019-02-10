@@ -1,5 +1,6 @@
 import os.path
 import json
+from .util import Util
 
 atomic = 100000000
 
@@ -12,33 +13,52 @@ class Dynamic:
         self.dot = None
 
     def get_node_configs(self):
-        envpath = '/home/' + self.username + '/.ark/config/'
-        # check if there is a network file
-        if os.path.exists(envpath + 'network.json') is True:
-            with open(envpath + 'network.json') as network_file:
-                self.network = json.load(network_file)
-        else:
-            self.network = None
-        
-        
+        u = Util()
+        plugin_file = u.core+'/plugins.js'
+        lines = [line.rstrip('\n') for line in open(plugin_file)]
+        self.plugins = lines
+
+    
+    def parser(self, line):
+        temp = line.split(':')[1]
+        return temp.replace(',','').strip()
+    
+    
     def calculate_dynamic_fee(self, t, s, c):
         fee = int((t+s)*c)
         return fee
 
+    
+    def scan_file(self,f):
+        check = False
 
+        for count,i in enumerate(f):
+            # check for dynamic fees
+            if "dynamicFees" in i:
+                check = True
+            elif "enabled" in i:
+                if check is True:
+                    e = self.parser(i)
+                    check = False
+            # check for minPoolFee
+            elif "minFeePool" in i:
+                mfp = int(self.parser(i))
+            # check for transfer bytes
+            elif "transfer" in i:
+                o = int(self.parser(i))
+    
+        return e, mfp, o
+    
     def get_dynamic_fee(self):
-        if self.network is None or self.network['constants'][0]['fees']['dynamic'] is False:
-            # standard transaction fees
+        
+        enabled, fee_multiplier, dynamic_offset = self.scan_file(self.plugins)
+        if enabled is "false":
             transaction_fee = int(.1 * atomic)
         else:
             # get size of transaction - S
             standard_tx = 230
             v_msg = len(self.msg)
             tx_size = standard_tx + v_msg
-            # get T
-            dynamic_offset = self.network['constants'][0]['fees']['dynamicFees']['addonBytes']['transfer']
-            # get C
-            fee_multiplier = self.network['constants'][0]['fees']['dynamicFees']['minFeePool']
             #calculate transaction fee
             transaction_fee = self.calculate_dynamic_fee(dynamic_offset, tx_size, fee_multiplier)
 

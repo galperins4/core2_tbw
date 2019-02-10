@@ -1,19 +1,6 @@
 from flask import Flask, jsonify, request
-import json
 from util.sql import SnekDB
-
-from pathlib import Path
-pool_path = Path().resolve().parent
-
-
-def parse_pool():
-
-    with open(pool_path / 'config/pool.json') as data_file:
-        d = json.load(data_file)
-    with open(pool_path / 'config/networks.json') as network_file:
-        n = json.load(network_file)
-        
-    return d, n
+from util.util import Util
 
 
 app = Flask(__name__)
@@ -32,6 +19,6 @@ def share():
 
 
 if __name__ == '__main__':
-    data, network = parse_pool()
-    #snekdb = SnekDB(data['dbusername'])
+    u = Util()
+    data, network = u.parse_pool()
     app.run(host=data['pool_ip'], port=data['custom_port'])

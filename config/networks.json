@@ -53,6 +53,33 @@
     "db_user": "null",
     "db_pw": "password"
     },
+    "qredit_mainnet": {
+    "epoch": ["2017", "3", "21", "13", "00", "00"],
+    "version": 58,
+    "wif": 187,
+    "port": 4103,
+    "db": "qredit_mainnet",
+    "db_user": "null",
+    "db_pw": "password"
+    },
+    "ripa_devnet": {
+    "epoch": ["2017", "3", "21", "13", "00", "00"],
+    "version": 75,
+    "wif": 186,
+    "port": 7500,
+    "db": "ripa_devnet",
+    "db_user": "null",
+    "db_pw": "password"
+    },
+    "ripa_mainnet": {
+    "epoch": ["2017", "3", "21", "13", "00", "00"],
+    "version": 55,
+    "wif": 170,
+    "port": 5500,
+    "db": "ripa_mainnet",
+    "db_user": "null",
+    "db_pw": "password"
+    },
     "phantom_mainnet": {
     "epoch": ["2019", "1", "3", "12", "00", "00"],
     "version": 55,

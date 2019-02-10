@@ -1,21 +1,15 @@
 #!/usr/bin/env python
 from crypto.configuration.network import set_custom_network
 from crypto.transactions.builder.transfer import Transfer
-from tbw import parse_config
 from util.sql import SnekDB
 from util.dynamic import Dynamic
-from client import ArkClient
+from util.util import Util
 from datetime import datetime
 import time
 import os
 from dotenv import load_dotenv
 
 atomic = 100000000
-
-
-def get_client(ip="localhost"):
-    port = network[data['network']]['port']
-    return ArkClient('http://{0}:{1}/api'.format(ip, port))
 
 
 def broadcast(tx):
@@ -82,7 +76,7 @@ def go():
         signed_tx = []
 
         # get max blast tx and check for unprocessed payments
-        max_tx = os.getenv("ARK_TRANSACTION_POOL_MAX_PER_REQUEST")
+        max_tx = os.getenv("CORE_TRANSACTION_POOL_MAX_PER_REQUEST")
         if max_tx == None:
             unprocessed_pay = snekdb.stagedArkPayment().fetchall()
         else:
@@ -97,7 +91,7 @@ def go():
                 dynamic = Dynamic(data['dbusername'], i[3])
                 dynamic.get_node_configs()
                 transaction_fee = dynamic.get_dynamic_fee()
-            
+
                 # fixed processing
                 if i[1] in data['fixed'].keys():
                     fixed_amt = int(data['fixed'][i[1]] * atomic)
@@ -130,13 +124,14 @@ def go():
 
 if __name__ == '__main__':
    
-    data, network = parse_config()
+    u = Util()
+    data, network = u.parse_configs()
     snekdb = SnekDB(data['dbusername'])
-    client = get_client()
+    client = u.get_client()
     build_network()
     
     #get dot path for load_env and load
-    dot = '/home/'+data['dbusername']+'/.ark/.env'
+    dot = u.core+'/.env'
     load_dotenv(dot)
     
     # Get the passphrase from config.json

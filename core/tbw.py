@@ -1,30 +1,16 @@
 #!/usr/bin/env python
-
 from util.sql import SnekDB
 from util.ark import ArkDB
 from util.dynamic import Dynamic
+from util.util import Util
 from pathlib import Path
 import os.path
 import time
-import json
 import sys
 
 
 tbw_path = Path().resolve().parent
 atomic = 100000000
-
-
-def parse_config():
-    """
-    Parse the config.json file and return the result.
-    """
-    with open(tbw_path / 'config/config.json') as data_file:
-        d = json.load(data_file)
-        
-    with open(tbw_path / 'config/networks.json') as network_file:
-        n = json.load(network_file)
-
-    return d, n
 
 
 def allocate(lb):
@@ -424,8 +410,9 @@ def share_change():
 
 if __name__ == '__main__':
 
+    u = Util()
     # get config data
-    data, network = parse_config()
+    data, network = u.parse_configs()
 
     dynamic = Dynamic(data['dbusername'], data['voter_msg'])
     dynamic.get_node_configs()
