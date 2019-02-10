@@ -132,4 +132,4 @@ if __name__ == '__main__':
     #get dot path for load_env and load
     dot = u.core+'/.env'
     load_dotenv(dot)
-    share(
+    share()
