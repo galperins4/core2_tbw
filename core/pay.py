@@ -86,7 +86,7 @@ def share():
             check = {}
             
             for i in unprocessed_pay:
-                dynamic = Dynamic(data.database_user, i[3])
+                dynamic = Dynamic(data.database_user, i[3], data.network)
                 dynamic.get_fee_configs()
                 transaction_fee = dynamic.get_dynamic_fee()
                 
