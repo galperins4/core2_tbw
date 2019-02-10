@@ -26,7 +26,7 @@ def index():
 
     snekdb = SnekDB(data.database_user)
     voter_data = snekdb.voters().fetchall()
-    voter_count = client.delegates.voter_balances(data['delegate'])
+    voter_count = client.delegates.voter_balances(data.delegate)
     s['votes'] = len(voter_count['data'])
     
     if data.pool_version == "original":
