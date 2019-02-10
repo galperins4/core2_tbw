@@ -18,7 +18,7 @@ def index():
     s['missed'] = dstats['data']['blocks']['missed']
     s['rank'] = dstats['data']['rank']
     s['productivity'] = dstats['data']['production']['productivity']
-    if data['network'] in ['ark_mainnet', 'ark_devnet']:
+    if data.network in ['ark_mainnet', 'ark_devnet']:
         if s['rank'] <= 51:
             s['forging'] = 'Forging'
         else:
