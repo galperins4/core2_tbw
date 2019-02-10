@@ -54,7 +54,7 @@ if __name__ == '__main__':
     data = Config()
     network = Network(data.network)
     u = Util(data.network)
-    client = u.get_client()
+    client = u.get_client(network.api_port)
     navbar = {
        'dname': data.delegate,
        'proposal': data.proposal,
