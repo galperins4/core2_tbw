@@ -2,8 +2,8 @@ import sqlite3
 from datetime import datetime
 
 class SnekDB():
-    def __init__(self, u):
-        self.connection=sqlite3.connect('/home/'+u+'/core2_tbw/ark.db')
+    def __init__(self, u, n):
+        self.connection=sqlite3.connect('/home/'+u+'/core2_tbw/'+n+'.db')
         self.cursor=self.connection.cursor()
 
 
