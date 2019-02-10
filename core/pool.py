@@ -1,5 +1,7 @@
+from config.config import Config
 from flask import Flask, render_template, request
 from flask_api import status
+from network.network import Network
 from util.sql import SnekDB
 from util.util import Util
 
@@ -10,8 +12,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():    
     s = {} 
-    pkey = data['pubkey']
-    dstats = client.delegates.get(pkey)
+    dstats = client.delegates.get(data.public_key)
 
     s['forged'] = dstats['data']['blocks']['produced']
     s['missed'] = dstats['data']['blocks']['missed']
@@ -23,13 +24,12 @@ def index():
         else:
             s['forging'] = 'Standby'
 
-    # s['votes'] = dstats['data']['votes']
-    snekdb = SnekDB(data['dbusername'])
+    snekdb = SnekDB(data.database_user)
     voter_data = snekdb.voters().fetchall()
     voter_count = client.delegates.voter_balances(data['delegate'])
     s['votes'] = len(voter_count['data'])
     
-    if poolVersion == "original":
+    if data.pool_version == "original":
         return render_template('index.html', node=s, row=voter_data, n=navbar)
     else:
         return render_template('geops_index.html', node=s, row=voter_data, n=navbar)
@@ -37,7 +37,7 @@ def index():
 
 @app.route('/payments')
 def payments():
-    snekdb = SnekDB(data['dbusername'])
+    snekdb = SnekDB(data.database_user)
     data_out = snekdb.transactions().fetchall()
     tx_data = []
     for i in data_out:
@@ -48,39 +48,17 @@ def payments():
        return render_template('payments.html', row=tx_data, n=navbar)
     else:
        return render_template('geops_payments.html', row=tx_data, n=navbar)
-        
-
-@app.route('/webhook', methods=['POST'])
-def webhook():
-    hook_data = json.loads(request.data)
-    authorization = request.headers['Authorization']
-    token = authorization+second
-
-    if token == webhookToken:
-        # do something with the data like store in database
-        block = [[hook_data['data']['id'], hook_data['data']['timestamp'], hook_data['data']['reward'],
-                 hook_data['data']['totalFee'], hook_data['data']['height']]]
-
-        # store block to get allocated by tbw
-        snekdb = SnekDB(data['dbusername'])
-        snekdb.storeBlocks(block)
-        return "OK"
-
-    # Token does not match
-    return '', status.HTTP_401_UNAUTHORIZED
 
 
 if __name__ == '__main__':
-    u = Util()
-    data, network = u.parse_pool()
-    webhookToken = data['webhook_token']
-    poolVersion = data['pool_version']
-    first, second = webhookToken[:len(webhookToken) // 2], webhookToken[len(webhookToken) // 2:]
+    data = Config()
+    network = Network(data.network)
+    u = Util(data.network)
     client = u.get_client()
     navbar = {
-       'dname': data['delegate'],
-       'proposal': data['proposal'],
-       'explorer': data['explorer'],
-       'coin': data['coin']}
+       'dname': data.delegate,
+       'proposal': data.proposal,
+       'explorer': data.explorer,
+       'coin': data.coin}
     
-    app.run(host=data['pool_ip'], port=data['pool_port'])
+    app.run(host=data.pool_ip, port=data.pool_port)
