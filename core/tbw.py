@@ -415,8 +415,10 @@ if __name__ == '__main__':
     data, network = u.parse_configs()
 
     dynamic = Dynamic(data['dbusername'], data['voter_msg'])
-    dynamic.get_node_configs()
+    #dynamic.get_node_configs()
     transaction_fee = dynamic.get_dynamic_fee()
+    print(transaction_fee)
+    quit()
     
     # initialize db connection
     # get database
