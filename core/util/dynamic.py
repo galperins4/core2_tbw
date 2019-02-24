@@ -11,46 +11,11 @@ class Dynamic:
         self.msg = msg
         self.u = Util()
         
-
-        
-    '''     
-    def get_node_configs(self):
-        u = Util()
-        plugin_file = u.core+'/plugins.js'
-        lines = [line.rstrip('\n') for line in open(plugin_file)]
-        self.plugins = lines
-    '''
-    '''
-    def parser(self, line):
-        temp = line.split(':')[1]
-        return temp.replace(',','').strip()
-    '''
     
     def calculate_dynamic_fee(self, t, s, c):
         fee = int((t+s)*c)
         return fee
 
-    '''
-    def scan_file(self,f):
-        check = False
-
-        for count,i in enumerate(f):
-            # check for dynamic fees
-            if "dynamicFees" in i:
-                check = True
-            elif "enabled" in i:
-                if check is True:
-                    e = self.parser(i)
-                    check = False
-            # check for minPoolFee
-            elif "minFeePool" in i:
-                mfp = int(self.parser(i))
-            # check for transfer bytes
-            elif "transfer" in i:
-                o = int(self.parser(i))
-    
-        return e, mfp, o
-    '''
     
     def get_dynamic_fee(self):
         client = self.u.get_client()
