@@ -1,0 +1,8 @@
+# network
+EPOCH = "2017,3,21,13,00,00"
+VERSION = 82
+WIF = 186
+API_PORT = 4112
+DATABASE = "test_swapblocks"
+DATABASE_USER = "null"
+DATABASE_PASSWORD = "password"

@@ -1,0 +1,8 @@
+# network
+EPOCH = "2019,1,3,12,00,00"
+VERSION = 55
+WIF = 170
+API_PORT = 4003
+DATABASE = "phantom_mainnet"
+DATABASE_USER = "phantom"
+DATABASE_PASSWORD = "password"
