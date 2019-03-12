@@ -21,12 +21,9 @@ def broadcast(tx):
         records = [[j['recipientId'], j['amount'], j['id']] for j in tx]
         time.sleep(1)
     except BaseException:
-        # fall back to delegate node to grab data needed
-        backup_client = get_client(data['delegate_ip'])
-        transaction = backup_client.transactions.create(tx)
-        print(transaction)
-        records = [[j['recipientId'], j['amount'], j['id']] for j in tx]
-        time.sleep(1)
+        # error
+        print("Something went wrong")
+        quit()
 
     snekdb.storeTransactions(records)
     
