@@ -413,6 +413,7 @@ if __name__ == '__main__':
     u = Util()
     # get config data
     data, network = u.parse_configs()
+    client = u.get_client()
 
     dynamic = Dynamic(data['dbusername'], data['voter_msg'])
     transaction_fee = dynamic.get_dynamic_fee()
