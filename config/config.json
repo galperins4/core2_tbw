@@ -1,7 +1,7 @@
 {
   "start_block": 0,
   "network": "network",
-  "delegate_ip": "ip",
+  "delegate": "delegate name",
   "dbusername": "dbname",
   "publicKey": "publicKey",
   "interval": 211,
