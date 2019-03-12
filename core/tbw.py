@@ -199,7 +199,10 @@ def anti_dilute(voters):
 def get_voters():
 
     # get voters
-    initial_voters = arkdb.voters()
+    #initial_voters = arkdb.voters()
+    v = client.delegates.voter_balances(delegate_id=data["delegate"])
+    initial_voters = [(i,v[i]) for i in v]
+    
     
     if data['whitelist'] == 'Y':
         bl = white_list(initial_voters)
