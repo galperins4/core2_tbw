@@ -201,9 +201,7 @@ def get_voters():
     # get voters
     #initial_voters = arkdb.voters()
     v = client.delegates.voter_balances(delegate_id=data["delegate"])['data']
-    print(v)
-    quit()
-    initial_voters = [(i,v[i]) for i in v['data']]
+    initial_voters = [(i,v[i]) for i in v]
     
     
     if data['whitelist'] == 'Y':
