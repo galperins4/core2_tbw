@@ -201,7 +201,7 @@ def get_voters():
     # get voters
     initial_voters = []
     start = 1
-    v = client.delegates.voters(delegate_id=data['delegate']))
+    v = client.delegates.voters(delegate_id=data['delegate'])
     counter = v['meta']['pageCount']
     while start <= counter:
         c = client.delegates.voters(delegate_id=data['delegate'], page=start)
