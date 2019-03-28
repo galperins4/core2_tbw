@@ -14,9 +14,11 @@ def index():
     dstats = client.delegates.get(pkey)
 
     s['forged'] = dstats['data']['blocks']['produced']
-    s['missed'] = dstats['data']['blocks']['missed']
+    #s['missed'] = dstats['data']['blocks']['missed']
+    s['missed'] = 0 # temp fix
     s['rank'] = dstats['data']['rank']
-    s['productivity'] = dstats['data']['production']['productivity']
+    #s['productivity'] = dstats['data']['production']['productivity']
+    s['productivity'] = 100 # temp fix
     if data['network'] in ['ark_mainnet', 'ark_devnet']:
         if s['rank'] <= 51:
             s['forging'] = 'Forging'
@@ -25,8 +27,8 @@ def index():
 
     snekdb = SnekDB(data['dbusername'])
     voter_data = snekdb.voters().fetchall()
-    voter_count = client.delegates.voter_balances(data['delegate'])
-    s['votes'] = len(voter_count['data'])
+    voter_count = client.delegates.voters(data['delegate'])    
+    s['votes'] = voter_count['meta']['totalCount']
     
     if poolVersion == "original":
         return render_template('index.html', node=s, row=voter_data, n=navbar)
