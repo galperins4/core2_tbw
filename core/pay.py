@@ -20,9 +20,9 @@ def broadcast(tx):
         print(transaction)
         records = [[j['recipientId'], j['amount'], j['id']] for j in tx]
         time.sleep(1)
-    except BaseException:
+    except BaseException as e:
         # error
-        print("Something went wrong")
+        print("Something went wrong", e)
         quit()
 
     snekdb.storeTransactions(records)
