@@ -6,7 +6,7 @@ from pathlib import Path
 class Util():
     def __init__(self):
         self.home = str(Path.home())
-        self.tbw = self.home+'/core2_tbw/config'
+        self.tbw = self.home+'/core2_tbw'
         
         self.data, self.network = self.parse_configs()
         net = self.data['network'].split('_')
@@ -21,18 +21,18 @@ class Util():
 
 
     def parse_configs(self):
-        with open((self.tbw+'/config.json')) as data_file:
+        with open((self.tbw+'/config/config.json')) as data_file:
             d = json.load(data_file)
-        with open((self.tbw+'/networks.json')) as network_file:
+        with open((self.tbw+'/config/networks.json')) as network_file:
             n = json.load(network_file)
 
         return d, n    
     
     
     def parse_pool(self):
-        with open((self.tbw+'/pool.json')) as data_file:
+        with open((self.tbw+'/config/pool.json')) as data_file:
             d = json.load(data_file)
-        with open((self.tbw+'/networks.json')) as network_file:
+        with open((self.tbw+'/config/networks.json')) as network_file:
             n = json.load(network_file)
         
         return d, n
