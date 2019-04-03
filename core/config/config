@@ -4,7 +4,6 @@ ATOMIC = 100000000
 # true block weight
 START_BLOCK = 0
 NETWORK = "network"
-DELEGATE_IP = "ip"
 DATABASE_USER = "dbname"
 PUBLIC_KEY = "publicKey"
 INTERVAL = 211
