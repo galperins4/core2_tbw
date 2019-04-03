@@ -30,7 +30,7 @@ def index():
     voter_count = client.delegates.voters(data.delegate)    
     s['votes'] = voter_count['meta']['totalCount']
     
-    if poolVersion == "original":
+    if data.pool_version == "original":
         return render_template('index.html', node=s, row=voter_data, n=navbar)
     else:
         return render_template('geops_index.html', node=s, row=voter_data, n=navbar)
