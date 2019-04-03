@@ -1,8 +1,9 @@
+from config.config import Config
 from flask import Flask, render_template, request
 from flask_api import status
+from network.network import Network
 from util.sql import SnekDB
 from util.util import Util
-
 
 app = Flask(__name__)
 
@@ -10,8 +11,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():    
     s = {} 
-    pkey = data['pubkey']
-    dstats = client.delegates.get(pkey)
+    dstats = client.delegates.get(data.public_key)
 
     s['forged'] = dstats['data']['blocks']['produced']
     #s['missed'] = dstats['data']['blocks']['missed']
@@ -19,15 +19,15 @@ def index():
     s['rank'] = dstats['data']['rank']
     #s['productivity'] = dstats['data']['production']['productivity']
     s['productivity'] = 100 # temp fix
-    if data['network'] in ['ark_mainnet', 'ark_devnet']:
+    if data.network in ['ark_mainnet', 'ark_devnet']:
         if s['rank'] <= 51:
             s['forging'] = 'Forging'
         else:
             s['forging'] = 'Standby'
 
-    snekdb = SnekDB(data['dbusername'])
+    snekdb = SnekDB(data.database_user, data.network)
     voter_data = snekdb.voters().fetchall()
-    voter_count = client.delegates.voters(data['delegate'])    
+    voter_count = client.delegates.voters(data.delegate)    
     s['votes'] = voter_count['meta']['totalCount']
     
     if poolVersion == "original":
@@ -38,7 +38,7 @@ def index():
 
 @app.route('/payments')
 def payments():
-    snekdb = SnekDB(data['dbusername'])
+    snekdb = SnekDB(data.database_user, data.network)
     data_out = snekdb.transactions().fetchall()
     tx_data = []
     for i in data_out:
@@ -50,7 +50,7 @@ def payments():
     else:
        return render_template('geops_payments.html', row=tx_data, n=navbar)
         
-
+'''
 @app.route('/webhook', methods=['POST'])
 def webhook():
     hook_data = json.loads(request.data)
@@ -69,19 +69,17 @@ def webhook():
 
     # Token does not match
     return '', status.HTTP_401_UNAUTHORIZED
-
+'''
 
 if __name__ == '__main__':
-    u = Util()
-    data, network = u.parse_pool()
-    webhookToken = data['webhook_token']
-    poolVersion = data['pool_version']
-    first, second = webhookToken[:len(webhookToken) // 2], webhookToken[len(webhookToken) // 2:]
-    client = u.get_client()
+    data = Config()
+    network = Network(data.network)
+    u = Util(data.network)
+    client = u.get_client(network.api_port)
     navbar = {
-       'dname': data['delegate'],
-       'proposal': data['proposal'],
-       'explorer': data['explorer'],
-       'coin': data['coin']}
+       'dname': data.delegate,
+       'proposal': data.proposal,
+       'explorer': data.explorer,
+       'coin': data.coin}
     
-    app.run(host=data['pool_ip'], port=data['pool_port'])
+    app.run(host=data.pool_ip, port=data.pool_port)
