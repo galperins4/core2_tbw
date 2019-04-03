@@ -45,7 +45,7 @@ def payments():
         data_list = [i[0], int(i[1]), i[2], i[3]]
         tx_data.append(data_list)
     
-    if poolVersion == 'original':
+    if data.pool_version == 'original':
        return render_template('payments.html', row=tx_data, n=navbar)
     else:
        return render_template('geops_payments.html', row=tx_data, n=navbar)
