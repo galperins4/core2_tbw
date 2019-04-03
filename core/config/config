@@ -1,0 +1,37 @@
+# atmoic
+ATOMIC = 100000000
+
+# true block weight
+START_BLOCK = 0
+NETWORK = "network"
+DELEGATE_IP = "ip"
+DATABASE_USER = "dbname"
+PUBLIC_KEY = "publicKey"
+INTERVAL = 211
+VOTER_SHARE = 0.50
+PASSPHRASE = "passphrase"
+SECONDPHRASE = "None"
+VOTER_MSG = "Delegate X - True Block Weight"
+BLOCK_CHECK = 30
+COVER_TX_FEE = "Y"
+VOTE_CAP = 0
+VOTE_MIN = 0
+FIXED = "addr1:0,addr2:0"
+WHITELIST = "N"
+WHITELIST_ADDR = "addr1,addr2,addr3"
+BLACKLIST = "block"
+BLACKLIST_ADDR = "addr1,addr2,addr3"
+BLACKLIST_ASSIGN = "addr"
+MIN_PAYMENT = 0.5
+KEEP = "reserve:0.25,second:0.25"
+PAY_ADDRESSES = "reserve:addr1,second:addr2"
+
+# pool
+POOL_IP = "xx.xx.xx.xx"
+EXPLORER = "https://dexplorer.ark.io/"
+DELEGATE = "https://xx.xx.xx/"
+COIN = "DARK"
+PROPOSAL = "https://xx.xx.xx/"
+POOL_PORT = 5000
+CUSTOM_PORT = 5004
+POOL_VERSION = "original"
