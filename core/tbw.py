@@ -207,8 +207,6 @@ def get_voters():
         for j in c['data']:
             initial_voters.append((j['address'], j['balance']))
         start += 1
-    #v = client.delegates.voter_balances(delegate_id=data["delegate"])['data']
-    #initial_voters = [(i,v[i]) for i in v]
     
    
     if data.whitelist == 'Y':
@@ -424,10 +422,10 @@ def conversion_check():
     db = data.home + '/core2_tbw/'+old_db
     if os.path.exists(db) is True:
         print("Old database found")
-        quit()
         new_db = data.network+'_'+data.delegate+'.db'
         run(["cd", '~/core2_tbw/'])
         run(["cp", old_db, new_db])
+        print("Converted old database to new naming format. Please restart script")
         quit()
     
 if __name__ == '__main__':
