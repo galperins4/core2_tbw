@@ -9,6 +9,7 @@ from util.ark import ArkDB
 from util.dynamic import Dynamic
 from util.util import Util
 from pathlib import Path
+from subprocess import run
 
 
 def allocate(lb):
@@ -419,7 +420,15 @@ def share_change():
 
 def conversion_check():
     # covert ark.db to new format
-    quit()
+    old_db = 'ark.db'
+    db = data.home + '/core2_tbw/'+old_db
+    if os.path.exists(db) is True:
+        print("Old database found")
+        quit()
+        new_db = data.network+'_'+data.delegate+'.db'
+        run(["cd", '~/core2_tbw/'])
+        run(["cp", old_db, new_db])
+        quit()
     
 if __name__ == '__main__':
 
@@ -436,7 +445,10 @@ if __name__ == '__main__':
     # get database
     arkdb = ArkDB(network.database, data.database_user, network.database_password, data.public_key)
     
-    # check to see if ark.db exists, if not initialize db, etc
+    #conversion check for pre 2.3 databases
+    conversion_check()
+    
+    # check to see if db exists, if not initialize db, etc
     db = data.home + '/core2_tbw/'+data.network+'_'+data.delegate+'.db'
     if os.path.exists(db) is False:
         snekdb = SnekDB(data.database_user, data.network, data.delegate)
