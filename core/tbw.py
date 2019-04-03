@@ -425,6 +425,7 @@ def conversion_check():
         new_db = data.network+'_'+data.delegate+'.db'
         os.chdir(u.tbw)
         run(["cp", old_db, new_db])
+        run(["rm", old_db])
         print("Converted old database to new naming format. Please restart script")
         quit()
     
