@@ -13,7 +13,7 @@ def share():
     req_data = request.get_json()
     address = req_data['address']
     new_share = req_data["share"]
-    snekdb = SnekDB(data.database_user, data.network)
+    snekdb = SnekDB(data.database_user, data.network, data.delegate)
     snekdb.updateVoterShare(address, new_share)
 
     msg = {"success": "share updated"}
