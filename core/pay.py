@@ -45,6 +45,9 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp):
         fee=fee
     )
     transaction.sign(pp)
+    
+    if sp == 'None':
+        sp = None
     if sp is not None:
         transaction.second_sign(sp)
 
