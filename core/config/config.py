@@ -18,7 +18,6 @@ class Config():
     def load_tbw_config(self):
         self.start_block = int(os.getenv("START_BLOCK"))
         self.network = os.getenv("NETWORK")
-        self.delegate_ip = os.getenv("DELEGATE_IP")
         self.database_user = os.getenv("DATABASE_USER")
         self.public_key = os.getenv("PUBLIC_KEY")
         self.interval = int(os.getenv("INTERVAL"))
