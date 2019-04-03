@@ -439,11 +439,11 @@ if __name__ == '__main__':
     # check to see if ark.db exists, if not initialize db, etc
     db = data.home + '/core2_tbw/'+data.network+'.db'
     if os.path.exists(db) is False:
-        snekdb = SnekDB(data.database_user, data.network)
+        snekdb = SnekDB(data.database_user, data.network, data.delegate)
         initialize()
     
     # check for new rewards accounts to initialize if any changed
-    snekdb = SnekDB(data.database_user, data.network)
+    snekdb = SnekDB(data.database_user, data.network, data.delegate)
     get_rewards()
 
     # set block count        
