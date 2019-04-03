@@ -423,11 +423,11 @@ def conversion_check():
     
 if __name__ == '__main__':
 
-    u = Util()
     # get config data
     data = Config()
     network = Network(data.network)
-    client = u.get_client()
+    u = Util(data.network)
+    client = u.get_client(network.api_port)
 
     dynamic = Dynamic(data.database_user, data.voter_msg)
     transaction_fee = dynamic.get_dynamic_fee()
