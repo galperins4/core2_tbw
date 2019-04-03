@@ -83,7 +83,7 @@ def go():
             check = {}
             
             for i in unprocessed_pay:
-                dynamic = Dynamic(data.database_user, i[3], data.network)
+                dynamic = Dynamic(data.database_user, i[3], data.network, network.api_port)
                 transaction_fee = dynamic.get_dynamic_fee()
 
                 # fixed processing
