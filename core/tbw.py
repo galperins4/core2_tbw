@@ -423,7 +423,7 @@ def conversion_check():
     if os.path.exists(db) is True:
         print("Old database found")
         new_db = data.network+'_'+data.delegate+'.db'
-        run(["cd", '~/core2_tbw/'])
+        os.chdir(u.tbw)
         run(["cp", old_db, new_db])
         print("Converted old database to new naming format. Please restart script")
         quit()
