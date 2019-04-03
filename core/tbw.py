@@ -437,7 +437,7 @@ if __name__ == '__main__':
     arkdb = ArkDB(network.database, data.database_user, network.database_password, data.public_key)
     
     # check to see if ark.db exists, if not initialize db, etc
-    db = data.home + '/core2_tbw/'+data.network+'.db'
+    db = data.home + '/core2_tbw/'+data.network+'_'+data.delegate+'.db'
     if os.path.exists(db) is False:
         snekdb = SnekDB(data.database_user, data.network, data.delegate)
         initialize()
