@@ -28,7 +28,7 @@ PAY_ADDRESSES = "reserve:addr1,second:addr2"
 # pool
 POOL_IP = "xx.xx.xx.xx"
 EXPLORER = "https://dexplorer.ark.io/"
-DELEGATE = "https://xx.xx.xx/"
+DELEGATE = "delegate"
 COIN = "DARK"
 PROPOSAL = "https://xx.xx.xx/"
 POOL_PORT = 5000
