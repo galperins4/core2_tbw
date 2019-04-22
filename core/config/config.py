@@ -58,21 +58,20 @@ class Config():
                 temp[i.split(':')[0]] = int(i.split(':')[1])
             
             self.fixed = temp
-            
+        else:
+            self fixed = temp   
         
     def format_keep(self):
         temp = {}
-        if len(self.keep[0]) != 0:
-            for i in self.keep:
-                temp[i.split(':')[0]] = float(i.split(':')[1])
+        for i in self.keep:
+            temp[i.split(':')[0]] = float(i.split(':')[1])
             
-            self.keep = temp
+        self.keep = temp
     
     
     def format_payaddr(self):
         temp = {}
-        if len(self.pay_addresses[0]) != 0:
-            for i in self.pay_addresses:
-                temp[i.split(':')[0]] = i.split(':')[1]
+        for i in self.pay_addresses:
+            temp[i.split(':')[0]] = i.split(':')[1]
             
-            self.pay_addresses = temp
+        self.pay_addresses = temp
