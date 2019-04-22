@@ -59,7 +59,7 @@ class Config():
             
             self.fixed = temp
         else:
-            self fixed = temp   
+            self.fixed = temp   
         
     def format_keep(self):
         temp = {}
