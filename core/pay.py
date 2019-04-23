@@ -1,15 +1,15 @@
 #!/usr/bin/env python
+import time
+import os
+from dotenv import load_dotenv
 from crypto.configuration.network import set_custom_network
 from crypto.transactions.builder.transfer import Transfer
+from config.config import Config
+from network.network import Network
 from util.sql import SnekDB
 from util.dynamic import Dynamic
 from util.util import Util
 from datetime import datetime
-import time
-import os
-from dotenv import load_dotenv
-
-atomic = 100000000
 
 
 def broadcast(tx):
@@ -20,13 +20,10 @@ def broadcast(tx):
         print(transaction)
         records = [[j['recipientId'], j['amount'], j['id']] for j in tx]
         time.sleep(1)
-    except BaseException:
-        # fall back to delegate node to grab data needed
-        backup_client = get_client(data['delegate_ip'])
-        transaction = backup_client.transactions.create(tx)
-        print(transaction)
-        records = [[j['recipientId'], j['amount'], j['id']] for j in tx]
-        time.sleep(1)
+    except BaseException as e:
+        # error
+        print("Something went wrong", e)
+        quit()
 
     snekdb.storeTransactions(records)
     
@@ -34,12 +31,10 @@ def broadcast(tx):
 
 
 def build_network():
-    e = network[data['network']]['epoch']
+    e = network.epoch
     t = [int(i) for i in e]
     epoch = datetime(t[0], t[1], t[2], t[3], t[4], t[5])
-    version = network[data['network']]['version']
-    wif = network[data['network']]['wif']
-    set_custom_network(epoch, version, wif)
+    set_custom_network(epoch, network.version, network.wif)
 
 
 def build_transfer_transaction(address, amount, vendor, fee, pp, sp):
@@ -50,6 +45,9 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp):
         fee=fee
     )
     transaction.sign(pp)
+    
+    if sp == 'None':
+        sp = None
     if sp is not None:
         transaction.second_sign(sp)
 
@@ -71,7 +69,7 @@ def non_accept_check(c, a):
     return removal_check
             
 
-def go():
+def share():
     while True:
         signed_tx = []
 
@@ -88,15 +86,15 @@ def go():
             check = {}
             
             for i in unprocessed_pay:
-                dynamic = Dynamic(data['dbusername'], i[3])
+                dynamic = Dynamic(data.database_user, i[3], data.network, network.api_port)
                 transaction_fee = dynamic.get_dynamic_fee()
 
                 # fixed processing
-                if i[1] in data['fixed'].keys():
-                    fixed_amt = int(data['fixed'][i[1]] * atomic)
-                    tx = build_transfer_transaction(i[1], (fixed_amt), i[3], transaction_fee, passphrase, secondphrase)
+                if i[1] in data.fixed.keys():
+                    fixed_amt = int(data.fixed[i[1]] * data.atomic)
+                    tx = build_transfer_transaction(i[1], (fixed_amt), i[3], transaction_fee, data.passphrase, data.secondphrase)
                 else:           
-                    tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, passphrase, secondphrase)
+                    tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, data.passphrase, data.secondphrase)
                 check[tx['id']] = i[0]
                 signed_tx.append(tx)
                 time.sleep(0.25)
@@ -123,21 +121,14 @@ def go():
 
 if __name__ == '__main__':
    
-    u = Util()
-    data, network = u.parse_configs()
-    snekdb = SnekDB(data['dbusername'])
-    client = u.get_client()
+    data = Config()
+    network = Network(data.network)
+    u = Util(data.network)
+    snekdb = SnekDB(data.database_user, data.network, data.delegate)
+    client = u.get_client(network.api_port)
     build_network()
     
     #get dot path for load_env and load
     dot = u.core+'/.env'
     load_dotenv(dot)
-    
-    # Get the passphrase from config.json
-    passphrase = data['passphrase']
-    # Get the second passphrase from config.json
-    secondphrase = data['secondphrase']
-    if secondphrase == 'None':
-        secondphrase = None
-
-    go()
+    share()

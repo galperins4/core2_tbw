@@ -53,7 +53,7 @@ class ArkDB:
             except Exception as e:
                 print(e)    
 
-
+    '''
     def voters(self):
         try:
             self.cursor.execute(f"""SELECT "address" FROM wallets WHERE "vote" = '{self.PublicKey}'""")
@@ -68,12 +68,4 @@ class ArkDB:
             return voters
         except Exception as e:
             print(e)
-
-
-    def votes(self, voters):
-        totalVotes = 0
-
-        for voter in voters:
-            totalVotes += voter[1]
-
-        return totalVotes
+     '''
