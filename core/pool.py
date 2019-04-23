@@ -81,5 +81,4 @@ if __name__ == '__main__':
        'proposal': data.proposal,
        'explorer': data.explorer,
        'coin': data.coin}
-    
     app.run(host=data.pool_ip, port=data.pool_port)
