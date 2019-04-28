@@ -1,8 +1,13 @@
 import sqlite3
 from datetime import datetime
+from pathlib import Path
 
 class SnekDB:
     def __init__(self, u, n, d):
+        self.home = str(Path.home())
+        self.path = self.home+'/core2_tbw/'+n+'_'+d+'.db'
+        print(self.path)
+        quit()
         self.connection=sqlite3.connect('/home/'+u+'/core2_tbw/'+n+'_'+d+'.db')
         self.cursor=self.connection.cursor()
 
