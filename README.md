@@ -74,7 +74,7 @@ KEEP = "reserve:0.25,your_second:0.25"
 PAY_ADDRESSES = "reserve:your_addr1,your_second:addr2"  
 ### These are the addresses to go with the keep percentages (Note: reserve is required! all others are optional)
 
-# Pool
+## Pool
 
 - POOL_IP = "xx.xx.xx.xx"                  # IP of the node the pool is installed on     
 - EXPLORER = "https://dexplorer.ark.io/"   # The address of the explorer for the coin
