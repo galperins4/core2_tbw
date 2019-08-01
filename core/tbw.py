@@ -12,8 +12,7 @@ from pathlib import Path
 from subprocess import run
 
 
-def allocate(lb):
-    
+def allocate(lb):    
     # create temp log / export output for block  rewards
     rewards_check = 0
     voter_check = 0
