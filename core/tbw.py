@@ -12,8 +12,7 @@ from pathlib import Path
 from subprocess import run
 
 
-def allocate(lb):
-    
+def allocate(lb):    
     # create temp log / export output for block  rewards
     rewards_check = 0
     voter_check = 0
@@ -205,7 +204,7 @@ def get_voters():
     while start <= counter:
         c = client.delegates.voters(delegate_id=data.delegate, page=start)
         for j in c['data']:
-            initial_voters.append((j['address'], j['balance']))
+            initial_voters.append((j['address'], int(j['balance'])))
         start += 1
     
    

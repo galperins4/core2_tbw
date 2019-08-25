@@ -7,13 +7,13 @@ Install and sync relay server
 git clone https://github.com/galperins4/core2_tbw
 cd ~/core2_tbw/core/config
 nano config
-fill out configs (see below)
+fill out config (see below)
 cd ~/core2_tbw
 bash tbw.sh
 ```
 
 ## Configuration & Usage
-After the repository has been cloned you need to open the `config` and change it to your liking (see details below for Available Configuration Options). Once this has been done navigate to core2_tbw folder and execute `bash tbw.sh` to get to the main menu script. Install required packages with option 1. Initialize tbw with option 2. You can then select options 3-7 to either run all modules of tbw or parts. 
+After the repository has been cloned you need to open the `config` and change it to your liking (see below for Available Configuration Options). Once this has been done navigate to core2_tbw folder and execute `bash tbw.sh` to get to the main menu script. Install required packages with option 1. Initialize tbw with option 2. You can then select options 3-7 to either run all modules of tbw or parts. 
 
 Important! - pay_addresses and keep keys should match in config. DO NOT delete the reserve key as it is required. All other's can be deleted or more added. In addition, payment is triggered to start based on when total blocks forged / interval is an integer (with no remainder). 
 
@@ -44,7 +44,7 @@ VOTER_SHARE = 0.50
 PASSPHRASE = "passphrase"    
 ### 12 word delegate passphrase inside ""
 SECONDPHRASE = "None"        
-### 2nd 12 word delegate passphrase inside ""
+### Second 12 word delegate passphrase inside ""
 VOTER_MSG = "Delegate X - True Block Weight"  
 ### ARK and ARKfork coins only - message you want in vendor field for share payments
 BLOCK_CHECK = 30             
@@ -70,9 +70,9 @@ BLACKLIST_ASSIGN = "addr"
 MIN_PAYMENT = 0.5            
 ### Minimum threshold for payment. If set to 1, any payout less than 1 ARK will be held until the next pay run and accumulated
 KEEP = "reserve:0.25,your_second:0.25"  
-### there are the percentages for delegates to keep and distribute among x accounts (Note: reserve is required! all others are optional)
+### These are the percentages for delegates to keep and distribute among x accounts (Note: reserve:your_addr1 is required! all others are optional)
 PAY_ADDRESSES = "reserve:your_addr1,your_second:addr2"  
-### These are the addresses to go with the keep percentages (Note: reserve is required! all others are optional)
+### These are the addresses to go with the keep percentages (Note: reserve:your_addr1 is required! all others are optional)
 
 ## Pool
 
