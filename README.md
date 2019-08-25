@@ -74,21 +74,15 @@ KEEP = "reserve:0.25,your_second:0.25"
 PAY_ADDRESSES = "reserve:your_addr1,your_second:addr2"  
 ### These are the addresses to go with the keep percentages (Note: reserve:your_addr1 is required! all others are optional)
 
-# Pool
-POOL_IP = "xx.xx.xx.xx"                  
-### IP of the node the pool is installed on     
-EXPLORER = "https://dexplorer.ark.io/"   
-### The address of the explorer for the coin
-COIN = "DARK"                            
-### Coin name, DARK, ARK, QREDIT, PRSN etc
-PROPOSAL = "https://xx.xx.xx/"           
-### Link to delegate proposal (if any)
-POOL_PORT = 5000                         
-### Port for pool/webhooks
-CUSTOM_PORT = 5004                       
-### Custom port for using custom voter share update functionality
-POOL_VERSION = "original"                
-### Set the pool website version - options are "original" or "geops"
+## Pool
+
+- POOL_IP = "xx.xx.xx.xx"                  # IP of the node the pool is installed on     
+- EXPLORER = "https://dexplorer.ark.io/"   # The address of the explorer for the coin
+- COIN = "DARK"                            # Coin name, DARK, ARK, QREDIT, PRSN etc
+- PROPOSAL = "https://xx.xx.xx/"           # Link to delegate proposal (if any)
+- POOL_PORT = 5000                         # Port for pool/webhooks
+- CUSTOM_PORT = 5004                       # Custom port for using custom voter share update functionality
+- POOL_VERSION = "original"                # Set the pool website version - options are "original" or "geops"
 
 ## To Do
 
