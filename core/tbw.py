@@ -503,6 +503,8 @@ if __name__ == '__main__':
         option = sys.argv[1]
         if option == "--shareChange":
             share_change()
+        elif option == "--manualPay":
+            payout()
         else:
             print("Flag input not recognized. Closing script")
         quit()
