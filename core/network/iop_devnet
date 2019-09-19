@@ -1,7 +1,7 @@
 # network
-EPOCH = "2017,3,21,13,00,00"
-VERSION = 30
-WIF = 170
+EPOCH = "2019,8,01,08,00,00"
+VERSION = 90
+WIF = 85
 API_PORT = 4703
 DATABASE = "iop_devnet"
 DATABASE_USER = "null"
