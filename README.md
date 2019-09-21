@@ -1,31 +1,54 @@
 # Python True Block Weight
 
+## Prerequisites
+
+1. Install pip and python3.6 or above
+
+2. Install `pm2`
+
+```bash
+npm install pm2@latest -g
+# or
+yarn global add pm2
+```
+
 ## Clean/New Installation
 
 ```sh
-Install and sync relay server
-git clone https://github.com/galperins4/core2_tbw
+# Install and sync relay server
 cd ~/core2_tbw/core/config
 nano config
-fill out config (see below)
-cd ~/core2_tbw
-bash tbw.sh
+# fill out config (see below)
 ```
 
 ## Configuration & Usage
-After the repository has been cloned you need to open the `config` and change it to your liking (see below for Available Configuration Options). Once this has been done navigate to core2_tbw folder and execute `bash tbw.sh` to get to the main menu script. Install required packages with option 1. Initialize tbw with option 2. You can then select options 3-7 to either run all modules of tbw or parts. 
 
-Important! - pay_addresses and keep keys should match in config. DO NOT delete the reserve key as it is required. All other's can be deleted or more added. In addition, payment is triggered to start based on when total blocks forged / interval is an integer (with no remainder). 
+1. After the repository has been cloned you need to open the [config](./core/config/config) and change it to your liking (see [Available Configuration Options](#available-configuration-options))
+
+Main values to update here are the following:
+
+```txt
+NETWORK
+DATABASE_USER
+DELEGATE
+PUBLIC_KEY
+```
+
+2. Once this has been done navigate to core2_tbw folder and execute `bash tbw.sh` to get to the main menu script. Install required packages with option `1` and `2`. You can then select options `3`-`7` to either run all modules of tbw or parts.
+
+_Important_ - pay_addresses and keep keys should match in config. DO NOT delete the reserve key as it is required. All other's can be deleted or more added. In addition, payment is triggered to start based on when total blocks forged / interval is an integer (with no remainder).
 
 To use custom voter shares, the following 2 options are available:
-1) Directly update the column "share" column in the voters table of ark.db
-2) Turn on custom.py and send a POST request to the http://ip:port/updateShare endpoint. See below for example: `{"address":"DKahhVFVJfqCcCmaQHuYzAVFKcWjBu5i6Z", "share":0.10}`
+
+1. Directly update the column "share" column in the voters table of `your_network`.db
+
+2. Turn on custom.py and send a POST request to the http://ip:port/updateShare endpoint. See below for example: `{"address":"DKahhVFVJfqCcCmaQHuYzAVFKcWjBu5i6Z", "share":0.10}`
 
 IMPORTANT: If at any time you change you share rate you must stop tbw, update your config.json and run the following command `python3 tbw.py --shareChange`
 
 Python 3.6+ is required.
 
-## Available Configuration Options (TRUE BLOCK WEIGHT)
+## Available Configuration Options
 
 START_BLOCK = 0      
 ### Script will start calculations only for blocks after specified start block
@@ -76,7 +99,7 @@ PAY_ADDRESSES = "reserve:your_addr1,your_second:addr2"
 
 ## Pool
 
-- POOL_IP = "xx.xx.xx.xx"                  # IP of the node the pool is installed on     
+- POOL_IP = "xx.xx.xx.xx"                  # IP of the node the pool is installed on
 - EXPLORER = "https://dexplorer.ark.io/"   # The address of the explorer for the coin
 - COIN = "DARK"                            # Coin name, DARK, ARK, QREDIT, PRSN etc
 - PROPOSAL = "https://xx.xx.xx/"           # Link to delegate proposal (if any)
@@ -118,8 +141,3 @@ If you discover a security vulnerability within this package, please open an iss
 ## License
 
 [MIT](LICENSE) © [galperins4](https://github.com/galperins4)
-
-
-
-
-
