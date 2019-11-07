@@ -1,24 +1,48 @@
 # Python True Block Weight
 
+## Prerequisites
+
+1. Install pip and python3.6 or above
+
+2. Install `pm2`
+
+```bash
+npm install pm2@latest -g
+# or
+yarn global add pm2
+```
+
 ## Clean/New Installation
 
 ```sh
-Install and sync relay server
+# Install and sync relay server
 git clone https://github.com/galperins4/core2_tbw
-cd ~/core2_tbw/core/config
-nano config
-fill out config (see below)
 cd ~/core2_tbw
+nano core/config/config
+# fill out config (see below)
 bash tbw.sh
 ```
 
 ## Configuration & Usage
-After the repository has been cloned you need to open the `config` and change it to your liking (see below for Available Configuration Options). Once this has been done navigate to core2_tbw folder and execute `bash tbw.sh` to get to the main menu script. Install required packages with option 1. Initialize tbw with option 2. You can then select options 3-7 to either run all modules of tbw or parts. 
 
-Important! - pay_addresses and keep keys should match in config. DO NOT delete the reserve key as it is required. All other's can be deleted or more added. In addition, payment is triggered to start based on when total blocks forged / interval is an integer (with no remainder). 
+1. After the repository has been cloned you need to open the [config](./core/config/config) and change it to your liking (see [Available Configuration Options](#available-configuration-options))
+
+Main values to update here are the following:
+
+```txt
+NETWORK
+DATABASE_USER
+DELEGATE
+PUBLIC_KEY
+```
+
+2. Once this has been done navigate to core2_tbw folder and execute `bash tbw.sh` to get to the main menu script. Install required packages with option `1` and `2`. You can then select options `3`-`7` to either run all modules of tbw or parts.
+
+_Important_ - pay_addresses and keep keys should match in config. DO NOT delete the reserve key as it is required. All other's can be deleted or more added. In addition, payment is triggered to start based on when total blocks forged / interval is an integer (with no remainder).
 
 To use custom voter shares, the following 2 options are available:
-1) Directly update the column "share" column in the voters table of ark.db
+
+1) Directly update the column "share" column in the voters table of `your_network`.db
 2) Turn on custom.py and send a POST request to the http://ip:port/updateShare endpoint. See below for example: `{"address":"DKahhVFVJfqCcCmaQHuYzAVFKcWjBu5i6Z", "share":0.10}`
 
 IMPORTANT: If at any time you change you share rate you must stop tbw, update your config.json and run the following command `python3 tbw.py --shareChange`
@@ -32,7 +56,7 @@ START_BLOCK = 0
 NETWORK = "network"       
 ### ark_mainnet or persona_mainnet or qredit_mainnet etc..)
 DATABASE_USER = "dbname"     
-### This is the postgresql database username nodeDB (usually your os username)
+### This is the postgresql database username nodeDB (usually your os username, but may be different when using docker)
 DELEGATE = "delegate"        
 ### Delegate name
 PUBLIC_KEY = "publicKey"     
