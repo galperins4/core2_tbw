@@ -5,7 +5,7 @@ from Naked.toolshed.shell import muterun_js
 class JsWrite():
     
     def write(network, passphrase, secondphrase, publickey, recipientid, nonce, vendor, amount, fee):
-        f = open("file.js", "a")
+        f = open("tx.js", "a")
         f.writelines("const fs = require('fs')\n")
         f.writelines("const { Transactions, Managers } = require('@arkecosystem/crypto');\n")
         f.writelines("Managers.configManager.getMilestone().aip11 = true\n")
@@ -23,9 +23,14 @@ class JsWrite():
         f.close()
         
     
-    def read():
-        pass
-        
-        
+    def run():
+        response = muterun_js('tx.js')
+        filename = 'output.json'
+
+        if filename:
+            with open(filename, 'r') as f:
+            datastore = json.load(f)
+          
     def delete():
-        pass
+        os.remove('output.json')
+        os.remove('tx.js')
