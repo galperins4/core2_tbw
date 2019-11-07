@@ -42,13 +42,14 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     if sp == 'None':
         sp = None
     
-    print(address)
-    print(amount)
-    print(vendor)
-    print(fee)
-    print(pp)
-    print(sp)
-    print(nonce)
+    print(type(data.public_key))
+    print(type(address))
+    print(type(amount))
+    print(type(vendor))
+    print(type(fee))
+    print(type(pp))
+    print(type(sp))
+    print(type(nonce))
     quit()
   
     
