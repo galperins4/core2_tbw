@@ -37,12 +37,16 @@ def build_network():
     set_custom_network(epoch, network.version, network.wif)
 
 
-def build_transfer_transaction(address, amount, vendor, fee, pp, sp):
+def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
+    version = 2
     transaction = Transfer(
         recipientId=address,
         amount=amount,
         vendorField=vendor,
-        fee=fee
+        fee=fee,
+        version = version,
+        nonce = nonce,
+        network = int(network.version)
     )
     transaction.sign(pp)
     
@@ -53,6 +57,10 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp):
 
     transaction_dict = transaction.to_dict()
     return transaction_dict
+
+def get_nonce():
+    n = client.wallets.get(data.delegate)
+    return int(n['data']['nonce'])
 
 
 def non_accept_check(c, a):
@@ -85,6 +93,7 @@ def share():
             unique_rowid = [y[0] for y in unprocessed_pay]
             check = {}
             
+            temp_nonce = get_nonce()+1
             for i in unprocessed_pay:
                 dynamic = Dynamic(data.database_user, i[3], data.network, network.api_port)
                 transaction_fee = dynamic.get_dynamic_fee()
@@ -92,11 +101,12 @@ def share():
                 # fixed processing
                 if i[1] in data.fixed.keys():
                     fixed_amt = int(data.fixed[i[1]] * data.atomic)
-                    tx = build_transfer_transaction(i[1], (fixed_amt), i[3], transaction_fee, data.passphrase, data.secondphrase)
+                    tx = build_transfer_transaction(i[1], (fixed_amt), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
                 else:           
-                    tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, data.passphrase, data.secondphrase)
+                    tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
                 check[tx['id']] = i[0]
                 signed_tx.append(tx)
+                temp_nonce+=1
                 time.sleep(0.25)
                      
             accepted = broadcast(signed_tx)
