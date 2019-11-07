@@ -1,6 +1,6 @@
 import os
 import json
-from Naked.toolshed.shell import muterun_js
+from Naked.toolshed.shell import execute_js
 
 class JsWrite:
     
@@ -27,7 +27,7 @@ class JsWrite:
         
     
     def run(self):
-        response = muterun_js('tx.js')
+        execute_js('tx.js')
         filename = 'output.json'
 
         if filename:
