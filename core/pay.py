@@ -42,7 +42,7 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     if sp == 'None':
         sp = None
     
-    print("+data.public_key+")
+    print(""+data.public_key+"")
     print(type(address))
     print(type(amount))
     print(type(vendor))
