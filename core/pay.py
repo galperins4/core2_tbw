@@ -43,8 +43,6 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
         sp = None
     js.write(network.version, pp, sp, data.public_key, address, nonce, vendor, str(amount), str(fee))
     transaction_dict = js.run()
-    print(transaction_dict)
-    quit()
     js.delete()
     return transaction_dict
     
