@@ -8,6 +8,7 @@ from config.config import Config
 from network.network import Network
 from util.sql import SnekDB
 from util.dynamic import Dynamic
+from util.write import JsWrite
 from util.util import Util
 from datetime import datetime
 
@@ -132,6 +133,7 @@ def share():
 if __name__ == '__main__':
    
     data = Config()
+    js = JsWrite()
     network = Network(data.network)
     u = Util(data.network)
     snekdb = SnekDB(data.database_user, data.network, data.delegate)
