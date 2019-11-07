@@ -39,6 +39,18 @@ def build_network():
 
 
 def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
+    if sp == 'None':
+        sp = None
+    
+    js.write(network.version, pp, sp, data.public_key, address, nonce, vendor, amount, fee)
+    transaction_dict = js.run()
+    print(transaction_dict)
+    quit()
+    js.delete()
+    return transaction_dict
+    
+    # python3 crypto version when ready
+    '''
     version = 2
     transaction = Transfer(
         recipientId=address,
@@ -59,6 +71,7 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     transaction_dict = transaction.to_dict()
     return transaction_dict
 
+    '''
 def get_nonce():
     n = client.wallets.get(data.delegate)
     return int(n['data']['nonce'])
