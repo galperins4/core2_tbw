@@ -4,5 +4,5 @@ VERSION = 100
 WIF = 111
 API_PORT = 4703
 DATABASE = "hydra_mainnet"
-DATABASE_USER = "hydra"
+DATABASE_USER = "null"
 DATABASE_PASSWORD = "password"

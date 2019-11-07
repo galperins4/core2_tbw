@@ -4,5 +4,5 @@ VERSION = 90
 WIF = 85
 API_PORT = 4703
 DATABASE = "hydra_devnet"
-DATABASE_USER = "hydra"
+DATABASE_USER = "null"
 DATABASE_PASSWORD = "password"
