@@ -1,0 +1,18 @@
+
+{
+    "private": true,
+    "name": "js hack",
+    "description": "A hacked js version to sign tx.",
+    "scripts": {
+        "start": "node ./index.js",
+        "dev": "nodemon ./index.js"
+    },
+    "dependencies": {
+        "@arkecosystem/crypto": "^2.6.0-next.1",
+        "@arkecosystem/core-utils": "^2.6.0-next.1",
+        "@arkecosystem/core-magistrate-crypto": "^2.6.0-next.1",
+    },
+    "devDependencies": {
+        "nodemon": "^1.19.4"
+    }
+}
