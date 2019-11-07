@@ -42,7 +42,7 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     if sp == 'None':
         sp = None
     
-    print(type(data.public_key))
+    print("+data.public_key+"))
     print(type(address))
     print(type(amount))
     print(type(vendor))
@@ -53,7 +53,7 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     quit()
   
     
-    js.write(network.version, pp, sp, data.public_key, address, nonce, vendor, amount, fee)
+    js.write(network.version, pp, sp, data.public_key, address, nonce, vendor, str(amount), str(fee))
     transaction_dict = js.run()
     print(transaction_dict)
     quit()
