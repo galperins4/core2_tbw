@@ -32,6 +32,7 @@ def allocate(lb):
     for k, v in data.keep.items():
         if k == 'reserve':
             keep = (int(block_reward * v)) + fee_reward
+            keep_assign = data.pay_addresses[k]
         else:
             keep = (int(block_reward * v))
 
@@ -78,7 +79,10 @@ def allocate(lb):
 
             # update reserve from blacklist assign
             if i[0] == data.blacklist_assign:
-                snekdb.updateDelegateBalance(i[0], reward)
+                if i[0] == keep_assign:
+                    snekdb.updateDelegateBalance(i[0], reward)
+                else:
+                    snekdb.updateVoterBalance(i[0], reward)
             else:
                 # add voter reward to sql database
                 snekdb.updateVoterBalance(i[0], reward)
