@@ -8,7 +8,7 @@ class JsWrite:
         pass
     
     def write(self, network, passphrase, secondphrase, publickey, recipientid, nonce, vendor, amount, fee):
-        f = open("tx.js", "a")
+        f = open("tx.js", "w")
         f.writelines("const fs = require('fs')\n")
         f.writelines("const { Transactions, Managers } = require('@arkecosystem/crypto');\n")
         f.writelines("Managers.configManager.getMilestone().aip11 = true\n")
