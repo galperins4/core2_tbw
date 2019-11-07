@@ -15,8 +15,8 @@ class JsWrite:
         f.writelines("Managers.configManager.config.network.pubKeyHash = "+network+";\n")
         f.writelines("var tx = Transactions.BuilderFactory.transfer().network("+network+").nonce("+nonce+").senderPublicKey('"+publickey+"').recipientId('"+recipientid+"').fee("+fee+").amount("+amount+").expiration(0).vendorField('"+vendor+"')\n")
         f.writelines("tx.sign('"+passphrase+"');\n")
-        if sp is not None:
-            f.writelines("    tx.secondSign('"+sp+"');\n")
+        if secondphrase is not None:
+            f.writelines("    tx.secondSign('"+secondphrase+"');\n")
         f.writelines("var jsonData = tx.build().toJson()\n")
         f.writelines("var jsonContent = JSON.stringify(jsonData);\n")
         f.writelines("fs.writeFile('output.json', jsonContent, 'utf8', function (err) {\n")
