@@ -118,7 +118,7 @@ def share():
                 check[tx['id']] = i[0]
                 signed_tx.append(tx)
                 temp_nonce+=1
-                time.sleep(0.25)
+                time.sleep(1.0)
                      
             accepted = broadcast(signed_tx)
             for_removal = non_accept_check(check, accepted)
