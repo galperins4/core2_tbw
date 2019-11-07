@@ -29,7 +29,7 @@ class JsWrite():
 
         if filename:
             with open(filename, 'r') as f:
-            datastore = json.load(f)
+                datastore = json.load(f)
         return datastore
           
     def delete():
