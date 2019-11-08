@@ -5,8 +5,10 @@ from Naked.toolshed.shell import muterun_js
 
 class JsWrite:
     
-    def __init__(self):
-        pass
+    def __init__(self, p):
+        self.path = p+'/core/'
+        print(self.path)
+        quit()
     
     def write(self, network, passphrase, secondphrase, publickey, recipientid, nonce, vendor, amount, fee):
         f = open("tx.js", "w")
