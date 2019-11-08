@@ -44,8 +44,6 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     js.write(network.version, pp, sp, data.public_key, address, nonce, vendor, str(amount), str(fee))
     transaction_dict = js.run()
     #js.delete()
-    print(transaction_dict)
-    quit()
     return transaction_dict
     
     # python3 crypto version when ready
