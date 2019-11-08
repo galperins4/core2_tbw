@@ -142,7 +142,7 @@ def share():
 if __name__ == '__main__':
    
     data = Config()
-    js = JsWrite()
+    js = JsWrite(u.tbw)
     network = Network(data.network)
     u = Util(data.network)
     snekdb = SnekDB(data.database_user, data.network, data.delegate)
