@@ -1,5 +1,6 @@
 import os
 import json
+import sys
 from Naked.toolshed.shell import muterun_js
 
 class JsWrite:
