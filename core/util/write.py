@@ -7,8 +7,6 @@ class JsWrite:
     
     def __init__(self, p):
         self.path = p+'/core/'
-        print(self.path)
-        quit()
     
     def write(self, network, passphrase, secondphrase, publickey, recipientid, nonce, vendor, amount, fee):
         f = open("tx.js", "w")
@@ -26,9 +24,10 @@ class JsWrite:
         
     
     def run(self):
-        response = muterun_js('tx.js')
+        f = self.path+'tx.js'
+        response = muterun_js(f)
         if response.exitcode == 0:
-            os.remove('tx.js')
+            os.remove(f)
             return json.loads(response.stdout.decode('utf-8'))
         else:
             sys.stderr.write(response.stderr.decode('utf-8'))
