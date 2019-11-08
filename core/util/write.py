@@ -1,6 +1,6 @@
 import os
 import json
-from Naked.toolshed.shell import execute_js
+from Naked.toolshed.shell import muterun_js
 
 class JsWrite:
     
@@ -18,25 +18,34 @@ class JsWrite:
         if secondphrase is not None:
             f.writelines("    tx.secondSign('"+secondphrase+"');\n")
         f.writelines("var jsonData = tx.build().toJson()\n")
-        f.writelines("var jsonContent = JSON.stringify(jsonData);\n")
-        f.writelines("fs.writeFile('output.json', jsonContent, 'utf8', function (err) {\n")
-        f.writelines("    if (err) {\n")
-        f.writelines(" console.log('An error occured while writing JSON Object to File.');\n")
-        f.writelines(" return console.log(err);\n")
-        f.writelines("    }\n")
-        f.writelines("});\n")
+        f.writelines("console.log(JSON.stringify(jsonData));\n")
+        #f.writelines("var jsonContent = JSON.stringify(jsonData);\n")
+        #f.writelines("fs.writeFile('output.json', jsonContent, 'utf8', function (err) {\n")
+        #f.writelines("    if (err) {\n")
+        #f.writelines(" console.log('An error occured while writing JSON Object to File.');\n")
+        #f.writelines(" return console.log(err);\n")
+        #f.writelines("    }\n")
+        #f.writelines("});\n")
         f.close()
         
     
     def run(self):
-        execute_js('tx.js')
+        '''execute_js('tx.js')
         filename = 'output.json'
 
         if filename:
             with open(filename, 'r') as f:
                 datastore = json.load(f)
         return datastore
-          
-    def delete(self):
-        os.remove('output.json')
-        os.remove('tx.js')
+        '''
+        response = muterun_js('tx.js')
+        if response.exitcode == 0:
+            os.remove('tx.js')
+            return json.loads(response.stdout.decode('utf-8'))
+        else:
+            sys.stderr.write(response.stderr.decode('utf-8'))  
+            
+                
+    #def delete(self):
+    #    os.remove('output.json')
+    #    os.remove('tx.js')
