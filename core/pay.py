@@ -44,7 +44,7 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     js.write(network.version, pp, sp, data.public_key, address, nonce, vendor, str(amount), str(fee))
     transaction_dict = js.run()
     #js.delete()
-    print(transasction_dict)
+    print(transaction_dict)
     quit()
     return transaction_dict
     
@@ -120,7 +120,7 @@ def share():
                 check[tx['id']] = i[0]
                 signed_tx.append(tx)
                 temp_nonce+=1
-                time.sleep(1.0)
+                time.sleep(0.25)
                      
             accepted = broadcast(signed_tx)
             for_removal = non_accept_check(check, accepted)
