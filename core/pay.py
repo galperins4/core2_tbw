@@ -41,7 +41,7 @@ def build_network():
 
 
 def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
-    tx = blockchain.Transaction(amount=amount, fee=fee, recipientId=recipientId, vendorField=vendor, nonce=nonce,version=2)
+    tx = blockchain.Transaction(amount=amount, fee=fee, recipientId=address, vendorField=vendor, nonce=nonce,version=2)
     if sp == 'None':
         sp = None
         tx.finalize(pp)
