@@ -157,6 +157,8 @@ if __name__ == '__main__':
     data = Config()
     network = Network(data.network)
     u = Util(data.network)
+    # UPDATE THIS TO DYNAMICALLY GET NETWORK
+    rest.use("d.ark")
     js = JsWrite(u.tbw)
     snekdb = SnekDB(data.database_user, data.network, data.delegate)
     client = u.get_client(network.api_port)
