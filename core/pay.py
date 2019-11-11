@@ -47,9 +47,6 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
         tx.finalize(pp)
     else:
         tx.finalize(pp,sp)
-    
-    print(tx)
-    quit()
     return tx
     
     #JS version
