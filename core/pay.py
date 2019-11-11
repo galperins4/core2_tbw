@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 from crypto.configuration.network import set_custom_network
 from crypto.transactions.builder.transfer import Transfer
 from config.config import Config
+from dposlib import blockchain
+from dposlib import rest
 from network.network import Network
 from util.sql import SnekDB
 from util.dynamic import Dynamic
@@ -39,12 +41,23 @@ def build_network():
 
 
 def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
+    tx = blockchain.Transaction(amount=amount, fee=fee, recipientId=recipientId, vendorField=vendor, nonce=nonce,version=2)
     if sp == 'None':
         sp = None
+        tx.finalize(pp)
+    else:
+        tx.finalize(pp,sp)
+    
+    print(tx)
+    quit()
+    return tx
+    
+    #JS version
+    '''
     js.write(network.version, pp, sp, data.public_key, address, nonce, vendor, str(amount), str(fee))
     transaction_dict = js.run()
     return transaction_dict
-    
+    '''
     # python3 crypto version when ready
     '''
     version = 2
