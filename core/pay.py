@@ -155,6 +155,8 @@ if __name__ == '__main__':
     network = Network(data.network)
     u = Util(data.network)
     # UPDATE THIS TO DYNAMICALLY GET NETWORK
+    print(u.dposlib)
+    quit()
     rest.use("d.ark")
     js = JsWrite(u.tbw)
     snekdb = SnekDB(data.database_user, data.network, data.delegate)
