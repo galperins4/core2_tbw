@@ -14,6 +14,7 @@ pause(){
 install_modules(){
   sudo apt-get install python3-pip
   sudo apt-get install python3-dev
+  sudo apt-get install libudev-dev libusb-1.0.0-dev
   pip3 install setuptools
   pip3 install -r requirements.txt
 }
