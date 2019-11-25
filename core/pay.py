@@ -3,6 +3,7 @@ import time
 import os
 from dotenv import load_dotenv
 from crypto.configuration.network import set_custom_network
+from crypto.constants import TRANSACTION_TYPE_GROUP
 from crypto.transactions.builder.transfer import Transfer
 from config.config import Config
 from dposlib import blockchain
@@ -57,17 +58,13 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     return transaction_dict
     '''
     # python3 crypto version when ready
-    print(address)
-    print(amount)
-    print(vendor)
-    print(fee)
-    
     transaction = Transfer(
         recipientId=address,
         amount=amount,
         vendorField=vendor,
         fee=fee
     )
+    transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
     transaction.set_nonce(int(nonce))
     transaction.sign(pp)
     
