@@ -41,6 +41,7 @@ def build_network():
 
 
 def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
+    '''
     tx = blockchain.Transaction(amount=amount, fee=fee, recipientId=address, vendorField=vendor, nonce=nonce,version=2)
     if sp == 'None':
         sp = None
@@ -48,7 +49,7 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     else:
         tx.finalize(pp,sp)
     return tx
-    
+    '''
     #JS version
     '''
     js.write(network.version, pp, sp, data.public_key, address, nonce, vendor, str(amount), str(fee))
@@ -57,16 +58,14 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     '''
     # python3 crypto version when ready
     '''
-    version = 2
     transaction = Transfer(
         recipientId=address,
         amount=amount,
         vendorField=vendor,
-        fee=fee,
-        version = version,
-        nonce = nonce,
-        network = int(network.version)
+        fee=fee
     )
+    transaction.set_version()
+    transaction.set_nonce(nonce)
     transaction.sign(pp)
     
     if sp == 'None':
@@ -75,6 +74,8 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
         transaction.second_sign(sp)
 
     transaction_dict = transaction.to_dict()
+    print(transaction_dict)
+    quit()
     return transaction_dict
 
     '''
