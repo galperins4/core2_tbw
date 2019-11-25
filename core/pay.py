@@ -116,8 +116,6 @@ def share():
             
             temp_nonce = get_nonce()+1
             for i in unprocessed_pay:
-                print(i)
-                quit()
                 dynamic = Dynamic(data.database_user, i[3], data.network, network.api_port)
                 transaction_fee = dynamic.get_dynamic_fee()
 
@@ -127,6 +125,8 @@ def share():
                     tx = build_transfer_transaction(i[1], (fixed_amt), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
                 else:           
                     tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
+                print(tx)
+                quit()
                 check[tx['id']] = i[0]
                 signed_tx.append(tx)
                 temp_nonce+=1
