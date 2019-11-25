@@ -64,7 +64,7 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
         fee=fee
     )
     transaction.set_version()
-    transaction.set_nonce(nonce)
+    transaction.set_nonce(int(nonce))
     transaction.sign(pp)
     
     if sp == 'None':
