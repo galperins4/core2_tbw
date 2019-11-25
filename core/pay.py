@@ -116,6 +116,8 @@ def share():
             
             temp_nonce = get_nonce()+1
             for i in unprocessed_pay:
+                print(i)
+                quit()
                 dynamic = Dynamic(data.database_user, i[3], data.network, network.api_port)
                 transaction_fee = dynamic.get_dynamic_fee()
 
