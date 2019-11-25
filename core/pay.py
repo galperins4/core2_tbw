@@ -57,7 +57,6 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     return transaction_dict
     '''
     # python3 crypto version when ready
-    '''
     transaction = Transfer(
         recipientId=address,
         amount=amount,
@@ -78,7 +77,6 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     quit()
     return transaction_dict
 
-    '''
 def get_nonce():
     n = client.wallets.get(data.delegate)
     return int(n['data']['nonce'])
@@ -125,8 +123,6 @@ def share():
                     tx = build_transfer_transaction(i[1], (fixed_amt), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
                 else:           
                     tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
-                print(tx)
-                quit()
                 check[tx['id']] = i[0]
                 signed_tx.append(tx)
                 temp_nonce+=1
