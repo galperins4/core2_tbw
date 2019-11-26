@@ -58,6 +58,12 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     return transaction_dict
     '''
     # python3 crypto version when ready
+    print(type(address))
+    print(type(amount))
+    print(type(vendor))
+    print(type(fee))
+    quit()
+    
     transaction = Transfer(
         recipientId=address,
         amount=amount,
