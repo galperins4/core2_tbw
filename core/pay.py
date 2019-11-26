@@ -77,7 +77,6 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
 
     transaction_dict = transaction.to_dict()
     print(transaction_dict)
-    quit()
     return transaction_dict
 
 def get_nonce():
