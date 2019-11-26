@@ -58,11 +58,6 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     return transaction_dict
     '''
     # python3 crypto version when ready
-    print(type(address))
-    print(type(amount))
-    print(type(vendor))
-    print(type(fee))
-    quit()
     
     transaction = Transfer(
         recipientId=address,
@@ -70,7 +65,6 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
         vendorField=vendor,
         fee=fee
     )
-    transaction.set_version()
     transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
     transaction.set_nonce(int(nonce))
     transaction.sign(pp)
@@ -165,7 +159,7 @@ if __name__ == '__main__':
     #js = JsWrite(u.tbw)
     snekdb = SnekDB(data.database_user, data.network, data.delegate)
     client = u.get_client(network.api_port)
-    build_network()
+    #build_network()
     
     #get dot path for load_env and load
     dot = u.core+'/.env'
