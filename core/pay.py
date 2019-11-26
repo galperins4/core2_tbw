@@ -159,7 +159,7 @@ if __name__ == '__main__':
     #js = JsWrite(u.tbw)
     snekdb = SnekDB(data.database_user, data.network, data.delegate)
     client = u.get_client(network.api_port)
-    #build_network()
+    build_network()
     
     #get dot path for load_env and load
     dot = u.core+'/.env'
