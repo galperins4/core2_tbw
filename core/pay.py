@@ -65,6 +65,7 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
         vendorField=vendor,
         fee=fee
     )
+    transaction.set_version()
     transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
     transaction.set_nonce(int(nonce))
     transaction.sign(pp)
@@ -75,6 +76,8 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
         transaction.second_sign(sp)
 
     transaction_dict = transaction.to_dict()
+    print(transaction_dict)
+    quit()
     return transaction_dict
 
 def get_nonce():
