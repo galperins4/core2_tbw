@@ -13,8 +13,8 @@ class Network():
         
     def load_network(self):
          self.epoch = os.getenv("EPOCH").split(',')
-         self.version = os.getenv("VERSION")
-         self.wif = os.getenv("WIF")
+         self.version = int(os.getenv("VERSION"))
+         self.wif = int(os.getenv("WIF"))
          self.api_port = os.getenv("API_PORT")
          self.database = os.getenv("DATABASE")
          self.database_user = os.getenv("DATABASE_USER")
