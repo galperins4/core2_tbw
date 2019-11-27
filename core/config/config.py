@@ -22,7 +22,6 @@ class Config():
         self.public_key = os.getenv("PUBLIC_KEY")
         self.interval = int(os.getenv("INTERVAL"))
         self.voter_share = float(os.getenv("VOTER_SHARE"))
-        self.multipay = os.getenv("MULTIPAY")
         self.passphrase = os.getenv("PASSPHRASE")
         self.secondphrase = os.getenv("SECONDPHRASE")
         self.voter_msg = os.getenv("VOTER_MSG")
