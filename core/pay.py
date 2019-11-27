@@ -80,9 +80,69 @@ def non_accept_check(c, a):
             pass
     
     return removal_check
-            
 
-def share():
+
+def share_multipay():
+    while True:
+        signed_tx = []
+
+        # set max multipayment
+        max_tx = 128
+        unprocessed_pay = snekdb.stagedArkPayment(int(max_tx)).fetchall()
+
+        # query not empty means unprocessed blocks
+        if unprocessed_pay:
+            unique_rowid = [y[0] for y in unprocessed_pay]
+            check = {}
+            nonce = int(get_nonce() + 1)
+
+            transaction = MultiPayment()
+            transaction.set_version()
+            transaction.set_nonce(nonce)
+
+            for i in unprocessed_pay:
+
+                # fixed processing
+                if i[1] in data.fixed.keys():
+                    fixed_amt = int(data.fixed[i[1]] * data.atomic)
+                    transaction.add_payment(fixed_amt, i[1])
+                else:
+                    transaction.add_payment(i[2], i[1])
+
+                #check[tx['id']] = i[0]
+
+            transaction.sign(pp)
+
+            if sp == 'None':
+                sp = None
+            if sp is not None:
+                transaction.second_sign(sp)
+
+            transaction_dict = transaction.to_dict()
+            signed_tx.append(transaction_dict)
+            print(signed_tx)
+            quit()
+            accepted = broadcast(signed_tx)
+            '''
+            for_removal = non_accept_check(check, accepted)
+
+            # remove non-accepted transactions from being marked as completed
+            if len(for_removal) > 0:
+                for i in for_removal:
+                    print("Removing RowId: ", i)
+                    unique_rowid.remove(i)
+            '''
+            snekdb.processStagedPayment(unique_rowid)
+
+            # payment run complete
+            print('Payment Run Completed!')
+            # sleep 1 minutes between tx blasts
+            time.sleep(60)
+
+        else:
+            time.sleep(150)
+
+def share_standard():
     while True:
         signed_tx = []
 
@@ -139,8 +199,6 @@ if __name__ == '__main__':
     data = Config()
     network = Network(data.network)
     u = Util(data.network)
-    #rest.use(u.dposlib)
-    #js = JsWrite(u.tbw)
     snekdb = SnekDB(data.database_user, data.network, data.delegate)
     client = u.get_client(network.api_port)
     build_network()
@@ -148,4 +206,5 @@ if __name__ == '__main__':
     #get dot path for load_env and load
     dot = u.core+'/.env'
     load_dotenv(dot)
-    share()
+    share_standard()
+    #share_multipay()
