@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from crypto.configuration.network import set_custom_network
 from crypto.constants import TRANSACTION_TYPE_GROUP
 from crypto.transactions.builder.transfer import Transfer
+from crypto.transactions.builder.multi_payment import MultiPayment
 from config.config import Config
 from dposlib import blockchain
 from dposlib import rest
