@@ -122,7 +122,7 @@ def share_multipay():
             signed_tx.append(transaction_dict)
             print(signed_tx)
             print(signed_tx[0]['id'])
-            for i in signed_tx[0]['asset']['payments'][0]:
+            for i in signed_tx[0]['asset']['payments']:
                 print(i)
             quit()
             accepted = broadcast(signed_tx)
