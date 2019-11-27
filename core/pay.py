@@ -111,8 +111,8 @@ def share_multipay():
 
                 #check[tx['id']] = i[0]
 
-            transaction.sign(pp)
-
+            transaction.sign(data.passphrase)
+            sp = data.secondphrase
             if sp == 'None':
                 sp = None
             if sp is not None:
