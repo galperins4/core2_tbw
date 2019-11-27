@@ -9,6 +9,7 @@ DELEGATE = "delegate"
 PUBLIC_KEY = "publicKey"
 INTERVAL = 211
 VOTER_SHARE = 0.50
+MULTIPAY = "Y"
 PASSPHRASE = "passphrase"
 SECONDPHRASE = "None"
 VOTER_MSG = "Delegate X - True Block Weight"
