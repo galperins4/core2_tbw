@@ -17,6 +17,25 @@ from util.util import Util
 from datetime import datetime
 
 
+def broadcast_multi(tx):
+    
+    # broadcast to relay
+    try:
+        transaction = client.transactions.create(tx)
+        print(transaction)
+        id = tx[0]['id']
+        records = [[j['recipientId'], j['amount'], id] for j in tx[0]['asset']['payments']]
+        time.sleep(1)
+    except BaseException as e:
+        # error
+        print("Something went wrong", e)
+        quit()
+
+    snekdb.storeTransactions(records)
+    
+    return transaction['data']['accept']
+
+
 def broadcast(tx):
     
     # broadcast to relay
@@ -120,12 +139,7 @@ def share_multipay():
 
             transaction_dict = transaction.to_dict()
             signed_tx.append(transaction_dict)
-            print(signed_tx)
-            id = signed_tx[0]['id']
-            records = [[j['recipientId'], j['amount'], id] for j in signed_tx[0]['asset']['payments']]
-            print(records)
-            quit()
-            accepted = broadcast(signed_tx)
+            accepted = broadcast_multi(signed_tx)
             '''
             for_removal = non_accept_check(check, accepted)
 
