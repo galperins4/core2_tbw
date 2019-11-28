@@ -21,8 +21,8 @@ class Dynamic:
 
     
     def get_multipay_limit(self):
-        node_configs = self.client.node.configuration()['data']['constants']['multiPaymentLimit']
-        print(node_configs)
+        limit = int(self.client.node.configuration()['data']['constants']['multiPaymentLimit'])
+        print(limit)
         quit()
     
     def get_dynamic_fee(self):        
