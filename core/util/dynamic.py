@@ -12,6 +12,7 @@ class Dynamic:
         self.network = network
         self.port = port
         self.u = Util(self.network)
+        self.client = self.u.get_client(self.port)
         
     
     def calculate_dynamic_fee(self, t, s, c):
@@ -20,16 +21,13 @@ class Dynamic:
 
     
     def get_multipay_limit(self):
-        client = self.u.get_client(self.port)
-        node_configs = client.node.configuration()
+        node_configs = self.client.node.configuration()
         print(node_configs)
         quit()
     
-    def get_dynamic_fee(self):
-        client = self.u.get_client(self.port)
-        
+    def get_dynamic_fee(self):        
         try:
-            node_configs = client.node.configuration()['data']['transactionPool']['dynamicFees']
+            node_configs = self.client.node.configuration()['data']['transactionPool']['dynamicFees']
             if node_configs['enabled'] is "False":
                 transaction_fee = int(0.1 * atomic)
             else:
