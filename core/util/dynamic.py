@@ -21,7 +21,7 @@ class Dynamic:
 
     
     def get_multipay_limit(self):
-        node_configs = self.client.node.configuration()['data']['constants']
+        node_configs = self.client.node.configuration()['data']['constants']['multiPaymentLimit']
         print(node_configs)
         quit()
     
