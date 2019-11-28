@@ -76,7 +76,7 @@ def share_multipay():
             check = {}
             nonce = int(get_nonce() + 1)
 
-            transaction = MultiPayment()
+            transaction = MultiPayment(fee=fee)
             transaction.set_version()
             transaction.set_nonce(nonce)
 
@@ -126,9 +126,7 @@ if __name__ == '__main__':
     client = u.get_client(network.api_port)
     build_network()
     dynamic = Dynamic(data.database_user, data.voter_msg, data.network, network.api_port)
-    transaction_fee = dynamic.get_dynamic_fee()
-    print(transaction_fee)
-    quit()
+    fee = dynamic.get_dynamic_fee()
     #get dot path for load_env and load
     dot = u.core+'/.env'
     load_dotenv(dot)
