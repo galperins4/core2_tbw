@@ -125,7 +125,8 @@ if __name__ == '__main__':
     snekdb = SnekDB(data.database_user, data.network, data.delegate)
     client = u.get_client(network.api_port)
     build_network()
-    
+    dynamic = Dynamic()
+    dynamic.get_multipay_limit()
     #get dot path for load_env and load
     dot = u.core+'/.env'
     load_dotenv(dot)
