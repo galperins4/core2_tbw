@@ -33,7 +33,7 @@ class Dynamic:
                 dynamic_offset = node_configs['addonBytes']['multiPayment']
                 fee_multiplier = node_configs['minFeePool']
                 # get size of transaction - S
-                multi_tx = 350
+                multi_tx = 300
                 v_msg = len(self.msg) 
                 tx_size = standard_tx + v_msg
                 #calculate transaction fee
