@@ -341,9 +341,9 @@ def payout():
         tx_count = v_count+d_count
         multi_limit = dynamic.get_multipay_limit()
         if tx_count%multi_limit == 0:
-            numtx = round(count/limit)
+            numtx = round(tx_count/multi_limit)
         else:
-            numtx = round(count//limit)+1
+            numtx = round(tx_count//multi_limit)+1
         
         print(numtx)
         quit()
