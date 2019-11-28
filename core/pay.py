@@ -67,7 +67,7 @@ def share_multipay():
         signed_tx = []
 
         # set max multipayment
-        max_tx = 128
+        max_tx = dynamic.get_multipay_limit()
         unprocessed_pay = snekdb.stagedArkPayment(int(max_tx)).fetchall()
 
         # query not empty means unprocessed blocks
@@ -126,7 +126,9 @@ if __name__ == '__main__':
     client = u.get_client(network.api_port)
     build_network()
     dynamic = Dynamic(data.database_user, data.voter_msg, data.network, network.api_port)
-    dynamic.get_multipay_limit()
+    transaction_fee = dynamic.get_transaction_fee()
+    print(transaction_fee)
+    quit()
     #get dot path for load_env and load
     dot = u.core+'/.env'
     load_dotenv(dot)
