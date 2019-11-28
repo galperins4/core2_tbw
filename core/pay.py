@@ -134,7 +134,13 @@ def share_multipay():
 
             transaction_dict = transaction.to_dict()
             signed_tx.append(transaction_dict)
+            id = signed_tx[0]['id']
+            print(id)
+            quit()
             accepted = broadcast_multi(signed_tx)
+            
+            
+            
             '''
             for_removal = non_accept_check(check, accepted)
 
