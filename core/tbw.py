@@ -339,6 +339,7 @@ def payout():
         print('Payout started!')
         
         tx_count = v_count+d_count
+        print(tx_count)
         # calculate tx fees needed to cover run in satoshis
         tx_fees = tx_count * int(transaction_fee)
     
