@@ -3,16 +3,12 @@ import time
 import os
 from dotenv import load_dotenv
 from crypto.configuration.network import set_custom_network
-from crypto.constants import TRANSACTION_TYPE_GROUP
 from crypto.transactions.builder.transfer import Transfer
 from crypto.transactions.builder.multi_payment import MultiPayment
 from config.config import Config
-from dposlib import blockchain
-from dposlib import rest
 from network.network import Network
 from util.sql import SnekDB
 from util.dynamic import Dynamic
-from util.write import JsWrite
 from util.util import Util
 from datetime import datetime
 
@@ -70,7 +66,6 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
         fee=fee
     )
     transaction.set_version()
-    transaction.set_type_group(TRANSACTION_TYPE_GROUP.CORE)
     transaction.set_nonce(int(nonce))
     transaction.sign(pp)
     
