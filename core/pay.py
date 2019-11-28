@@ -123,8 +123,6 @@ def share_multipay():
                 else:
                     transaction.add_payment(i[2], i[1])
 
-                #check[tx['id']] = i[0]
-
             transaction.sign(data.passphrase)
             sp = data.secondphrase
             if sp == 'None':
@@ -136,7 +134,6 @@ def share_multipay():
             signed_tx.append(transaction_dict)
             id = signed_tx[0]['id']
             print(id)
-            quit()
             accepted = broadcast_multi(signed_tx)
             
             
