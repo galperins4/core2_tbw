@@ -126,7 +126,7 @@ if __name__ == '__main__':
     client = u.get_client(network.api_port)
     build_network()
     dynamic = Dynamic(data.database_user, data.voter_msg, data.network, network.api_port)
-    transaction_fee = dynamic.get_transaction_fee()
+    transaction_fee = dynamic.get_dynamic_fee()
     print(transaction_fee)
     quit()
     #get dot path for load_env and load
