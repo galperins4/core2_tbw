@@ -19,6 +19,12 @@ class Dynamic:
         return fee
 
     
+    def get_multipay_limit(self):
+        client = self.u.get_client(self.port)
+        node_configs = client.node.configuration()['data']['"multiPaymentLimit']
+        print(node_configs)
+        quit()
+    
     def get_dynamic_fee(self):
         client = self.u.get_client(self.port)
         
@@ -27,7 +33,7 @@ class Dynamic:
             if node_configs['enabled'] is "False":
                 transaction_fee = int(0.1 * atomic)
             else:
-                dynamic_offset = node_configs['addonBytes']['transfer']
+                dynamic_offset = node_configs['addonBytes']['multiPayment']
                 fee_multiplier = node_configs['minFeePool']
                 # get size of transaction - S
                 standard_tx = 230
