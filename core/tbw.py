@@ -442,7 +442,7 @@ if __name__ == '__main__':
     client = u.get_client(network.api_port)
 
     dynamic = Dynamic(data.database_user, data.voter_msg, data.network, network.api_port)
-    transaction_fee = dynamic.get_dynamic_fee()
+    transaction_fee = data.atomic*0.1
     
     # initialize db connection
     # get database
