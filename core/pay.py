@@ -134,7 +134,9 @@ def share_multipay():
             signed_tx.append(transaction_dict)
             id = signed_tx[0]['id']
             accepted = broadcast_multi(signed_tx)
-            print(accepted)
+            #check if multipay was accepted
+            if id in accepted:
+                print("True")
             
             
             '''
