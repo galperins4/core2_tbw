@@ -344,11 +344,10 @@ def payout():
             numtx = round(tx_count/multi_limit)
         else:
             numtx = round(tx_count//multi_limit)+1
-        
-        print(numtx)
-        quit()
+
         # calculate tx fees needed to cover run in satoshis
-        tx_fees = tx_count * int(transaction_fee)
+        tx_fees = numxtx * transaction_fee
+        print(tx_fees)
     
         # process delegate rewards
         process_delegate_pmt(tx_fees, adj_factor)
