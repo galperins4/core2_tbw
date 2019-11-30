@@ -15,6 +15,7 @@ from datetime import datetime
 
 def broadcast_multi(tx):
     
+    print(tx)
     # broadcast to relay
     try:
         transaction = client.transactions.create(tx)
