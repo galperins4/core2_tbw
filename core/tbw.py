@@ -258,20 +258,7 @@ def process_voter_pmt(min_amt):
             snekdb.storePayRun(row[0], row[1], msg)
             # adjust sql balances
             snekdb.updateVoterPaidBalance(row[0])
-            '''
-            if data.cover_tx_fee == "Y":
-                # update staging records
-                snekdb.storePayRun(row[0], row[1], msg)
-                # adjust sql balances
-                snekdb.updateVoterPaidBalance(row[0])
-            
-            else:
-                net = row[1] - transaction_fee
-                # only pay if net payment is greater than 0, accumulate rest
-                if net > 0:
-                    snekdb.storePayRun(row[0], net, msg)
-                    snekdb.updateVoterPaidBalance(row[0])
-            '''
+
 
 def process_delegate_pmt(fee, adjust):
     # process delegate first
@@ -283,31 +270,12 @@ def process_delegate_pmt(fee, adjust):
             del_pay_adjust = int(row[1]*adjust)
 
             net_pay = del_pay_adjust - fee
-            '''
-            if data.cover_tx_fee == 'Y':
-                net_pay = del_pay_adjust - fee
-            else:
-                net_pay = del_pay_adjust - transaction_fee
-            '''
             
             if net_pay <= 0:
                 snekdb.deleteStagedPayment()
                 print("Not enough in reserve to cover transactions")
                 print("Update interval and restart")
                 quit()
-                '''
-                # check if 100% share node
-                if data.voter_share == 1.00 and data.cover_tx_fee == 'N':
-                    # do nothing
-                    pass
-                else:
-                    # delete staged payments to prevent duplicates
-                    snekdb.deleteStagedPayment()
-                
-                    print("Not enough in reserve to cover transactions")
-                    print("Update interval and restart")
-                    quit()
-                 '''
             else:
                 # update staging records
                 snekdb.storePayRun(row[0], net_pay, del_address(row[0]))
@@ -320,22 +288,6 @@ def process_delegate_pmt(fee, adjust):
                 snekdb.storePayRun(row[0], row[1], del_address(row[0]))
                 # adjust sql balances
                 snekdb.updateDelegatePaidBalance(row[0], row[1])
-            '''
-            if data.cover_tx_fee == 'N':
-                # update staging records
-                net = row[1] - transaction_fee
-
-                if net > 0:
-                    snekdb.storePayRun(row[0], net, del_address(row[0]))
-                    # adjust sql balances
-                    snekdb.updateDelegatePaidBalance(row[0], row[1])
-                
-            else: 
-                if row[1] > 0:
-                    snekdb.storePayRun(row[0], row[1], del_address(row[0]))
-                    # adjust sql balances
-                    snekdb.updateDelegatePaidBalance(row[0], row[1])
-            '''
 
 def payout():
     minamt = int(data.min_payment * data.atomic)
@@ -345,14 +297,6 @@ def payout():
     
     # get total possible payouts before adjusting for accumulated payments
     t_count = len([i for i in snekdb.voters() if i[1] > 0])
-    
-    '''
-    if data.cover_tx_fee == 'Y':
-        v_count = len([i for i in snekdb.voters() if i[1] > minamt])
-    else:
-        v_count = len([i for i in snekdb.voters() if (i[1] > minamt and (i[1]-transaction_fee) > 0)])
-    '''
-    
     v_count = len([i for i in snekdb.voters() if i[1] > minamt])
     adj_factor = v_count / t_count
                    
