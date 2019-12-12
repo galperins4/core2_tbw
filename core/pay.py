@@ -70,6 +70,8 @@ def share_multipay():
         # set max multipayment
         max_tx = dynamic.get_multipay_limit()
         unprocessed_pay = snekdb.stagedArkPayment(int(max_tx)).fetchall()
+        
+        print(len(unprocessed_pay))
 
         # query not empty means unprocessed blocks
         if unprocessed_pay:
