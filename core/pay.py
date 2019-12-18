@@ -61,7 +61,7 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     )
     transaction.set_version()
     transaction.set_nonce(int(nonce))
-    transaction.sign(pp)
+    transaction.shnorr_sign(pp)
 
     if sp == 'None':
         sp = None
@@ -129,7 +129,7 @@ def share_multipay():
                 else:
                     transaction.add_payment(i[2], i[1])
 
-            transaction.sign(data.passphrase)
+            transaction.schnorr_sign(data.passphrase)
             sp = data.secondphrase
             if sp == 'None':
                 sp = None
