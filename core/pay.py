@@ -61,7 +61,7 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     )
     #transaction.set_version()
     transaction.set_nonce(int(nonce))
-    transaction.shnorr_sign(pp)
+    transaction.schnorr_sign(pp)
 
     if sp == 'None':
         sp = None
