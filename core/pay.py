@@ -59,7 +59,6 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
         vendorField=vendor,
         fee=fee
     )
-    #transaction.set_version()
     transaction.set_nonce(int(nonce))
     transaction.schnorr_sign(pp)
 
@@ -79,6 +78,20 @@ def build_network():
     set_custom_network(epoch, network.version, network.wif)
 
 
+def non_accept_check(c, a):
+    removal_check = []
+    for k,v in c.items():
+        if k not in a:
+            removal_check.append(v)
+            #print("TransactionID not accepted: ", k)
+            snekdb.deleteTransactionRecord(k)
+        else:
+            #print("TransactionID accepted: ", k)
+            pass
+    
+    return removal_check
+
+    
 def get_nonce():
     n = client.wallets.get(data.delegate)
     return int(n['data']['nonce'])
@@ -108,7 +121,21 @@ def share_multipay():
                     tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
                 check[tx['id']] = i[0]
                 signed_tx.append(tx)
-                broadcast(signed_tx)
+            
+            accepted = broadcast(signed_tx)
+            for_removal = non_accept_check(check, accepted)
+            
+            # remove non-accepted transactions from being marked as completed
+            if len(for_removal) > 0:
+                for i in for_removal:
+                    print("Removing RowId: ", i)
+                    unique_rowid.remove(i)
+                    
+            snekdb.processStagedPayment(unique_rowid)
+            # payment run complete
+            print('Payment Run Completed!')
+            time.sleep(60)
+                
 
         # query not empty means unprocessed blocks
         elif unprocessed_pay:
