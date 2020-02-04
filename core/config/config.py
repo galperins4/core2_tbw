@@ -37,6 +37,7 @@ class Config():
         self.min_payment = float(os.getenv("MIN_PAYMENT"))
         self.keep = os.getenv("KEEP").split(',')
         self.pay_addresses = os.getenv("PAY_ADDRESSES").split(',')
+        self.multi = os.getenv("MULTI")
         
         
     def load_pool_config(self):
