@@ -212,6 +212,7 @@ def share():
                     tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
                 check[tx['id']] = i[0]
                 signed_tx.append(tx)
+                temp_nonce+=1
                 time.sleep(0.25)
                      
             accepted = broadcast(signed_tx)
