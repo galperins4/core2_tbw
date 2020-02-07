@@ -30,7 +30,8 @@ class Dynamic:
             if node_configs['enabled'] is "False":
                 transaction_fee = int(0.1 * atomic)
             else:
-                dynamic_offset = node_configs['addonBytes']['multiPayment']
+                dynamic_offset = node_configs['addonBytes']['transfer']
+                #dynamic_offset = node_configs['addonBytes']['multiPayment']
                 fee_multiplier = node_configs['minFeePool']
                 # get size of transaction - S
                 standard_tx = 230
