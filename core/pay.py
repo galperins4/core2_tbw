@@ -143,7 +143,8 @@ def share_multipay():
             check = {}
             nonce = int(get_nonce() + 1)
 
-            transaction = MultiPayment(vendorField=data.voter_msg)
+            vendor = 'test'
+            transaction = MultiPayment(vendorField=vendor)
             transaction.set_nonce(nonce)
 
             for i in unprocessed_pay:
