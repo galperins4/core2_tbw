@@ -26,7 +26,6 @@ class Config():
         self.secondphrase = os.getenv("SECONDPHRASE")
         self.voter_msg = os.getenv("VOTER_MSG")
         self.block_check = int(os.getenv("BLOCK_CHECK"))
-        self.cover_tx_fee = os.getenv("COVER_TX_FEE")
         self.vote_cap = int(os.getenv("VOTE_CAP"))
         self.vote_min = int(os.getenv("VOTE_MIN"))
         self.fixed = os.getenv("FIXED").split(',')
@@ -38,6 +37,7 @@ class Config():
         self.min_payment = float(os.getenv("MIN_PAYMENT"))
         self.keep = os.getenv("KEEP").split(',')
         self.pay_addresses = os.getenv("PAY_ADDRESSES").split(',')
+        self.multi = os.getenv("MULTI")
         
         
     def load_pool_config(self):

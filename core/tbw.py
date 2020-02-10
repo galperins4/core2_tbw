@@ -254,19 +254,10 @@ def process_voter_pmt(min_amt):
         if row[1] > min_amt:
                
             msg = data.voter_msg
-            
-            if data.cover_tx_fee == "Y":
-                # update staging records
-                snekdb.storePayRun(row[0], row[1], msg)
-                # adjust sql balances
-                snekdb.updateVoterPaidBalance(row[0])
-            
-            else:
-                net = row[1] - transaction_fee
-                # only pay if net payment is greater than 0, accumulate rest
-                if net > 0:
-                    snekdb.storePayRun(row[0], net, msg)
-                    snekdb.updateVoterPaidBalance(row[0])
+            # update staging records
+            snekdb.storePayRun(row[0], row[1], msg)
+            # adjust sql balances
+            snekdb.updateVoterPaidBalance(row[0])
 
 
 def process_delegate_pmt(fee, adjust):
@@ -278,23 +269,13 @@ def process_delegate_pmt(fee, adjust):
             # adjust reserve payment by factor to account for not all tx being paid due to tx fees or min payments
             del_pay_adjust = int(row[1]*adjust)
 
-            if data.cover_tx_fee == 'Y':
-                net_pay = del_pay_adjust - fee
-            else:
-                net_pay = del_pay_adjust - transaction_fee
-    
+            net_pay = del_pay_adjust - fee
+            
             if net_pay <= 0:
-                # check if 100% share node
-                if data.voter_share == 1.00 and data.cover_tx_fee == 'N':
-                    # do nothing
-                    pass
-                else:
-                    # delete staged payments to prevent duplicates
-                    snekdb.deleteStagedPayment()
-                
-                    print("Not enough in reserve to cover transactions")
-                    print("Update interval and restart")
-                    quit()    
+                snekdb.deleteStagedPayment()
+                print("Not enough in reserve to cover transactions")
+                print("Update interval and restart")
+                quit()
             else:
                 # update staging records
                 snekdb.storePayRun(row[0], net_pay, del_address(row[0]))
@@ -303,21 +284,10 @@ def process_delegate_pmt(fee, adjust):
                 snekdb.updateDelegatePaidBalance(row[0], del_pay_adjust)
                 
         else:
-            if data.cover_tx_fee == 'N':
-                # update staging records
-                net = row[1] - transaction_fee
-
-                if net > 0:
-                    snekdb.storePayRun(row[0], net, del_address(row[0]))
-                    # adjust sql balances
-                    snekdb.updateDelegatePaidBalance(row[0], row[1])
-                
-            else: 
-                if row[1] > 0:
-                    snekdb.storePayRun(row[0], row[1], del_address(row[0]))
-                    # adjust sql balances
-                    snekdb.updateDelegatePaidBalance(row[0], row[1])
-
+            if row[1] > 0:
+                snekdb.storePayRun(row[0], row[1], del_address(row[0]))
+                # adjust sql balances
+                snekdb.updateDelegatePaidBalance(row[0], row[1])
 
 def payout():
     minamt = int(data.min_payment * data.atomic)
@@ -327,20 +297,21 @@ def payout():
     
     # get total possible payouts before adjusting for accumulated payments
     t_count = len([i for i in snekdb.voters() if i[1] > 0])
-    
-    if data.cover_tx_fee == 'Y':
-        v_count = len([i for i in snekdb.voters() if i[1] > minamt])
-    else:
-        v_count = len([i for i in snekdb.voters() if (i[1] > minamt and (i[1]-transaction_fee) > 0)])
-    
+    v_count = len([i for i in snekdb.voters() if i[1] > minamt])
     adj_factor = v_count / t_count
                    
     if v_count > 0:
         print('Payout started!')
         
         tx_count = v_count+d_count
+        multi_limit = dynamic.get_multipay_limit()
+        if tx_count%multi_limit == 0:
+            numtx = round(tx_count/multi_limit)
+        else:
+            numtx = round(tx_count//multi_limit)+1
+
         # calculate tx fees needed to cover run in satoshis
-        tx_fees = tx_count * int(transaction_fee)
+        tx_fees = int(numtx * transaction_fee)
     
         # process delegate rewards
         process_delegate_pmt(tx_fees, adj_factor)
@@ -441,7 +412,7 @@ if __name__ == '__main__':
     client = u.get_client(network.api_port)
 
     dynamic = Dynamic(data.database_user, data.voter_msg, data.network, network.api_port)
-    transaction_fee = dynamic.get_dynamic_fee()
+    transaction_fee = data.atomic*0.1
     
     # initialize db connection
     # get database

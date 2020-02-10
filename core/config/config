@@ -13,7 +13,6 @@ PASSPHRASE = "passphrase"
 SECONDPHRASE = "None"
 VOTER_MSG = "Delegate X - True Block Weight"
 BLOCK_CHECK = 30
-COVER_TX_FEE = "Y"
 VOTE_CAP = 0
 VOTE_MIN = 0
 FIXED = "addr1:0,addr2:0"
@@ -25,6 +24,7 @@ BLACKLIST_ASSIGN = "addr"
 MIN_PAYMENT = 0.5
 KEEP = "reserve:0.25,second:0.25"
 PAY_ADDRESSES = "reserve:addr1,second:addr2"
+MULTI = "N"
 
 # pool
 POOL_IP = "xx.xx.xx.xx"
