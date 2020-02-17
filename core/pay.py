@@ -53,7 +53,7 @@ def broadcast(tx):
 
 def build_multi_transaction(payments, pp, sp, nonce):
     transaction = MultiPayment(vendorField=data.voter_msg)
-    transaction.set_nonce(nonce)
+    transaction.set_nonce(int(nonce))
 
     for i in payments:
         # fixed processing
