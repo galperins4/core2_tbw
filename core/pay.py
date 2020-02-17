@@ -106,6 +106,8 @@ def share_multipay():
         unprocessed_pay = snekdb.stagedArkPayment(int(max_tx)).fetchall()
         
         if len(unprocessed_pay) == 1:
+            share()
+        """
             unique_rowid = [y[0] for y in unprocessed_pay]
             check = {}
 
@@ -136,7 +138,7 @@ def share_multipay():
             print('Payment Run Completed!')
             time.sleep(60)
                 
-
+        """
         # query not empty means unprocessed blocks
         elif unprocessed_pay:
             unique_rowid = [y[0] for y in unprocessed_pay]
@@ -201,7 +203,6 @@ def share():
             temp_nonce = get_nonce()+1
             
             for i in unprocessed_pay:
-                #dynamic = Dynamic(data.database_user, i[3], data.network, network.api_port)
                 transaction_fee = dynamic.get_dynamic_fee()
 
                 # fixed processing
