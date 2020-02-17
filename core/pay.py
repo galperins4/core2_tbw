@@ -59,9 +59,9 @@ def build_multi_transaction(payments, pp, sp, nonce):
         # fixed processing
         if i[1] in data.fixed.keys():
             fixed_amt = int(data.fixed[i[1]] * data.atomic)
-                transaction.add_payment(fixed_amt, i[1])
-            else:
-                transaction.add_payment(i[2], i[1])
+            transaction.add_payment(fixed_amt, i[1])
+        else:
+            transaction.add_payment(i[2], i[1])
 
         transaction.schnorr_sign(data.passphrase)
         sp = data.secondphrase
