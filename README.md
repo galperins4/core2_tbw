@@ -97,6 +97,8 @@ KEEP = "reserve:0.25,your_second:0.25"
 ### These are the percentages for delegates to keep and distribute among x accounts (Note: reserve:your_addr1 is required! all others are optional)
 PAY_ADDRESSES = "reserve:your_addr1,your_second:addr2"  
 ### These are the addresses to go with the keep percentages (Note: reserve:your_addr1 is required! all others are optional)
+MULTI = "N"
+### Change to "Y" if you'd like payments to be made using Multipayments. 
 
 ## Pool
 
