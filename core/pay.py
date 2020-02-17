@@ -51,7 +51,7 @@ def broadcast(tx):
     return transaction['data']['accept']
 
 
-def build_multi_transaction(payments, pp, sp, nonce):
+def build_multi_transaction(payments, nonce):
     transaction = MultiPayment(vendorField=data.voter_msg)
     transaction.set_nonce(int(nonce))
 
@@ -135,7 +135,7 @@ def share_multipay():
             unique_rowid = [y[0] for y in unprocessed_pay]
             check = {}
             nonce = int(get_nonce() + 1)
-            tx = build_multi_transaction(unprocessed_pay, data.passphrase, data.secondphrase, str(nonce))
+            tx = build_multi_transaction(unprocessed_pay, str(nonce))
             #signed_tx.append(transaction_dict)
             signed_tx.append(tx)
             id = signed_tx[0]['id']
