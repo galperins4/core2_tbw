@@ -51,6 +51,29 @@ def broadcast(tx):
     return transaction['data']['accept']
 
 
+def build_multi_transaction(payments, pp, sp, nonce):
+    transaction = MultiPayment(vendorField=data.voter_msg)
+    transaction.set_nonce(nonce)
+
+    for i in payments:
+        # fixed processing
+        if i[1] in data.fixed.keys():
+            fixed_amt = int(data.fixed[i[1]] * data.atomic)
+                transaction.add_payment(fixed_amt, i[1])
+            else:
+                transaction.add_payment(i[2], i[1])
+
+        transaction.schnorr_sign(data.passphrase)
+        sp = data.secondphrase
+        if sp == 'None':
+            sp = None
+        if sp is not None:
+            transaction.second_sign(sp)
+    
+    transaction_dict = transaction.to_dict()
+    return transaction_dict
+
+
 def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     # python3 crypto version    
     transaction = Transfer(
@@ -144,7 +167,8 @@ def share_multipay():
             unique_rowid = [y[0] for y in unprocessed_pay]
             check = {}
             nonce = int(get_nonce() + 1)
-
+            tx = build_multi_transaction(unprocessed_pay, pp, sp, nonce)
+            """
             transaction = MultiPayment(vendorField=data.voter_msg)
             transaction.set_nonce(nonce)
 
@@ -165,7 +189,9 @@ def share_multipay():
                 transaction.second_sign(sp)
 
             transaction_dict = transaction.to_dict()
-            signed_tx.append(transaction_dict)
+            """"
+            #signed_tx.append(transaction_dict)
+            signed_tx.append(tx)
             id = signed_tx[0]['id']
             accepted = broadcast_multi(signed_tx)
             #check if multipay was accepted
