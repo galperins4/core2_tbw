@@ -130,38 +130,6 @@ def share_multipay():
         
         if len(unprocessed_pay) == 1:
             share()
-        """
-            unique_rowid = [y[0] for y in unprocessed_pay]
-            check = {}
-
-            temp_nonce = get_nonce()+1
-            for i in unprocessed_pay:
-                transaction_fee = dynamic.get_dynamic_fee()
-
-                # fixed processing
-                if i[1] in data.fixed.keys():
-                    fixed_amt = int(data.fixed[i[1]] * data.atomic)
-                    tx = build_transfer_transaction(i[1], (fixed_amt), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
-                else:           
-                    tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
-                check[tx['id']] = i[0]
-                signed_tx.append(tx)
-            
-            accepted = broadcast(signed_tx)
-            for_removal = non_accept_check(check, accepted)
-            
-            # remove non-accepted transactions from being marked as completed
-            if len(for_removal) > 0:
-                for i in for_removal:
-                    print("Removing RowId: ", i)
-                    unique_rowid.remove(i)
-                    
-            snekdb.processStagedPayment(unique_rowid)
-            # payment run complete
-            print('Payment Run Completed!')
-            time.sleep(60)
-                
-        """
         # query not empty means unprocessed blocks
         elif unprocessed_pay:
             unique_rowid = [y[0] for y in unprocessed_pay]
