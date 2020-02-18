@@ -51,21 +51,4 @@ class ArkDB:
                 "height" FROM blocks WHERE "generator_public_key" = '{self.PublicKey}' and "height" > {h} ORDER BY "height" DESC LIMIT 50""")
                 return self.cursor.fetchall()
             except Exception as e:
-                print(e)    
-
-    '''
-    def voters(self):
-        try:
-            self.cursor.execute(f"""SELECT "address" FROM wallets WHERE "vote" = '{self.PublicKey}'""")
-
-            voters=[]
-
-            for addr in self.cursor.fetchall():
-                self.cursor.execute(f"""SELECT "address","balance" FROM wallets WHERE "address" = '{addr[0]}'""")
-
-                voters.append(self.cursor.fetchone())
-
-            return voters
-        except Exception as e:
-            print(e)
-     '''
+                print(e)
