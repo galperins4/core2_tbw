@@ -20,16 +20,16 @@ def broadcast_multi(tx):
     try:
         transaction = client.transactions.create(tx)
         print(transaction)
-        quit()
-        id = tx[0]['id']
-        records = [[j['recipientId'], j['amount'], id] for j in tx[0]['asset']['payments']]
+        for i in tx:
+            id = i['id']
+            records = [[j['recipientId'], j['amount'], id] for j in i['asset']['payments']]
+            snekdb.storeTransactions(records)
+        print(records)
         time.sleep(1)
     except BaseException as e:
         # error
         print("Something went wrong", e)
         quit()
-
-    snekdb.storeTransactions(records)
     
     return transaction['data']['accept']
 
