@@ -174,7 +174,7 @@ def share_multipay():
             print('Payment Run Completed!')
             # sleep 1 minutes between tx blasts
             time.sleep(150)
-        elif:
+        elif len(unprocessed_pay) == 1:
             share()
         else:
             time.sleep(150)
