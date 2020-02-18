@@ -149,39 +149,12 @@ def share_multipay():
         print("Accepted Tx")
         print(accepted)
         for k,v in check.items():
-            print(k)
-            print(v)
-            quit()
             if k in accepted:
+                # mark all accepted records complete
                 snekdb.processStagedPayment(v)
-                
-        
-        quit()
-        
-        '''
-        if id in accepted:
-                #mark all staged payments as complete
-                snekdb.processStagedPayment(unique_rowid)
             else:
                 #delete all transaction records with relevant multipay txid
-                snekdb.deleteTransactionRecord(id)
-        '''
-        # query not empty means unprocessed blocks
-        if len(unprocessed_pay) != 1:
-            unique_rowid = [y[0] for y in unprocessed_pay]
-            check = {}
-            nonce = int(get_nonce() + 1)
-            tx = build_multi_transaction(unprocessed_pay, str(nonce))
-            signed_tx.append(tx)
-            id = signed_tx[0]['id']
-            accepted = broadcast_multi(signed_tx)
-            #check if multipay was accepted
-            if id in accepted:
-                #mark all staged payments as complete
-                snekdb.processStagedPayment(unique_rowid)
-            else:
-                #delete all transaction records with relevant multipay txid
-                snekdb.deleteTransactionRecord(id)
+                snekdb.deleteTransactionRecord(k) 
 
             # payment run complete
             print('Payment Run Completed!')
