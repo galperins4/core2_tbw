@@ -130,6 +130,7 @@ def get_nonce():
 def share_multipay():
     while True:
         signed_tx = []
+        max_tx_limit = 20
 
         # set max multipayment
         #max_tx = dynamic.get_multipay_limit()
@@ -138,14 +139,23 @@ def share_multipay():
         #unprocessed_pay = snekdb.stagedArkPayment(int(max_tx)).fetchall()
         unprocessed_pay = snekdb.stagedArkPayment(multi=data.multi).fetchall()
         
-        test = list(chunks(unprocessed_pay, max_tx))
-        print(len(test))
+        multi_chunk = list(chunks(unprocessed_pay, max_tx))
+        nonce = int(get_nonce() + 1)
+        for i in multi_chunk:
+            check = {}
+            tx = build_multi_transaction(unprocessed_pay, str(nonce))
+            signed_tx.append(tx)
+            nonce += 1
+            #need to add a handler for single tx
+        
+        print(signed_tx)
+            
+        
+        
         quit()
         
-        if len(unprocessed_pay) == 1:
-            share()
         # query not empty means unprocessed blocks
-        elif unprocessed_pay:
+        if len(unprocessed_pay) != 1:
             unique_rowid = [y[0] for y in unprocessed_pay]
             check = {}
             nonce = int(get_nonce() + 1)
@@ -166,6 +176,8 @@ def share_multipay():
             # sleep 1 minutes between tx blasts
             time.sleep(150)
 
+        elif:
+            share()
         else:
             time.sleep(150)
 
