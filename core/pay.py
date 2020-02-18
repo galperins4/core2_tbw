@@ -142,12 +142,11 @@ def share_multipay():
         multi_chunk = list(chunks(unprocessed_pay, max_tx))
         nonce = int(get_nonce() + 1)
         for i in multi_chunk:
-            check = {}
-            tx = build_multi_transaction(i, str(nonce))
-            signed_tx.append(tx)
-            nonce += 1
-            #need to add a handler for single tx
-        
+            if len(i) > 1:
+                check = {}
+                tx = build_multi_transaction(i, str(nonce))
+                signed_tx.append(tx)
+                nonce += 1        
         print(signed_tx)
             
         
@@ -175,6 +174,8 @@ def share_multipay():
             print('Payment Run Completed!')
             # sleep 1 minutes between tx blasts
             time.sleep(150)
+        elif:
+            share()
         else:
             time.sleep(150)
 
