@@ -16,7 +16,11 @@ from datetime import datetime
 def broadcast_multi(tx):
     
     print(tx)
-    quit()
+    for i in tx:
+        id = i['id']
+        records = [[j['recipientId'], j['amount'], id] for j in i['asset']['payments']]
+        print(records)
+        quit()
     # broadcast to relay
     try:
         transaction = client.transactions.create(tx)
