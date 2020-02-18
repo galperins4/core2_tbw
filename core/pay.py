@@ -136,32 +136,32 @@ def share_multipay():
         # hard code multipay for test
         max_tx = 3
         unprocessed_pay = snekdb.stagedArkPayment(multi=data.multi).fetchall()
-        multi_chunk = list(chunks(unprocessed_pay, max_tx))
-        nonce = int(get_nonce() + 1)
-        for i in multi_chunk:
-            if len(i) > 1:
-                unique_rowid = [y[0] for y in i]
-                tx = build_multi_transaction(i, str(nonce))
-                check[tx['id']] = unique_rowid
-                signed_tx.append(tx)
-                nonce += 1        
-        accepted = broadcast_multi(signed_tx)
-        print("Accepted Tx")
-        print(accepted)
-        for k,v in check.items():
-            if k in accepted:
-                # mark all accepted records complete
-                snekdb.processStagedPayment(v)
-            else:
-                #delete all transaction records with relevant multipay txid
-                snekdb.deleteTransactionRecord(k) 
+        if len(unprocessed_pay) == 1:
+            share()
+        elif unprocessed_pay:
+            multi_chunk = list(chunks(unprocessed_pay, max_tx))
+            nonce = int(get_nonce() + 1)
+            for i in multi_chunk:
+                if len(i) > 1:
+                    unique_rowid = [y[0] for y in i]
+                    tx = build_multi_transaction(i, str(nonce))
+                    check[tx['id']] = unique_rowid
+                    signed_tx.append(tx)
+                    nonce += 1        
+            accepted = broadcast_multi(signed_tx)
+            #check for accepted and non-accepted transactions
+            for k,v in check.items():
+                if k in accepted:
+                    # mark all accepted records complete
+                    snekdb.processStagedPayment(v)
+                else:
+                    #delete all transaction records with relevant multipay txid
+                    snekdb.deleteTransactionRecord(k) 
 
             # payment run complete
             print('Payment Run Completed!')
-            # sleep 1 minutes between tx blasts
+            # sleep 3 minutes between tx blasts
             time.sleep(150)
-        elif len(unprocessed_pay) == 1:
-            share()
         else:
             time.sleep(150)
 
