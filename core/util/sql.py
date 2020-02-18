@@ -134,10 +134,13 @@ class SnekDB:
         return self.cursor.execute("SELECT * FROM blocks WHERE processed_at IS NULL ORDER BY height")
 
 
-    def stagedArkPayment(self, lim=40):
-        return self.cursor.execute(f"SELECT rowid, * FROM staging WHERE processed_at IS NULL LIMIT {lim}")
+    def stagedArkPayment(self, lim=40, multi='N'):
+        if multi is 'N':
+            return self.cursor.execute(f"SELECT rowid, * FROM staging WHERE processed_at IS NULL LIMIT {lim}")
+        else:
+            return self.cursor.execute(f"SELECT rowid, * FROM staging WHERE processed_at IS NULL")
+            
 
-    
     def processStagedPayment(self, rows):
         ts = datetime.now().strftime('%Y-%m-%d %H:%M:%S')		
         for i in rows:
