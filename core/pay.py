@@ -168,6 +168,8 @@ def share():
         else:
             unprocessed_pay = snekdb.stagedArkPayment(int(max_tx)).fetchall()
 
+        print(len(unprocessed_pay))
+        quit()
         # query not empty means unprocessed blocks
         if unprocessed_pay:
             unique_rowid = [y[0] for y in unprocessed_pay]
