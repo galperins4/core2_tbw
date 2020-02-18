@@ -130,7 +130,7 @@ def share_multipay():
         #unprocessed_pay = snekdb.stagedArkPayment(int(max_tx)).fetchall()
         unprocessed_pay = snekdb.stagedArkPayment(multi=data.multi).fetchall()
         
-        print(len(unprocessed_pay))
+        print(unprocessed_pay)
         quit()
         
         if len(unprocessed_pay) == 1:
