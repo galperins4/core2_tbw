@@ -148,7 +148,7 @@ def share_multipay():
         accepted = broadcast_multi(signed_tx)
         print("Accepted Tx")
         print(accepted)
-        for k,v in check:
+        for k,v in check.items():
             print(k)
         
         quit()
