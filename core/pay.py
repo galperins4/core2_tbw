@@ -130,11 +130,12 @@ def share_multipay():
     while True:
         signed_tx = []
         check = {}
+        #ADD FIX TO LIMIT THE AMOUNT OF MULTIPAYMENT TRANSACTIONS
         max_tx_limit = 20
         # set max multipayment
-        #max_tx = dynamic.get_multipay_limit()
+        max_tx = dynamic.get_multipay_limit()
         # hard code multipay for test
-        max_tx = 3
+        #max_tx = 3
         unprocessed_pay = snekdb.stagedArkPayment(multi=data.multi).fetchall()
         if len(unprocessed_pay) == 1:
             share()
