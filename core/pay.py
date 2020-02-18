@@ -13,15 +13,7 @@ from util.util import Util
 from datetime import datetime
 
 
-def broadcast_multi(tx):
-    
-    print(tx)
-    for i in tx:
-        records = []
-        id = i['id']
-        records = [[j['recipientId'], j['amount'], id] for j in i['asset']['payments']]
-        print(records)
-    
+def broadcast_multi(tx):    
     quit()
     # broadcast to relay
     try:
