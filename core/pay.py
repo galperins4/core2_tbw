@@ -126,7 +126,11 @@ def share_multipay():
 
         # set max multipayment
         max_tx = dynamic.get_multipay_limit()
+        print(max_tx)
         unprocessed_pay = snekdb.stagedArkPayment(int(max_tx)).fetchall()
+        
+        print(len(unprocessed_pay))
+        quit()
         
         if len(unprocessed_pay) == 1:
             share()
