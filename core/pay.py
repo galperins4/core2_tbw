@@ -141,6 +141,9 @@ def share_multipay():
         nonce = int(get_nonce() + 1)
         for i in multi_chunk:
             if len(i) > 1:
+                unique_rowid = [y[0] for y in i]
+                print(unique_rowid)
+                quit()
                 check = {}
                 tx = build_multi_transaction(i, str(nonce))
                 print(tx['id'])
