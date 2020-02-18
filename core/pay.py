@@ -143,7 +143,7 @@ def share_multipay():
         nonce = int(get_nonce() + 1)
         for i in multi_chunk:
             check = {}
-            tx = build_multi_transaction(unprocessed_pay, str(nonce))
+            tx = build_multi_transaction(i, str(nonce))
             signed_tx.append(tx)
             nonce += 1
             #need to add a handler for single tx
