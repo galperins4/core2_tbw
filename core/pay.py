@@ -153,13 +153,14 @@ def share_multipay():
         
         quit()
         
+        '''
         if id in accepted:
                 #mark all staged payments as complete
                 snekdb.processStagedPayment(unique_rowid)
             else:
                 #delete all transaction records with relevant multipay txid
                 snekdb.deleteTransactionRecord(id)
-        
+        '''
         # query not empty means unprocessed blocks
         if len(unprocessed_pay) != 1:
             unique_rowid = [y[0] for y in unprocessed_pay]
