@@ -144,14 +144,10 @@ def share_multipay():
                 unique_rowid = [y[0] for y in i]
                 tx = build_multi_transaction(i, str(nonce))
                 check[tx['id']] = unique_rowid
-                print(check)
-                quit()
                 signed_tx.append(tx)
                 nonce += 1        
+        print(check)
         print(signed_tx)
-            
-        
-        
         quit()
         
         # query not empty means unprocessed blocks
