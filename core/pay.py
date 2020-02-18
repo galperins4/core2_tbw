@@ -14,7 +14,6 @@ from datetime import datetime
 
 
 def broadcast_multi(tx):    
-    quit()
     # broadcast to relay
     try:
         transaction = client.transactions.create(tx)
@@ -24,7 +23,6 @@ def broadcast_multi(tx):
             id = i['id']
             records = [[j['recipientId'], j['amount'], id] for j in i['asset']['payments']]
             snekdb.storeTransactions(records)
-        print(records)
         time.sleep(1)
     except BaseException as e:
         # error
@@ -148,6 +146,8 @@ def share_multipay():
                 signed_tx.append(tx)
                 nonce += 1        
         accepted = broadcast_multi(signed_tx)
+        print(accepted)
+        quit()
         
         # query not empty means unprocessed blocks
         if len(unprocessed_pay) != 1:
