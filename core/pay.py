@@ -143,8 +143,9 @@ def share_multipay():
             if len(i) > 1:
                 unique_rowid = [y[0] for y in i]
                 tx = build_multi_transaction(i, str(nonce))
-                check[tx['id'] = unique_rowid
+                check[tx['id']] = unique_rowid
                 print(check)
+                quit()
                 signed_tx.append(tx)
                 nonce += 1        
         print(signed_tx)
