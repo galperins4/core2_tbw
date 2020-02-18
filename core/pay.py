@@ -150,6 +150,11 @@ def share_multipay():
         print(accepted)
         for k,v in check.items():
             print(k)
+            print(v)
+            quit()
+            if k in accepted:
+                snekdb.processStagedPayment(v)
+                
         
         quit()
         
