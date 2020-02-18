@@ -150,7 +150,6 @@ def share_multipay():
             check = {}
             nonce = int(get_nonce() + 1)
             tx = build_multi_transaction(unprocessed_pay, str(nonce))
-            #signed_tx.append(transaction_dict)
             signed_tx.append(tx)
             id = signed_tx[0]['id']
             accepted = broadcast_multi(signed_tx)
