@@ -33,6 +33,13 @@ def broadcast_multi(tx):
     return transaction['data']['accept']
 
 
+def chunks(l, n):
+    # For item i in a range that is a length of l,
+    for i in range(0, len(l), n):
+        # Create an index range for l of n items:
+        yield l[i:i+n]
+
+
 def broadcast(tx):
     
     # broadcast to relay
@@ -130,6 +137,7 @@ def share_multipay():
         #unprocessed_pay = snekdb.stagedArkPayment(int(max_tx)).fetchall()
         unprocessed_pay = snekdb.stagedArkPayment(multi=data.multi).fetchall()
         
+        test = list(chunks(unprocessed_pay, max_tx))
         print(unprocessed_pay)
         quit()
         
@@ -168,14 +176,11 @@ def share():
 
         # get max blast tx and check for unprocessed payments
         max_tx = os.getenv("CORE_TRANSACTION_POOL_MAX_PER_REQUEST")
-        print(max_tx)
         if max_tx == None:
             unprocessed_pay = snekdb.stagedArkPayment().fetchall()
         else:
             unprocessed_pay = snekdb.stagedArkPayment(int(max_tx)).fetchall()
 
-        print(len(unprocessed_pay))
-        quit()
         # query not empty means unprocessed blocks
         if unprocessed_pay:
             unique_rowid = [y[0] for y in unprocessed_pay]
