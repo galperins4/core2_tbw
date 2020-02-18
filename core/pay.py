@@ -20,6 +20,7 @@ def broadcast_multi(tx):
     try:
         transaction = client.transactions.create(tx)
         print(transaction)
+        quit()
         id = tx[0]['id']
         records = [[j['recipientId'], j['amount'], id] for j in tx[0]['asset']['payments']]
         time.sleep(1)
@@ -146,9 +147,9 @@ def share_multipay():
                 check[tx['id']] = unique_rowid
                 signed_tx.append(tx)
                 nonce += 1        
-        print(check)
-        print(signed_tx)
         quit()
+        
+        accepted = broadcast_multi(signed_tx)
         
         # query not empty means unprocessed blocks
         if len(unprocessed_pay) != 1:
