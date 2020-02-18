@@ -63,12 +63,12 @@ def build_multi_transaction(payments, nonce):
         else:
             transaction.add_payment(i[2], i[1])
 
-        transaction.schnorr_sign(data.passphrase)
-        sp = data.secondphrase
-        if sp == 'None':
-            sp = None
-        if sp is not None:
-            transaction.second_sign(sp)
+    transaction.schnorr_sign(data.passphrase)
+    sp = data.secondphrase
+    if sp == 'None':
+        sp = None
+    if sp is not None:
+        transaction.second_sign(sp)
     
     transaction_dict = transaction.to_dict()
     return transaction_dict
