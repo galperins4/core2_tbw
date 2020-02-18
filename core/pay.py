@@ -147,8 +147,6 @@ def share_multipay():
                 check[tx['id']] = unique_rowid
                 signed_tx.append(tx)
                 nonce += 1        
-        quit()
-        
         accepted = broadcast_multi(signed_tx)
         
         # query not empty means unprocessed blocks
