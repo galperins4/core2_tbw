@@ -17,15 +17,18 @@ def broadcast_multi(tx):
     
     print(tx)
     for i in tx:
+        records = []
         id = i['id']
         records = [[j['recipientId'], j['amount'], id] for j in i['asset']['payments']]
         print(records)
-        quit()
+    
+    quit()
     # broadcast to relay
     try:
         transaction = client.transactions.create(tx)
         print(transaction)
         for i in tx:
+            records = []
             id = i['id']
             records = [[j['recipientId'], j['amount'], id] for j in i['asset']['payments']]
             snekdb.storeTransactions(records)
