@@ -148,7 +148,7 @@ def share_multipay():
             nonce += 1
             #need to add a handler for single tx
         
-        print(signed_tx[0])
+        print(signed_tx[2])
             
         
         
