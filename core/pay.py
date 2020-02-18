@@ -146,6 +146,7 @@ def share_multipay():
                 signed_tx.append(tx)
                 nonce += 1        
         accepted = broadcast_multi(signed_tx)
+        print("Accepted Tx")
         print(accepted)
         quit()
         
