@@ -134,6 +134,8 @@ def share_multipay():
         max_tx_limit = os.getenv("CORE_TRANSACTION_POOL_MAX_PER_REQUEST")
         if max_tx_limit == None:
             max_tx_limit = 40
+        else:
+            max_tx_limit = int(max_tx_limit)
         
         # set max multipayment
         max_tx = dynamic.get_multipay_limit()
