@@ -131,7 +131,10 @@ def share_multipay():
         signed_tx = []
         check = {}
         #ADD FIX TO LIMIT THE AMOUNT OF MULTIPAYMENT TRANSACTIONS
-        max_tx_limit = 20
+        max_tx_limit = os.getenv("CORE_TRANSACTION_POOL_MAX_PER_REQUEST")
+        if max_tx_limit == None:
+            max_tx_limit = 40
+        
         # set max multipayment
         max_tx = dynamic.get_multipay_limit()
         # hard code multipay for test
@@ -140,7 +143,9 @@ def share_multipay():
         if len(unprocessed_pay) == 1:
             share()
         elif unprocessed_pay:
-            multi_chunk = list(chunks(unprocessed_pay, max_tx))
+            temp_multi_chunk = list(chunks(unprocessed_pay, max_tx))
+            # remove any items over tax_tx_limit
+            multi_chunk = temp_multi_chunk[:max_tx_limit]
             nonce = int(get_nonce() + 1)
             for i in multi_chunk:
                 if len(i) > 1:
