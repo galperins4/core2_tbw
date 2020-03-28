@@ -207,8 +207,13 @@ def get_voters():
     counter = v['meta']['pageCount']
     while start <= counter:
         c = client.delegates.voters(delegate_id=data.delegate, page=start)
-        for j in c['data']:
-            initial_voters.append((j['address'], int(j['balance'])))
+        if data.network == "nos":
+            for j in c['data']:
+                print("quit")
+            quit()
+        else:
+            for j in c['data']:
+                initial_voters.append((j['address'], int(j['balance'])))
         start += 1
     
    
