@@ -209,7 +209,8 @@ def get_voters():
         c = client.delegates.voters(delegate_id=data.delegate, page=start)
         if data.network == "nos_realdevnet":
             for j in c['data']:
-                print("quit")
+                print(j)
+                #print(j['address'], int(j['balance']))
             quit()
         else:
             for j in c['data']:
