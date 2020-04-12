@@ -308,14 +308,23 @@ def payout():
         print('Payout started!')
         
         tx_count = v_count+d_count
-        multi_limit = dynamic.get_multipay_limit()
-        if tx_count%multi_limit == 0:
-            numtx = round(tx_count/multi_limit)
+        if data.multi =="Y":
+            multi_limit = dynamic.get_multipay_limit()
+            if tx_count%multi_limit == 0:
+                numtx = round(tx_count/multi_limit)
+            else:
+                numtx = round(tx_count//multi_limit)+1
+            tx_fees = int(numtx * transaction_fee)    
+            
         else:
-            numtx = round(tx_count//multi_limit)+1
-
+            numtx = tx_count
+            tx_fees = int(numtx * dynamic.get_dynamic_fee())
+        
         # calculate tx fees needed to cover run in satoshis
-        tx_fees = int(numtx * transaction_fee)
+        #tx_fees = int(numtx * transaction_fee)
+        print(numtx)
+        print(tx_fees)
+        quit()
     
         # process delegate rewards
         process_delegate_pmt(tx_fees, adj_factor)
