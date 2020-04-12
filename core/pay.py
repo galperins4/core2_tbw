@@ -13,24 +13,30 @@ from util.util import Util
 from datetime import datetime
 
 
-def broadcast_multi(tx):
-    
-    print(tx)
+def broadcast_multi(tx):    
     # broadcast to relay
     try:
         transaction = client.transactions.create(tx)
         print(transaction)
-        id = tx[0]['id']
-        records = [[j['recipientId'], j['amount'], id] for j in tx[0]['asset']['payments']]
+        for i in tx:
+            records = []
+            id = i['id']
+            records = [[j['recipientId'], j['amount'], id] for j in i['asset']['payments']]
+            snekdb.storeTransactions(records)
         time.sleep(1)
     except BaseException as e:
         # error
         print("Something went wrong", e)
         quit()
-
-    snekdb.storeTransactions(records)
     
     return transaction['data']['accept']
+
+
+def chunks(l, n):
+    # For item i in a range that is a length of l,
+    for i in range(0, len(l), n):
+        # Create an index range for l of n items:
+        yield l[i:i+n]
 
 
 def broadcast(tx):
@@ -49,6 +55,29 @@ def broadcast(tx):
     snekdb.storeTransactions(records)
     
     return transaction['data']['accept']
+
+
+def build_multi_transaction(payments, nonce):
+    transaction = MultiPayment(vendorField=data.voter_msg)
+    transaction.set_nonce(int(nonce))
+
+    for i in payments:
+        # fixed processing
+        if i[1] in data.fixed.keys():
+            fixed_amt = int(data.fixed[i[1]] * data.atomic)
+            transaction.add_payment(fixed_amt, i[1])
+        else:
+            transaction.add_payment(i[2], i[1])
+
+    transaction.schnorr_sign(data.passphrase)
+    sp = data.secondphrase
+    if sp == 'None':
+        sp = None
+    if sp is not None:
+        transaction.second_sign(sp)
+    
+    transaction_dict = transaction.to_dict()
+    return transaction_dict
 
 
 def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
@@ -100,87 +129,49 @@ def get_nonce():
 def share_multipay():
     while True:
         signed_tx = []
-
+        check = {}
+        #ADD FIX TO LIMIT THE AMOUNT OF MULTIPAYMENT TRANSACTIONS
+        max_tx_limit = os.getenv("CORE_TRANSACTION_POOL_MAX_PER_REQUEST")
+        if max_tx_limit == None:
+            max_tx_limit = 40
+        else:
+            max_tx_limit = int(max_tx_limit)
+        
         # set max multipayment
         max_tx = dynamic.get_multipay_limit()
-        unprocessed_pay = snekdb.stagedArkPayment(int(max_tx)).fetchall()
-        
+        # hard code multipay for test
+        #max_tx = 3
+        unprocessed_pay = snekdb.stagedArkPayment(multi=data.multi).fetchall()
         if len(unprocessed_pay) == 1:
-            unique_rowid = [y[0] for y in unprocessed_pay]
-            check = {}
-
-            temp_nonce = get_nonce()+1
-            for i in unprocessed_pay:
-                transaction_fee = dynamic.get_dynamic_fee()
-
-                # fixed processing
-                if i[1] in data.fixed.keys():
-                    fixed_amt = int(data.fixed[i[1]] * data.atomic)
-                    tx = build_transfer_transaction(i[1], (fixed_amt), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
-                else:           
-                    tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
-                check[tx['id']] = i[0]
-                signed_tx.append(tx)
-            
-            accepted = broadcast(signed_tx)
-            for_removal = non_accept_check(check, accepted)
-            
-            # remove non-accepted transactions from being marked as completed
-            if len(for_removal) > 0:
-                for i in for_removal:
-                    print("Removing RowId: ", i)
-                    unique_rowid.remove(i)
-                    
-            snekdb.processStagedPayment(unique_rowid)
-            # payment run complete
-            print('Payment Run Completed!')
-            time.sleep(60)
-                
-
-        # query not empty means unprocessed blocks
+            share()
         elif unprocessed_pay:
-            unique_rowid = [y[0] for y in unprocessed_pay]
-            check = {}
+            temp_multi_chunk = list(chunks(unprocessed_pay, max_tx))
+            # remove any items over tax_tx_limit
+            multi_chunk = temp_multi_chunk[:max_tx_limit]
             nonce = int(get_nonce() + 1)
-
-            transaction = MultiPayment(vendorField=data.voter_msg)
-            transaction.set_nonce(nonce)
-
-            for i in unprocessed_pay:
-
-                # fixed processing
-                if i[1] in data.fixed.keys():
-                    fixed_amt = int(data.fixed[i[1]] * data.atomic)
-                    transaction.add_payment(fixed_amt, i[1])
-                else:
-                    transaction.add_payment(i[2], i[1])
-
-            transaction.schnorr_sign(data.passphrase)
-            sp = data.secondphrase
-            if sp == 'None':
-                sp = None
-            if sp is not None:
-                transaction.second_sign(sp)
-
-            transaction_dict = transaction.to_dict()
-            signed_tx.append(transaction_dict)
-            id = signed_tx[0]['id']
+            for i in multi_chunk:
+                if len(i) > 1:
+                    unique_rowid = [y[0] for y in i]
+                    tx = build_multi_transaction(i, str(nonce))
+                    check[tx['id']] = unique_rowid
+                    signed_tx.append(tx)
+                    nonce += 1        
             accepted = broadcast_multi(signed_tx)
-            #check if multipay was accepted
-            if id in accepted:
-                #mark all staged payments as complete
-                snekdb.processStagedPayment(unique_rowid)
-            else:
-                #delete all transaction records with relevant multipay txid
-                snekdb.deleteTransactionRecord(id)
+            #check for accepted and non-accepted transactions
+            for k,v in check.items():
+                if k in accepted:
+                    # mark all accepted records complete
+                    snekdb.processStagedPayment(v)
+                else:
+                    #delete all transaction records with relevant multipay txid
+                    snekdb.deleteTransactionRecord(k) 
 
             # payment run complete
             print('Payment Run Completed!')
-            # sleep 1 minutes between tx blasts
-            time.sleep(60)
-
+            # sleep 3 minutes between tx blasts
+            time.sleep(300)
         else:
-            time.sleep(150)
+            time.sleep(300)
 
 
 def share():
@@ -201,7 +192,6 @@ def share():
             temp_nonce = get_nonce()+1
             
             for i in unprocessed_pay:
-                #dynamic = Dynamic(data.database_user, i[3], data.network, network.api_port)
                 transaction_fee = dynamic.get_dynamic_fee()
 
                 # fixed processing

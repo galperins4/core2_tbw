@@ -207,8 +207,12 @@ def get_voters():
     counter = v['meta']['pageCount']
     while start <= counter:
         c = client.delegates.voters(delegate_id=data.delegate, page=start)
-        for j in c['data']:
-            initial_voters.append((j['address'], int(j['balance'])))
+        if data.network == "nos_realdevnet":
+            for j in c['data']:
+                initial_voters.append((j['address'], int(j['power'])))
+        else:
+            for j in c['data']:
+                initial_voters.append((j['address'], int(j['balance'])))
         start += 1
     
    
@@ -304,14 +308,17 @@ def payout():
         print('Payout started!')
         
         tx_count = v_count+d_count
-        multi_limit = dynamic.get_multipay_limit()
-        if tx_count%multi_limit == 0:
-            numtx = round(tx_count/multi_limit)
+        if data.multi =="Y":
+            multi_limit = dynamic.get_multipay_limit()
+            if tx_count%multi_limit == 0:
+                numtx = round(tx_count/multi_limit)
+            else:
+                numtx = round(tx_count//multi_limit)+1
+            tx_fees = int(numtx * transaction_fee)    
+            
         else:
-            numtx = round(tx_count//multi_limit)+1
-
-        # calculate tx fees needed to cover run in satoshis
-        tx_fees = int(numtx * transaction_fee)
+            numtx = tx_count
+            tx_fees = int(numtx * dynamic.get_dynamic_fee())
     
         # process delegate rewards
         process_delegate_pmt(tx_fees, adj_factor)
