@@ -82,12 +82,18 @@ def build_multi_transaction(payments, nonce):
 
 def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     # python3 crypto version    
-    transaction = Transfer(
-        recipientId=address,
-        amount=amount,
-        vendorField=vendor,
-        fee=fee
-    )
+    if data.network == "nos_realdevnet":
+        transaction = Transfer(
+            recipientId=address,
+            amount=amount,
+            fee=fee)
+    else:
+        transaction = Transfer(
+            recipientId=address,
+            amount=amount,
+            vendorField=vendor,
+            fee=fee)
+    
     transaction.set_nonce(int(nonce))
     transaction.schnorr_sign(pp)
 
