@@ -58,7 +58,10 @@ def broadcast(tx):
 
 
 def build_multi_transaction(payments, nonce):
-    transaction = MultiPayment(vendorField=data.voter_msg)
+    if data.network == "nos_realdevnet":
+        transaction = MultiPayment()
+    else:
+        transaction = MultiPayment(vendorField=data.voter_msg)
     transaction.set_nonce(int(nonce))
 
     for i in payments:
