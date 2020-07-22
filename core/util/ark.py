@@ -48,7 +48,7 @@ class ArkDB:
         else:
             try:
                 self.cursor.execute(f"""SELECT "id","timestamp","reward","total_fee",
-                "height" FROM blocks WHERE "generator_public_key" = '{self.PublicKey}' and "height" > {h} ORDER BY "height" DESC LIMIT 50""")
+                "height" FROM blocks WHERE "generator_public_key" = '{self.PublicKey}' and "height" > {h} ORDER BY "height" DESC LIMIT 250""")
                 return self.cursor.fetchall()
             except Exception as e:
                 print(e)
