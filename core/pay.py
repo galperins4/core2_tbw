@@ -58,7 +58,7 @@ def broadcast(tx):
 
 
 def build_multi_transaction(payments, nonce):
-    if data.network == "nos_realdevnet":
+    if data.network == "nos_realdevnet" or data.network == "compendia_realmainnet":
         transaction = MultiPayment()
     else:
         transaction = MultiPayment(vendorField=data.voter_msg)
@@ -85,7 +85,7 @@ def build_multi_transaction(payments, nonce):
 
 def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     # python3 crypto version    
-    if data.network == "nos_realdevnet":
+    if data.network == "nos_realdevnet" or data.network == "compendia_realmainnet":
         transaction = Transfer(
             recipientId=address,
             amount=amount,
