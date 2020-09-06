@@ -59,7 +59,9 @@ def broadcast(tx):
 
 def build_multi_transaction(payments, nonce):
     if data.network == "nos_realdevnet" or data.network == "compendia_realmainnet":
-        transaction = MultiPayment()
+        #fee override for compendia due to static fees
+        f = 25000000
+        transaction = MultiPayment(fee=f)
     else:
         transaction = MultiPayment(vendorField=data.voter_msg)
     transaction.set_nonce(int(nonce))
