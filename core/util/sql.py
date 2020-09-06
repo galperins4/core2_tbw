@@ -112,9 +112,13 @@ class SnekDB:
         self.commit()
 
 
-    def markAsProcessed(self, block):
+    def markAsProcessed(self, block, initial="N"):
         ts = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        self.cursor.execute(f"UPDATE blocks SET processed_at = '{ts}' WHERE height = '{block}'")
+        if initial = "N"
+            self.cursor.execute(f"UPDATE blocks SET processed_at = '{ts}' WHERE height = '{block}'")
+        else:
+            self.cursor.execute(f"UPDATE blocks SET processed_at = '{ts}' WHERE height <= '{block}'")
+        
         self.commit()
 
 
