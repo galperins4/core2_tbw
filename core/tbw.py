@@ -207,7 +207,7 @@ def get_voters():
     counter = v['meta']['pageCount']
     while start <= counter:
         c = client.delegates.voters(delegate_id=data.delegate, page=start)
-        if data.network == "nos_realdevnet":
+        if data.network == "nos_realdevnet" or data.network == "compendia_realmainnet":
             for j in c['data']:
                 initial_voters.append((j['address'], int(j['power'])))
         else:
@@ -359,10 +359,12 @@ def initialize():
     snekdb.storeBlocks(all_blocks)
         
     # mark all blocks as processed
-    for row in all_blocks:
+    '''for row in all_blocks:
         if row[4] <= data.start_block:
             snekdb.markAsProcessed(row[4])
-        
+    '''
+    snekdb.markAsProcessed(data.start_block, initial = "Y")
+    
     # set block count to rows imported
     b_count = len(all_blocks)
     p_count = block_counter()
