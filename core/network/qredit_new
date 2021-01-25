@@ -1,0 +1,8 @@
+# network
+EPOCH = "2017,3,21,13,00,00"
+VERSION = 58
+WIF = 187
+API_PORT = 4103
+DATABASE = "qredit_mainnet"
+DATABASE_USER = "null"
+DATABASE_PASSWORD = "password"
