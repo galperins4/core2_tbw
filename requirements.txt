@@ -2,6 +2,6 @@ wheel
 python-dotenv
 flask
 flask-API
-arkecosystem-crypto
-arkecosystem-client
 psycopg2
+arkecosystem-client
+arkecosystem-crypto
