@@ -1,8 +1,8 @@
 wheel
 python-dotenv
-psycopg2
 flask
 flask-API
 arkecosystem-crypto
 arkecosystem-client
 dposlib
+psycopg2
