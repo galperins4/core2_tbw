@@ -4,5 +4,4 @@ flask
 flask-API
 arkecosystem-crypto
 arkecosystem-client
-dposlib
 psycopg2
