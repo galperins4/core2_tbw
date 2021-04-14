@@ -41,16 +41,16 @@ class SnekDB:
         
         self.cursor.execute("CREATE TABLE IF NOT EXISTS staging (address varchar(36), payamt bigint, msg varchar(64), processed_at varchar(64) null )")
         
-        self.cursor.execute("CREATE TABLE IF NOT EXISTS exchange (inaddress varchar(36), outaddress varchar(64), payamt bigint, exchangeid varchar(64), processed_at varchar(64) null )")
+        self.cursor.execute("CREATE TABLE IF NOT EXISTS exchange (fromaddress varchar(36), toaddress varchar(36), ogaddress varchar(64), payamt bigint, exchangeid varchar(64), processed_at varchar(64) null )")
 
         self.connection.commit()
 
 
-    def storeExchange(self, inpay, outpay, amount, exchangeid):
+    def storeExchange(self, fromaddress, toaddress, ogaddress, amount, exchangeid):
         ts = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         exchange=[]
-        exchange.append((inpay, outpay, amount, exchangeid, ts))
-        self.executemany("INSERT INTO exchange VALUES (?,?,?,?,?)", exchange)
+        exchange.append((fromaddress, toaddress, ogaddress, amount, exchangeid, ts))
+        self.executemany("INSERT INTO exchange VALUES (?,?,?,?,?,?)", exchange)
         self.commit
     
     
