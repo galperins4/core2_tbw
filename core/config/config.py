@@ -47,6 +47,7 @@ class Config():
         self.convert_to = os.getenv("CONVERT_TO")
         self.address_to = os.getenv("ADDRESS_TO")
         self.network_to = os.getenv("NETWORK_TO")
+        self.convert_address = os.getenv("CONVERT_ADDRESS")
     
     
     def load_pool_config(self):
