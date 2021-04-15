@@ -112,6 +112,7 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
 
 def process_exchange(address, amount):
     print("Processing Exchange")
+    quit()
     print("Original Amount", amount)
     amount = amount/data.atomic
     print("Exchange Amount:", amount)
@@ -235,7 +236,7 @@ def share():
                 if i[1] in data.fixed.keys():
                     fixed_amt = int(data.fixed[i[1]] * data.atomic)
                     tx = build_transfer_transaction(i[1], (fixed_amt), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
-                elif i[1] in data.convert_address:
+                elif i[1] in data.convert_address and data.exchange == "Y":
                     pay_in = process_exchange(i[1], i[2])
                     tx = build_transfer_transaction(pay_in, (i[2]), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
                 else:           
