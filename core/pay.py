@@ -111,9 +111,10 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     return transaction_dict
 
 def process_exchange(address, amount):
+    atomic = 100000000
     print("Processing Exchange")
     print("Original Amount", amount)
-    amount = amount / data.atomic
+    amount = amount / atomic
     print("Exchange Amount:", amount)
     quit()
     url = 'https://mkcnus24ib.execute-api.us-west-2.amazonaws.com/Test/exchange'
