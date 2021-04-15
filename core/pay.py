@@ -111,7 +111,6 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     return transaction_dict
 
 def process_exchange(address, amount):
-    #atomic = 100000000
     print("Processing Exchange")
     print("Original Amount", amount)
     amount = amount / data.atomic
@@ -135,7 +134,7 @@ def process_exchange(address, amount):
         payin_address = address
         print("Exchange Fail")
    
-    print("Pay In Xddress", payin_address)
+    print("Pay In Address", payin_address)
     quit()
     return payin_address
 
