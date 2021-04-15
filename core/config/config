@@ -29,6 +29,7 @@ MULTI = "N"
 # experiment
 EXCHANGE = "N"
 CONVERT_FROM = "ark
+CONVERT_ADDRESS = "addr1"
 CONVERT_TO = "usdc"
 ADDRESS_TO = "addr1"
 NETWORK_TO = "eth"
