@@ -112,6 +112,10 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
 
 def process_exchange(address, amount):
     print("Processing Exchange")
+    print("Original Amount", amount)
+    amount = amount/data.atomic
+    print("Exchange Amount:", amount)
+    quit()
     url = 'https://mkcnus24ib.execute-api.us-west-2.amazonaws.com/Test/exchange'
     data = {"fromCurrency": data.convert_from,
           "toCurrency": data.convert_to,
@@ -120,19 +124,18 @@ def process_exchange(address, amount):
           "fromAmount": amount,}
     
     try: 
-        r = requests.get(awsurl, params=data)
+        r = requests.get(url, params=data)
         if r.json()['status'] == "success":
-            exchange_address = r.json()['deliveryAddress']
+            payin_address = r.json()['payinAddress']
             exchangeid = r.json()['exchangeId']
-            snekdb.storeExchange(exchange_address, data.address_to, address, amount, exchangeid)
-            print("Exchange Success)"   
+            snekdb.storeExchange(address, payin_address, data.address_to, address, amount, exchangeid)
+            print("Exchange Success")   
     except:
-        exchange_address = address
+        payin_address = address
         print("Exchange Fail")
        
     quit()
-
-    return exchange_address
+    return payin_address
 
 
 def build_network():
@@ -152,7 +155,6 @@ def non_accept_check(c, a):
         else:
             #print("TransactionID accepted: ", k)
             pass
-    
     return removal_check
 
     
@@ -229,10 +231,13 @@ def share():
             for i in unprocessed_pay:
                 transaction_fee = dynamic.get_dynamic_fee()
 
-                # fixed processing
+                # fixed and exchange processing
                 if i[1] in data.fixed.keys():
                     fixed_amt = int(data.fixed[i[1]] * data.atomic)
                     tx = build_transfer_transaction(i[1], (fixed_amt), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
+                elif i[1] in data.convert_address:
+                    pay_in = process_exchange(i[1], i[2])
+                    tx = build_transfer_transaction(pay_in, (i[2]), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
                 else:           
                     tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
                 check[tx['id']] = i[0]
