@@ -116,7 +116,7 @@ def process_exchange(address, amount):
     print("Original Amount", amount)
     amount = amount / atomic
     print("Exchange Amount:", amount)
-    quit()
+    #quit()
     url = 'https://mkcnus24ib.execute-api.us-west-2.amazonaws.com/Test/exchange'
     data = {"fromCurrency": data.convert_from,
           "toCurrency": data.convert_to,
@@ -134,7 +134,8 @@ def process_exchange(address, amount):
     except:
         payin_address = address
         print("Exchange Fail")
-       
+   
+    print("Pay In Xddress", payin_address)
     quit()
     return payin_address
 
