@@ -26,6 +26,14 @@ KEEP = "reserve:0.25,second:0.25"
 PAY_ADDRESSES = "reserve:addr1,second:addr2"
 MULTI = "N"
 
+# experiment
+EXCHANGE = "N"
+CONVERT_FROM = "ark
+CONVERT_TO = "usdc"
+ADDRESS_TO = "addr1"
+NETWORK_TO = "eth"
+
+
 # pool
 POOL_IP = "xx.xx.xx.xx"
 EXPLORER = "https://dexplorer.ark.io/"
