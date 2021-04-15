@@ -112,7 +112,6 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
 
 def process_exchange(address, amount):
     print("Processing Exchange")
-    quit()
     print("Original Amount", amount)
     amount = amount/data.atomic
     print("Exchange Amount:", amount)
