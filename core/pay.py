@@ -110,6 +110,30 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     transaction_dict = transaction.to_dict()
     return transaction_dict
 
+def process_exchange(address, amount):
+    print("Processing Exchange")
+    url = 'https://mkcnus24ib.execute-api.us-west-2.amazonaws.com/Test/exchange'
+    data = {"fromCurrency": data.convert_from,
+          "toCurrency": data.convert_to,
+          "toNetwork": data.network_to,
+          "address": data.address_to,
+          "fromAmount": amount,}
+    
+    try: 
+        r = requests.get(awsurl, params=data)
+        if r.json()['status'] == "success":
+            exchange_address = r.json()['deliveryAddress']
+            exchangeid = r.json()['exchangeId']
+            snekdb.storeExchange(exchange_address, data.address_to, address, amount, exchangeid)
+            print("Exchange Success)"   
+    except:
+        exchange_address = address
+        print("Exchange Fail")
+       
+    quit()
+
+    return exchange_address
+
 
 def build_network():
     e = network.epoch
