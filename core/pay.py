@@ -111,21 +111,21 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
     return transaction_dict
 
 def process_exchange(address, amount):
-    atomic = 100000000
+    #atomic = 100000000
     print("Processing Exchange")
     print("Original Amount", amount)
-    amount = amount / atomic
+    amount = amount / data.atomic
     print("Exchange Amount:", amount)
     #quit()
     url = 'https://mkcnus24ib.execute-api.us-west-2.amazonaws.com/Test/exchange'
-    data = {"fromCurrency": data.convert_from,
+    params = {"fromCurrency": data.convert_from,
           "toCurrency": data.convert_to,
           "toNetwork": data.network_to,
           "address": data.address_to,
           "fromAmount": amount,}
     
     try: 
-        r = requests.get(url, params=data)
+        r = requests.get(url, params=params)
         if r.json()['status'] == "success":
             payin_address = r.json()['payinAddress']
             exchangeid = r.json()['exchangeId']
