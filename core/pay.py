@@ -134,6 +134,7 @@ def process_exchange(address, amount):
         if r.json()['status'] == "success":
             payin_address = r.json()['payinAddress']
             exchangeid = r.json()['exchangeId']
+            print("2")
             snekdb.storeExchange(address, payin_address, data.address_to, address, amount, exchangeid)
             print("Exchange Success")   
     except:
