@@ -127,7 +127,9 @@ def process_exchange(address, amount):
           "fromAmount": amount,}
     
     try: 
+        print("1")
         r = requests.get(url, params=params)
+        print("2")
         if r.json()['status'] == "success":
             payin_address = r.json()['payinAddress']
             exchangeid = r.json()['exchangeId']
