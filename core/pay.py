@@ -2,6 +2,7 @@
 import time
 import os
 import math
+import requests
 from dotenv import load_dotenv
 from crypto.configuration.network import set_custom_network
 from crypto.transactions.builder.transfer import Transfer
@@ -126,21 +127,19 @@ def process_exchange(address, amount):
           "toNetwork": data.network_to,
           "address": data.address_to,
           "fromAmount": str(amount),}
-    print(data_in)
     
-    print("1")
-    r = requests.get(url, params=data_in)
-    print(r)
-    if r.json()['status'] == "success":
-        payin_address = r.json()['payinAddress']
-        exchangeid = r.json()['exchangeId']
-        snekdb.storeExchange(address, payin_address, data.address_to, address, amount, exchangeid)
-        print("Exchange Success")   
-    '''
+    try:
+        r = requests.get(url, params=data_in)
+        print(r.json())
+        if r.json()['status'] == "success":
+            payin_address = r.json()['payinAddress']
+            exchangeid = r.json()['exchangeId']
+            snekdb.storeExchange(address, payin_address, data.address_to, address, amount, exchangeid)
+            print("Exchange Success")   
     except:
         payin_address = address
         print("Exchange Fail")
-    '''
+    
     print("Pay In Address", payin_address)
     quit()
     return payin_address
