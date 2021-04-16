@@ -126,7 +126,7 @@ def process_exchange(address, amount):
           "toNetwork": data.network_to,
           "address": data.address_to,
           "fromAmount": str(amount),}
-    
+    print(data_in)
     try: 
         print("1")
         r = requests.get(url, params=data_in)
