@@ -124,7 +124,7 @@ def process_exchange(address, amount):
           "toCurrency": data.convert_to,
           "toNetwork": data.network_to,
           "address": data.address_to,
-          "fromAmount": amount,}
+          "fromAmount": str(amount),}
     
     try: 
         print("1")
