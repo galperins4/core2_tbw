@@ -127,19 +127,20 @@ def process_exchange(address, amount):
           "address": data.address_to,
           "fromAmount": str(amount),}
     print(data_in)
-    try: 
-        print("1")
-        r = requests.get(url, params=data_in)
-        print(r)
-        if r.json()['status'] == "success":
-            payin_address = r.json()['payinAddress']
-            exchangeid = r.json()['exchangeId']
-            snekdb.storeExchange(address, payin_address, data.address_to, address, amount, exchangeid)
-            print("Exchange Success")   
+    
+    print("1")
+    r = requests.get(url, params=data_in)
+    print(r)
+    if r.json()['status'] == "success":
+        payin_address = r.json()['payinAddress']
+        exchangeid = r.json()['exchangeId']
+        snekdb.storeExchange(address, payin_address, data.address_to, address, amount, exchangeid)
+        print("Exchange Success")   
+    '''
     except:
         payin_address = address
         print("Exchange Fail")
-   
+    '''
     print("Pay In Address", payin_address)
     quit()
     return payin_address
