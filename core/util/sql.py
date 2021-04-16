@@ -51,7 +51,7 @@ class SnekDB:
         exchange=[]
         exchange.append((i_address, pay_address, e_address, amount, exchangeid, ts))
         self.executemany("INSERT INTO exchange VALUES (?,?,?,?,?,?)", exchange)
-        self.commit
+        self.commit()
     
     
     def storePayRun(self, address, amount, msg):
