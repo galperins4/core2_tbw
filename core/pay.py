@@ -130,7 +130,7 @@ def process_exchange(address, amount):
     try: 
         print("1")
         r = requests.get(url, params=data_in)
-        print("2")
+        print(r)
         if r.json()['status'] == "success":
             payin_address = r.json()['payinAddress']
             exchangeid = r.json()['exchangeId']
