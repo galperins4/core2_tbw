@@ -125,7 +125,8 @@ def process_exchange(address, amount):
           "toCurrency": data.convert_to,
           "toNetwork": data.network_to,
           "address": data.address_to,
-          "fromAmount": str(amount),}
+          "fromAmount": str(amount),
+          "refundAddress":address}
     try:
         r = requests.get(url, params=data_in)
         if r.json()['status'] == "success":
