@@ -120,7 +120,7 @@ def process_exchange(address, amount):
     print("Exchange Amount:", amount)
     #quit()
     url = 'https://mkcnus24ib.execute-api.us-west-2.amazonaws.com/Test/exchange'
-    params = {"fromCurrency": data.convert_from,
+    data_in = {"fromCurrency": data.convert_from,
           "toCurrency": data.convert_to,
           "toNetwork": data.network_to,
           "address": data.address_to,
@@ -128,7 +128,7 @@ def process_exchange(address, amount):
     
     try: 
         print("1")
-        r = requests.get(url, params=params)
+        r = requests.get(url, params=data_in)
         print("2")
         if r.json()['status'] == "success":
             payin_address = r.json()['payinAddress']
