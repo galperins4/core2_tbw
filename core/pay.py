@@ -71,6 +71,9 @@ def build_multi_transaction(payments, nonce):
         if i[1] in data.fixed.keys():
             fixed_amt = int(data.fixed[i[1]] * data.atomic)
             transaction.add_payment(fixed_amt, i[1])
+        elif i[1] in data.convert_address and data.exchange == "Y":
+            pay_in = process_exchange(i[1], i[2])
+            transaction.add_payment(i[2], pay_in)        
         else:
             transaction.add_payment(i[2], i[1])
 
