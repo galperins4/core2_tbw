@@ -119,16 +119,13 @@ def process_exchange(address, amount):
     print("Original Amount", amount)
     amount = truncate((amount / data.atomic),4)
     print("Exchange Amount:", amount)
-    quit()
+    #quit()
     url = 'https://mkcnus24ib.execute-api.us-west-2.amazonaws.com/Test/exchange'
     data_in = {"fromCurrency": data.convert_from,
           "toCurrency": data.convert_to,
           "toNetwork": data.network_to,
           "address": data.address_to,
           "fromAmount": str(amount),}
-    print(data_in)
-    quit()
-    
     
     try: 
         print("1")
