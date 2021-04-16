@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import time
 import os
+import math
 from dotenv import load_dotenv
 from crypto.configuration.network import set_custom_network
 from crypto.transactions.builder.transfer import Transfer
@@ -116,9 +117,9 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
 def process_exchange(address, amount):
     print("Processing Exchange")
     print("Original Amount", amount)
-    amount = amount / data.atomic
+    amount = truncate((amount / data.atomic),4)
     print("Exchange Amount:", amount)
-    #quit()
+    quit()
     url = 'https://mkcnus24ib.execute-api.us-west-2.amazonaws.com/Test/exchange'
     data_in = {"fromCurrency": data.convert_from,
           "toCurrency": data.convert_to,
@@ -146,6 +147,9 @@ def process_exchange(address, amount):
     quit()
     return payin_address
 
+
+def truncate(f, n):
+    return math.floor(f * 10 ** n) / 10 ** n
 
 def build_network():
     e = network.epoch
