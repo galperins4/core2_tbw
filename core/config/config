@@ -33,6 +33,7 @@ CONVERT_ADDRESS = "addr1"
 CONVERT_TO = "usdc"
 ADDRESS_TO = "addr1"
 NETWORK_TO = "eth"
+PROVIDER = "provider"
 
 
 # pool
