@@ -14,7 +14,7 @@ class Exchange:
     def process_changenow_exchange(self, address, amount):
         print("Processing Exchange")
         print("Original Amount", amount)
-        amount = truncate((amount / self.atomic),4)
+        amount = self.truncate((amount / self.atomic),4)
         print("Exchange Amount:", amount)
         url = 'https://mkcnus24ib.execute-api.us-west-2.amazonaws.com/Test/exchange'
         data_in = {"fromCurrency": data.convert_from,
