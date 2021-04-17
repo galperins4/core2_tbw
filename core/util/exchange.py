@@ -3,8 +3,8 @@ import requests
 
 
 class Exchange:
-    def __init__(self, database, config, provider):
-        self.provider = provider
+    def __init__(self, database, config):
+        self.provider = "ChangeNow"
         self.config = config
         self.database = database
         self.atomic = 100000000
