@@ -5,6 +5,7 @@ import requests
 class Exchange:
     def __init__(self, provider):
         self.provider = provider
+        self.atomic = 100000000
 
     def truncate(self,f, n):
         return math.floor(f * 10 ** n) / 10 ** n
