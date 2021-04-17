@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 import time
 import os
-import math
-import requests
 from dotenv import load_dotenv
 from crypto.configuration.network import set_custom_network
 from crypto.transactions.builder.transfer import Transfer
@@ -116,37 +114,8 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
 
     transaction_dict = transaction.to_dict()
     return transaction_dict
-'''
-def process_exchange(address, amount):
-    print("Processing Exchange")
-    print("Original Amount", amount)
-    amount = truncate((amount / data.atomic),4)
-    print("Exchange Amount:", amount)
-    url = 'https://mkcnus24ib.execute-api.us-west-2.amazonaws.com/Test/exchange'
-    data_in = {"fromCurrency": data.convert_from,
-          "toCurrency": data.convert_to,
-          "toNetwork": data.network_to,
-          "address": data.address_to,
-          "fromAmount": str(amount),
-          "refundAddress":address}
-    try:
-        r = requests.get(url, params=data_in)
-        if r.json()['status'] == "success":
-            payin_address = r.json()['payinAddress']
-            exchangeid = r.json()['exchangeId']
-            snekdb.storeExchange(address, payin_address, data.address_to, amount, exchangeid)
-            print("Exchange Success")   
-    except:
-        payin_address = address
-        print("Exchange Fail")
-    
-    print("Pay In Address", payin_address)
-    return payin_address
-'''
-'''
-def truncate(f, n):
-    return math.floor(f * 10 ** n) / 10 ** n
-'''
+
+
 def build_network():
     e = network.epoch
     t = [int(i) for i in e]
