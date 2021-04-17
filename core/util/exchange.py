@@ -6,9 +6,10 @@ from lowercase_booleans import false
 
 class Exchange:
     def __init__(self, database, config):
-        self.provider = "ChangeNow"
         self.config = config
         self.database = database
+        #self.provider = "ChangeNow"
+        self.provider = self.config.provider
         self.atomic = 100000000
 
         
