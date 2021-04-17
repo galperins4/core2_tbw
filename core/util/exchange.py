@@ -18,10 +18,10 @@ class Exchange:
         amount = self.truncate((amount / self.atomic),4)
         print("Exchange Amount:", amount)
         url = 'https://mkcnus24ib.execute-api.us-west-2.amazonaws.com/Test/exchange'
-        data_in = {"fromCurrency": data.convert_from,
-                   "toCurrency": data.convert_to,
-                   "toNetwork": data.network_to,
-                   "address": data.address_to,
+        data_in = {"fromCurrency": self.config.convert_from,
+                   "toCurrency": self.config.convert_to,
+                   "toNetwork": self.config.network_to,
+                   "address": self.config.address_to,
                    "fromAmount": str(amount),
                    "refundAddress":address}
         try:
@@ -29,7 +29,7 @@ class Exchange:
             if r.json()['status'] == "success":
                 payin_address = r.json()['payinAddress']
                 exchangeid = r.json()['exchangeId']
-                snekdb.storeExchange(address, payin_address, data.address_to, amount, exchangeid)
+                self.database.storeExchange(address, payin_address, self.config.address_to, amount, exchangeid)
                 print("Exchange Success")   
         except:
             payin_address = address
