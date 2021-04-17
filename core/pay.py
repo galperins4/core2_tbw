@@ -11,6 +11,7 @@ from config.config import Config
 from network.network import Network
 from util.sql import SnekDB
 from util.dynamic import Dynamic
+from util.exchange import Exchange
 from util.util import Util
 from datetime import datetime
 
@@ -277,6 +278,7 @@ if __name__ == '__main__':
     network = Network(data.network)
     u = Util(data.network)
     snekdb = SnekDB(data.database_user, data.network, data.delegate)
+    exchange = Exchange(data,snekdb)
     client = u.get_client(network.api_port)
     build_network()
     dynamic = Dynamic(data.database_user, data.voter_msg, data.network, network.api_port)
