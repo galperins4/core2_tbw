@@ -75,7 +75,8 @@ def build_multi_transaction(payments, nonce):
             fixed_amt = int(data.fixed[i[1]] * data.atomic)
             transaction.add_payment(fixed_amt, i[1])
         elif i[1] in data.convert_address and data.exchange == "Y":
-            pay_in = process_exchange(i[1], i[2])
+            #pay_in = process_exchange(i[1], i[2])
+            pay_in = exchange.exchange_select(i[1], i[2])
             transaction.add_payment(i[2], pay_in)        
         else:
             transaction.add_payment(i[2], i[1])
@@ -115,7 +116,7 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
 
     transaction_dict = transaction.to_dict()
     return transaction_dict
-
+'''
 def process_exchange(address, amount):
     print("Processing Exchange")
     print("Original Amount", amount)
@@ -141,11 +142,11 @@ def process_exchange(address, amount):
     
     print("Pay In Address", payin_address)
     return payin_address
-
-
+'''
+'''
 def truncate(f, n):
     return math.floor(f * 10 ** n) / 10 ** n
-
+'''
 def build_network():
     e = network.epoch
     t = [int(i) for i in e]
@@ -244,7 +245,7 @@ def share():
                     fixed_amt = int(data.fixed[i[1]] * data.atomic)
                     tx = build_transfer_transaction(i[1], (fixed_amt), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
                 elif i[1] in data.convert_address and data.exchange == "Y":
-                    pay_in = process_exchange(i[1], i[2])
+                    pay_in = exchange.exchange_select(i[1], i[2])
                     tx = build_transfer_transaction(pay_in, (i[2]), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
                 else:           
                     tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
