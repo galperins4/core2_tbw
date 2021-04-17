@@ -9,8 +9,17 @@ class Exchange:
         self.database = database
         self.atomic = 100000000
 
+        
     def truncate(self,f, n):
         return math.floor(f * 10 ** n) / 10 ** n
+   
+
+    def exchange_select(self, address, amount):
+        if self.provider == "ChangeNow":
+            self.process_changenow_exchange(address,amount)
+        else:
+            pass
+    
     
     def process_changenow_exchange(self, address, amount):
         print("Processing Exchange")
