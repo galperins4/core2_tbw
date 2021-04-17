@@ -3,8 +3,9 @@ import requests
 
 
 class Exchange:
-    def __init__(self, provider):
+    def __init__(self, config, provider):
         self.provider = provider
+        self.config = config
         self.atomic = 100000000
 
     def truncate(self,f, n):
