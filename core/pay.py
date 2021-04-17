@@ -279,7 +279,7 @@ if __name__ == '__main__':
     network = Network(data.network)
     u = Util(data.network)
     snekdb = SnekDB(data.database_user, data.network, data.delegate)
-    exchange = Exchange(data,snekdb)
+    exchange = Exchange(snekdb, data)
     client = u.get_client(network.api_port)
     build_network()
     dynamic = Dynamic(data.database_user, data.voter_msg, data.network, network.api_port)
