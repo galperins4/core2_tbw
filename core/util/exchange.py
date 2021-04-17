@@ -1,23 +1,36 @@
-import os.path
-import json
-from .util import Util
-
-atomic = 100000000
+import math
+import requests
 
 
-class Dynamic:
-    def __init__(self, u, msg, network, port):
-        self.username = u
-        self.msg = msg
-        self.network = network
-        self.port = port
-        self.u = Util(self.network)
-        self.client = self.u.get_client(self.port)
+class Exchange:
+    def __init__(self, provider):
+        self.provider = provider
 
+    def truncate(self,f, n):
+        return math.floor(f * 10 ** n) / 10 ** n
     
-    def get_multipay_limit(self):
+    def process_changenow_exchange(self, address, amount):
+        print("Processing Exchange")
+        print("Original Amount", amount)
+        amount = truncate((amount / data.atomic),4)
+        print("Exchange Amount:", amount)
+        url = 'https://mkcnus24ib.execute-api.us-west-2.amazonaws.com/Test/exchange'
+        data_in = {"fromCurrency": data.convert_from,
+                   "toCurrency": data.convert_to,
+                   "toNetwork": data.network_to,
+                   "address": data.address_to,
+                   "fromAmount": str(amount),
+                   "refundAddress":address}
         try:
-            limit = int(self.client.node.configuration()['data']['constants']['multiPaymentLimit'])
+            r = requests.get(url, params=data_in)
+            if r.json()['status'] == "success":
+                payin_address = r.json()['payinAddress']
+                exchangeid = r.json()['exchangeId']
+                snekdb.storeExchange(address, payin_address, data.address_to, amount, exchangeid)
+                print("Exchange Success")   
         except:
-            limit = 20
-        return limit
+            payin_address = address
+            print("Exchange Fail")
+    
+        print("Pay In Address", payin_address)
+        return payin_address
