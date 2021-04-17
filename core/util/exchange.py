@@ -16,7 +16,8 @@ class Exchange:
 
     def exchange_select(self, address, amount):
         if self.provider == "ChangeNow":
-            self.process_changenow_exchange(address,amount)
+            pay = self.process_changenow_exchange(address,amount)
+            return pay
         else:
             pass
     
