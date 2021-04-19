@@ -9,7 +9,7 @@ class Exchange:
         self.config = config
         self.database = database
         #self.provider = "ChangeNow"
-        self.provider = self.config.provider
+        #self.provider = self.config.provider
         self.atomic = 100000000
 
         
@@ -17,17 +17,17 @@ class Exchange:
         return math.floor(f * 10 ** n) / 10 ** n
    
 
-    def exchange_select(self, address, amount):
-        if self.provider == "ChangeNow":
-            pay = self.process_changenow_exchange(address,amount)
-        elif self.provider == "SimpleSwap":
-            pay = self.process_simpleswap_exchange(address,amount)
+    def exchange_select(self, index, address, amount, provider):
+        if provider == "ChangeNow":
+            pay = self.process_changenow_exchange(index,address,amount)
+        elif provider == "SimpleSwap":
+            pay = self.process_simpleswap_exchange(index,address,amount)
         else:
             pay = address
             
         return pay
     
-    def process_simpleswap_exchange(self, address, amount):
+    def process_simpleswap_exchange(self, index, address, amount):
         fixed = false
         print("Processing Exchange")
         print("Original Amount", amount)
@@ -35,9 +35,9 @@ class Exchange:
         print("Exchange Amount:", amount)
         url = 'https://t1mi6dwix2.execute-api.us-west-2.amazonaws.com/Test/exchange'
         data_in = {"fixed": fixed,
-                   "currency_from": self.config.convert_from,
-                   "currency_to": self.config.convert_to,
-                   "address_to": self.config.address_to,
+                   "currency_from": self.config.convert_from[index],
+                   "currency_to": self.config.convert_to[index],
+                   "address_to": self.config.address_to[index],
                    "amount": str(amount),
                    "user_refund_address":address}
         
@@ -59,16 +59,16 @@ class Exchange:
         return payin_address
     
     
-    def process_changenow_exchange(self, address, amount):
+    def process_changenow_exchange(self, index, address, amount):
         print("Processing Exchange")
         print("Original Amount", amount)
         amount = self.truncate((amount / self.atomic),4)
         print("Exchange Amount:", amount)
         url = 'https://mkcnus24ib.execute-api.us-west-2.amazonaws.com/Test/exchange'
-        data_in = {"fromCurrency": self.config.convert_from,
-                   "toCurrency": self.config.convert_to,
-                   "toNetwork": self.config.network_to,
-                   "address": self.config.address_to,
+        data_in = {"fromCurrency": self.config.convert_from[index],
+                   "toCurrency": self.config.convert_to[index],
+                   "toNetwork": self.config.network_to[index],
+                   "address": self.config.address_to[index],
                    "fromAmount": str(amount),
                    "refundAddress":address}
         try:
