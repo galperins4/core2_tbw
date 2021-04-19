@@ -28,12 +28,12 @@ MULTI = "N"
 
 # experiment
 EXCHANGE = "N"
-CONVERT_FROM = "ark
-CONVERT_ADDRESS = "addr1"
-CONVERT_TO = "usdc"
-ADDRESS_TO = "addr1"
-NETWORK_TO = "eth"
-PROVIDER = "provider"
+CONVERT_FROM = "ark, ark"
+CONVERT_ADDRESS = "addr1, addr2"
+CONVERT_TO = "usdc, xrp"
+ADDRESS_TO = "usdc_addr1, xrp_addr2"
+NETWORK_TO = "eth, xrp"
+PROVIDER = "provider, provider"
 
 
 # pool
