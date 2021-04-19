@@ -43,12 +43,12 @@ class Config():
     
     def load_experimental_config(self):
         self.exchange = os.getenv("EXCHANGE")
-        self.convert_from = os.getenv("CONVERT_FROM")
-        self.convert_to = os.getenv("CONVERT_TO")
-        self.address_to = os.getenv("ADDRESS_TO")
-        self.network_to = os.getenv("NETWORK_TO")
-        self.convert_address = os.getenv("CONVERT_ADDRESS")
-        self.provider = os.getenv("PROVIDER")
+        self.convert_from = os.getenv("CONVERT_FROM").split(',')
+        self.convert_to = os.getenv("CONVERT_TO").split(',')
+        self.address_to = os.getenv("ADDRESS_TO").split(',')
+        self.network_to = os.getenv("NETWORK_TO").split(',')
+        self.convert_address = os.getenv("CONVERT_ADDRESS").split(',')
+        self.provider = os.getenv("PROVIDER").split(',')
     
     
     def load_pool_config(self):
