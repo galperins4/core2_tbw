@@ -51,7 +51,9 @@ class Exchange:
                 payin_address = r.json()['payinAddress']
                 exchangeid = r.json()['exchangeId']
                 self.database.storeExchange(address, payin_address, self.config.address_to, amount, exchangeid)
-                print("Exchange Success")   
+                print("Exchange Success") 
+            else:
+                payin_address = address
         except:
             payin_address = address
             print("Exchange Fail")
@@ -79,7 +81,9 @@ class Exchange:
                 payin_address = r.json()['payinAddress']
                 exchangeid = r.json()['exchangeId']
                 self.database.storeExchange(address, payin_address, self.config.address_to, amount, exchangeid)
-                print("Exchange Success")   
+                print("Exchange Success") 
+            else:
+                payin_address = address
         except:
             payin_address = address
             print("Exchange Fail")
