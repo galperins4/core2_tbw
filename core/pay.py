@@ -75,7 +75,7 @@ def build_multi_transaction(payments, nonce):
         elif data.exchange == "Y":
             if i[1] in data.convert_address:
                 index = data.convert_address.index(i[1])
-                pay_in = exchange.exchange_select(index, i[1], i[2])
+                pay_in = exchange.exchange_select(index, i[1], i[2],data.provider[index])
                 transaction.add_payment(i[2], pay_in)         
         else:
             transaction.add_payment(i[2], i[1])
@@ -217,7 +217,7 @@ def share():
                 elif data.exchange == "Y":
                     if i[1] in data.convert_address:
                         index = data.convert_address.index(i[1])
-                        pay_in = exchange.exchange_select(index, i[1], i[2])
+                        pay_in = exchange.exchange_select(index, i[1], i[2], data.provider[index])
                         tx = build_transfer_transaction(pay_in, (i[2]), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
                 else:           
                     tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
