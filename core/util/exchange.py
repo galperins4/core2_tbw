@@ -25,7 +25,7 @@ class Exchange:
             pay = self.process_simpleswap_exchange(index,address,amount)
         else:
             pay = address
-        time.sleep(1)
+        time.sleep(8)
         return pay
     
     def process_simpleswap_exchange(self, index, address, amount):
