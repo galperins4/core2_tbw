@@ -51,7 +51,7 @@ class Exchange:
             if r.json()['status'] == "success":
                 payin_address = r.json()['payinAddress']
                 exchangeid = r.json()['exchangeId']
-                self.database.storeExchange(address, payin_address, self.config.address_to, amount, exchangeid)
+                self.database.storeExchange(address, payin_address, self.config.address_to[index], amount, exchangeid)
                 print("Exchange Success") 
             else:
                 payin_address = address
@@ -81,7 +81,7 @@ class Exchange:
             if r.json()['status'] == "success":
                 payin_address = r.json()['payinAddress']
                 exchangeid = r.json()['exchangeId']
-                self.database.storeExchange(address, payin_address, self.config.address_to, amount, exchangeid)
+                self.database.storeExchange(address, payin_address, self.config.address_to[index], amount, exchangeid)
                 print("Exchange Success") 
             else:
                 payin_address = address
