@@ -1,8 +1,8 @@
 from config.config import Config
 from network.network import Network
 from util.sql import SnekDB
-from util.dynamic import Dynamic
 from util.exchange import Exchange
+from util.util import Util
 
 if __name__ == '__main__':
    
@@ -16,6 +16,8 @@ if __name__ == '__main__':
     print(addresses)
     
     for i in addresses:
+        amount = 500000000
         if j in data.convert_address:
             index = data.convert_address[j]
-            pay_in = exchange.exchange_select(index, i[1], i[2],data.provider[index])
+            pay_in = exchange.exchange_select(index, i, amount,data.provider[index]
+        amount+= 500000000
