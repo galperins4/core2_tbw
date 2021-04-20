@@ -13,7 +13,6 @@ if __name__ == '__main__':
     exchange = Exchange(snekdb, data)
     
     addresses = [i for i in data.convert_address]
-    print(addresses)
     
     for i in addresses:
         amount = 50000000000
