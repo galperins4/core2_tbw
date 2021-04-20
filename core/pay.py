@@ -216,7 +216,7 @@ def share():
                 if i[1] in data.fixed.keys():
                     fixed_amt = int(data.fixed[i[1]] * data.atomic)
                     tx = build_transfer_transaction(i[1], (fixed_amt), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
-                elif i[1] in data.convert_addresses:
+                elif i[1] in data.convert_address:
                     if data.exchange == "Y":
                         index = data.convert_address.index(i[1])
                         pay_in = exchange.exchange_select(index, i[1], i[2], data.provider[index])
