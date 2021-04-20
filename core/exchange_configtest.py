@@ -18,6 +18,6 @@ if __name__ == '__main__':
     for i in addresses:
         amount = 500000000
         if i in data.convert_address:
-            index = data.convert_address[i]
+            index = data.convert_address.index(i)
             pay_in = exchange.exchange_select(index, i, amount,data.provider[index])
         amount += 500000000
