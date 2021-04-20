@@ -1,6 +1,7 @@
 import json
 import math
 import requests
+import time
 from lowercase_booleans import false
 
 
@@ -24,7 +25,7 @@ class Exchange:
             pay = self.process_simpleswap_exchange(index,address,amount)
         else:
             pay = address
-            
+        time.sleep(1)
         return pay
     
     def process_simpleswap_exchange(self, index, address, amount):
