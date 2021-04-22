@@ -113,6 +113,9 @@ Python 3.6+ is required.
 
 ## Changelog
 
+### 0.4
+ - Added exchange / swap functionality (for ark network only)
+
 ### 0.3
 - updated for Typescript and changes to dynamic fee location
 - Added support for Qredit, Ripa, and Phantom Core2
