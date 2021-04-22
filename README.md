@@ -80,7 +80,13 @@ Python 3.6+ is required.
 ### Exchange (Experimental)
 | Config Option | Default Setting | Description | 
 | :--- | :---: | :--- |
-| START_BLOCK | 0 | Script will start calculations only for blocks after specified start block |
+| EXCHANGE | N | Script will start calculations only for blocks after specified start block |
+| CONVERT_FROM | ark, ark | Script will start calculations only for blocks after specified start block |
+| CONVERT_ADDRESS | addr1, addr2 | Script will start calculations only for blocks after specified start block |
+| CONVERT_TO | usdc, xrp | Script will start calculations only for blocks after specified start block |
+| ADDRESS_TO | usdc_addr1, xrp_addr2 | Script will start calculations only for blocks after specified start block |
+| NETWORK_TO | eth, xrp | Script will start calculations only for blocks after specified start block |
+| PROVIDER | provider, provider | Script will start calculations only for blocks after specified start block |
 
 ### Pool
 | Config Option | Default Setting | Description | 
