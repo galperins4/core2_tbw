@@ -9,8 +9,6 @@ class Exchange:
     def __init__(self, database, config):
         self.config = config
         self.database = database
-        #self.provider = "ChangeNow"
-        #self.provider = self.config.provider
         self.atomic = 100000000
 
         
@@ -25,13 +23,12 @@ class Exchange:
             pay = self.process_simpleswap_exchange(index,address,amount)
         else:
             pay = address
-        time.sleep(8)
+        time.sleep(5)
         return pay
     
     def process_simpleswap_exchange(self, index, address, amount):
         fixed = false
         print("Processing Exchange")
-        print("Original Amount", amount)
         amount = self.truncate((amount / self.atomic),4)
         print("Exchange Amount:", amount)
         url = 'https://t1mi6dwix2.execute-api.us-west-2.amazonaws.com/Test/exchange'
@@ -55,6 +52,7 @@ class Exchange:
                 print("Exchange Success") 
             else:
                 payin_address = address
+                print("Exchange Fail")
         except:
             payin_address = address
             print("Exchange Fail")
@@ -65,7 +63,6 @@ class Exchange:
     
     def process_changenow_exchange(self, index, address, amount):
         print("Processing Exchange")
-        print("Original Amount", amount)
         amount = self.truncate((amount / self.atomic),4)
         print("Exchange Amount:", amount)
         url = 'https://mkcnus24ib.execute-api.us-west-2.amazonaws.com/Test/exchange'
@@ -85,6 +82,7 @@ class Exchange:
                 print("Exchange Success") 
             else:
                 payin_address = address
+                print("Exchange Fail")
         except:
             payin_address = address
             print("Exchange Fail")
