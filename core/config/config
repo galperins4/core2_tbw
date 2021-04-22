@@ -1,4 +1,4 @@
-# atmoic
+# atomic
 ATOMIC = 100000000
 
 # true block weight
@@ -21,10 +21,19 @@ WHITELIST_ADDR = "addr1,addr2,addr3"
 BLACKLIST = "block"
 BLACKLIST_ADDR = "addr1,addr2,addr3"
 BLACKLIST_ASSIGN = "addr"
-MIN_PAYMENT = 0.5
+MIN_PAYMENT = 0
 KEEP = "reserve:0.25,second:0.25"
 PAY_ADDRESSES = "reserve:addr1,second:addr2"
 MULTI = "N"
+
+# experiment
+EXCHANGE = "N"
+CONVERT_FROM = "ark, ark"
+CONVERT_ADDRESS = "addr1, addr2"
+CONVERT_TO = "usdc, xrp"
+ADDRESS_TO = "usdc_addr1, xrp_addr2"
+NETWORK_TO = "eth, xrp"
+PROVIDER = "provider, provider"
 
 # pool
 POOL_IP = "xx.xx.xx.xx"

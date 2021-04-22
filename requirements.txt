@@ -3,5 +3,6 @@ python-dotenv
 flask
 flask-API
 psycopg2
+lowercase-booleans
 arkecosystem-client
 arkecosystem-crypto

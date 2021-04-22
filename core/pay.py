@@ -9,6 +9,7 @@ from config.config import Config
 from network.network import Network
 from util.sql import SnekDB
 from util.dynamic import Dynamic
+from util.exchange import Exchange
 from util.util import Util
 from datetime import datetime
 
@@ -71,6 +72,13 @@ def build_multi_transaction(payments, nonce):
         if i[1] in data.fixed.keys():
             fixed_amt = int(data.fixed[i[1]] * data.atomic)
             transaction.add_payment(fixed_amt, i[1])
+        elif i[1] in data.convert_address:
+            if data.exchange == "Y":
+                index = data.convert_address.index(i[1])
+                pay_in = exchange.exchange_select(index, i[1], i[2],data.provider[index])
+                transaction.add_payment(i[2], pay_in)
+            else:
+                transaction.add_payment(i[2], i[1])
         else:
             transaction.add_payment(i[2], i[1])
 
@@ -128,7 +136,6 @@ def non_accept_check(c, a):
         else:
             #print("TransactionID accepted: ", k)
             pass
-    
     return removal_check
 
     
@@ -205,10 +212,17 @@ def share():
             for i in unprocessed_pay:
                 transaction_fee = dynamic.get_dynamic_fee()
 
-                # fixed processing
+                # fixed and exchange processing
                 if i[1] in data.fixed.keys():
                     fixed_amt = int(data.fixed[i[1]] * data.atomic)
                     tx = build_transfer_transaction(i[1], (fixed_amt), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
+                elif i[1] in data.convert_address:
+                    if data.exchange == "Y":
+                        index = data.convert_address.index(i[1])
+                        pay_in = exchange.exchange_select(index, i[1], i[2], data.provider[index])
+                        tx = build_transfer_transaction(pay_in, (i[2]), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
+                    else:
+                        tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
                 else:           
                     tx = build_transfer_transaction(i[1], (i[2]), i[3], transaction_fee, data.passphrase, data.secondphrase, str(temp_nonce))
                 check[tx['id']] = i[0]
@@ -241,6 +255,7 @@ if __name__ == '__main__':
     network = Network(data.network)
     u = Util(data.network)
     snekdb = SnekDB(data.database_user, data.network, data.delegate)
+    exchange = Exchange(snekdb, data)
     client = u.get_client(network.api_port)
     build_network()
     dynamic = Dynamic(data.database_user, data.voter_msg, data.network, network.api_port)

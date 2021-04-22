@@ -10,6 +10,7 @@ class Config():
         self.atomic = int(os.getenv("ATOMIC"))
         self.load_tbw_config()
         self.load_pool_config()
+        self.load_experimental_config()
         self.format_fixed()
         self.format_keep()
         self.format_payaddr()
@@ -39,7 +40,17 @@ class Config():
         self.pay_addresses = os.getenv("PAY_ADDRESSES").split(',')
         self.multi = os.getenv("MULTI")
         
-        
+    
+    def load_experimental_config(self):
+        self.exchange = os.getenv("EXCHANGE")
+        self.convert_from = os.getenv("CONVERT_FROM").split(',')
+        self.convert_to = os.getenv("CONVERT_TO").split(',')
+        self.address_to = os.getenv("ADDRESS_TO").split(',')
+        self.network_to = os.getenv("NETWORK_TO").split(',')
+        self.convert_address = os.getenv("CONVERT_ADDRESS").split(',')
+        self.provider = os.getenv("PROVIDER").split(',')
+    
+    
     def load_pool_config(self):
         self.pool_ip = os.getenv("POOL_IP")
         self.explorer = os.getenv("EXPLORER")

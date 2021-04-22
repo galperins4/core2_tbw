@@ -40,10 +40,20 @@ class SnekDB:
         self.cursor.execute("CREATE TABLE IF NOT EXISTS delegate_rewards (address varchar(36), u_balance bigint, p_balance bigint )")
         
         self.cursor.execute("CREATE TABLE IF NOT EXISTS staging (address varchar(36), payamt bigint, msg varchar(64), processed_at varchar(64) null )")
+        
+        self.cursor.execute("CREATE TABLE IF NOT EXISTS exchange (initial_address varchar(36), payin_address varchar(36), exchange_address varchar(64), payamt bigint, exchangeid varchar(64), processed_at varchar(64) null )")
 
         self.connection.commit()
 
 
+    def storeExchange(self, i_address, pay_address, e_address, amount, exchangeid):
+        ts = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        exchange=[]
+        exchange.append((i_address, pay_address, e_address, amount, exchangeid, ts))
+        self.executemany("INSERT INTO exchange VALUES (?,?,?,?,?,?)", exchange)
+        self.commit()
+    
+    
     def storePayRun(self, address, amount, msg):
         staging=[]
 
@@ -153,14 +163,17 @@ class SnekDB:
 
     
     def deleteStagedPayment(self):
-        self.cursor.execute("DELETE FROM staging WHERE processed_at NOT NULL")
-        
+        self.cursor.execute("DELETE FROM staging WHERE processed_at NOT NULL")     
         self.commit()
 
-        
+    
+    def deleteTestExchange(self,p_in,p_out,amount):
+        self.cursor.execute(f"DELETE FROM exchange WHERE initial_address = '{p_in}' AND payin_address = '{p_out}' AND payamt = '{amount}'")
+        self.commit()
+    
+    
     def deleteTransactionRecord(self, txid):
         self.cursor.execute(f"DELETE FROM transactions WHERE id = '{txid}'")
-        
         self.commit()
 
         
