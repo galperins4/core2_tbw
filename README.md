@@ -49,8 +49,8 @@ IMPORTANT: If at any time you change you share rate you must stop tbw, update yo
 
 Python 3.6+ is required.
 
-## Available Configuration Options (True Block Weight)
-
+## Available Configuration Options 
+#True Block Weight
 | Config Option | Default Setting | Description | 
 | :--- | :---: | :--- |
 | START_BLOCK | 0 | Script will start calculations only for blocks after specified start block |
