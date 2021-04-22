@@ -44,7 +44,6 @@ class Exchange:
         
         try:
             r = requests.get(url, params=res_bytes)
-            print(r.json())
             if r.json()['status'] == "success":
                 payin_address = r.json()['payinAddress']
                 exchangeid = r.json()['exchangeId']
@@ -74,7 +73,6 @@ class Exchange:
                    "refundAddress":address}
         try:
             r = requests.get(url, params=data_in)
-            print(r.json())
             if r.json()['status'] == "success":
                 payin_address = r.json()['payinAddress']
                 exchangeid = r.json()['exchangeId']
@@ -87,5 +85,4 @@ class Exchange:
             payin_address = address
             print("Exchange Fail")
     
-        print("Pay In Address", payin_address)
         return payin_address
