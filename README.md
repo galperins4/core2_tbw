@@ -77,16 +77,16 @@ Python 3.6+ is required.
 | PAY_ADDRESSES | reserve:addr1,second:addr2 | These are the addresses to go with the keep percentages (Note: reserve:your_addr1 is required! all others are optional) |
 | MULTI | N | Change to "Y" if you'd like payments to be made using Multipayments |
 
-### Exchange (Experimental)
+### Exchange (Experimental - ark network only)
 | Config Option | Default Setting | Description | 
 | :--- | :---: | :--- |
-| EXCHANGE | N | Script will start calculations only for blocks after specified start block |
-| CONVERT_FROM | ark, ark | Script will start calculations only for blocks after specified start block |
-| CONVERT_ADDRESS | addr1, addr2 | Script will start calculations only for blocks after specified start block |
-| CONVERT_TO | usdc, xrp | Script will start calculations only for blocks after specified start block |
-| ADDRESS_TO | usdc_addr1, xrp_addr2 | Script will start calculations only for blocks after specified start block |
-| NETWORK_TO | eth, xrp | Script will start calculations only for blocks after specified start block |
-| PROVIDER | provider, provider | Script will start calculations only for blocks after specified start block |
+| EXCHANGE | N | Changing value to Y will enable exchange swap functionality |
+| CONVERT_FROM | ark, ark | Network the swap is sending from - ark only |
+| CONVERT_ADDRESS | addr1, addr2 | Reward address we are converting from for the swap - can support one or many|
+| CONVERT_TO | usdc, xrp | Cryptocurrency we want to swap / exchange into - can support one or many |
+| ADDRESS_TO | usdc_addr1, xrp_addr2 | Addresses to exchange into - can support one or many |
+| NETWORK_TO | eth, xrp | Network for the receving swap cryptocurrency - can support one or many |
+| PROVIDER | provider, provider | Provider of the swap - Available options are "SimpleSwap" or "ChangeNow" |
 
 ### Pool
 | Config Option | Default Setting | Description | 
