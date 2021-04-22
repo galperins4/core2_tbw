@@ -49,7 +49,7 @@ IMPORTANT: If at any time you change you share rate you must stop tbw, update yo
 
 Python 3.6+ is required.
 
-## Available Configuration Options (TRUE BLOCK WEIGHT)
+## Available Configuration Options (True Block Weight)
 
 | Config Option | Default Setting | Description | 
 | :---: | :---: | :--- |
@@ -64,33 +64,20 @@ Python 3.6+ is required.
 | SECONDPHRASE | None | Second 12 word delegate passphrase |
 | VOTER_MSG | Delegate X - True Block Weight | ARK and ARK Fork coins only - message you want in vendor field for share payments |
 | BLOCK_CHECK | 30 | How often you want the script to check for new blocks in seconds. Recommend low value (e.g., 30 seconds) |
+| VOTE_CAP | 0 | Cap voters for how much they can earn with votes. For example 10000 will mean any wallet over 10K will only be paid based on 10K weight |
+| VOTE_MIN | 0 | Use this if you have a minimum wallet balance to be eligible for payments |
+| FIXED | addr1:0,addr2:0 | Use this for fixed deals. Amount will be spread evenly over the set interval |
+| WHITELIST | N | Enable payment to only whitelisted addresses |
+| WHITELIST_ADDR | addr1,addr2,addr3 | Comma seperated list of addresses to allow voter payments to |
+| BLACKLIST | block | Options are block or assign. Block zero's out blocked accounts which then distributes their earnings to voters. Assign does the same but assigns weight to a designated account |
+| BLACKLIST_ADDR | addr1,addr2,addr3 | Comma seperated list of addresses to block from voter payments |
+| BLACKLIST_ASSIGN | addr | If assign option is picked, this is the address those blacklisted shares go to. DO NOT SET to an account voting for said delegate. It is HIGHLY recommended this is set to the reserve address! |
+| MIN_PAYMENT| 0 | Minimum threshold for payment. If set to 1, any payout less than 1 ARK will be held until the next pay run and accumulated |
+| KEEP | reserve:0.25,your_second:0.25 | These are the percentages for delegates to keep and distribute among x accounts (Note: reserve:your_addr1 is required! all others are optional |
+| PAY_ADDRESSES | N | These are the addresses to go with the keep percentages (Note: reserve:your_addr1 is required! all others are optional) |
+| MULTI | N | Change to "Y" if you'd like payments to be made using Multipayments |
 
-   
 
-VOTE_CAP = 0                 
-### Use this if you cap voters for how much they can earn with votes. For example 10000 will mean any wallet over 10K will only be paid based on 10K weight
-VOTE_MIN = 0                 
-### Use this if you have a minimum wallet balance to be eligible for payments
-FIXED = "addr1:0,addr2:0"    
-### Fixed payout addresses - Use this for fixed deals. Amount will be spread evenly over the set interval
-WHITELIST = "N"              
-### Enable payment to only whitelisted addresses
-WHITELIST_ADDR = "addr1,addr2,addr3"  
-### Comma seperated list of addresses to allow voter payments to
-BLACKLIST = "block"          
-### Options are block or assign. Block zero's out blocked accounts which then distributes their earnings to voters. Assign does the same but assigns weight to a designated account.    
-BLACKLIST_ADDR = "addr1,addr2,addr3"   
-### Comma seperated list of addresses to block from voter payments
-BLACKLIST_ASSIGN = "addr"    
-### If assign option is picked, this is the address those blacklisted shares go to. DO NOT SET to an account voting for said delegate. It is HIGHLY recommended this is set to the reserve address!
-MIN_PAYMENT = 0.5            
-### Minimum threshold for payment. If set to 1, any payout less than 1 ARK will be held until the next pay run and accumulated
-KEEP = "reserve:0.25,your_second:0.25"  
-### These are the percentages for delegates to keep and distribute among x accounts (Note: reserve:your_addr1 is required! all others are optional)
-PAY_ADDRESSES = "reserve:your_addr1,your_second:addr2"  
-### These are the addresses to go with the keep percentages (Note: reserve:your_addr1 is required! all others are optional)
-MULTI = "N"
-### Change to "Y" if you'd like payments to be made using Multipayments. 
 
 ## Pool
 
