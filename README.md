@@ -52,34 +52,21 @@ Python 3.6+ is required.
 ## Available Configuration Options (TRUE BLOCK WEIGHT)
 
 | Config Option | Default Setting | Description | 
-| --- | --- | --- |
+| :---: | :---: | :--- |
 | START_BLOCK | 0 | Script will start calculations only for blocks after specified start block |
+| NETWORK | network | ark_mainnet or persona_mainnet or qredit_mainnet etc.. |
+| DATABASE_USER | dbname | This is the postgresql database username nodeDB (usually your os username) |
+| DELEGATE | delegate | Delegate name |
+| PUBLIC_KEY | publicKey | Delegate public key |
+| INTERVAL | 211  | The interval you want to pay voters in blocks. A setting of 211 would pay ever 211 blocks (or 422 ark) |
+| VOTER_SHARE | 0.50  | Percentage to share with voters (0.xx format) |
+| PASSPHRASE | passphrase | 12 word delegate passphrase |
+| SECONDPHRASE | None | Second 12 word delegate passphrase |
+| VOTER_MSG | Delegate X - True Block Weight | ARK and ARK Fork coins only - message you want in vendor field for share payments |
+| BLOCK_CHECK | 30 | How often you want the script to check for new blocks in seconds. Recommend low value (e.g., 30 seconds) |
 
+   
 
-START_BLOCK = 0      
-### Script will start calculations only for blocks after specified start block
-NETWORK = "network"       
-### ark_mainnet or persona_mainnet or qredit_mainnet etc..)
-DATABASE_USER = "dbname"     
-### This is the postgresql database username nodeDB (usually your os username, but may be different when using docker)
-DELEGATE = "delegate"        
-### Delegate name
-PUBLIC_KEY = "publicKey"     
-### Delegate public key
-INTERVAL = 211               
-### The interval you want to pay voters in blocks. A setting of 211 would pay ever 211 blocks (or 422 ark)
-VOTER_SHARE = 0.50           
-### Percentage to share with voters (0.xx format)
-PASSPHRASE = "passphrase"    
-### 12 word delegate passphrase inside ""
-SECONDPHRASE = "None"        
-### Second 12 word delegate passphrase inside ""
-VOTER_MSG = "Delegate X - True Block Weight"  
-### ARK and ARKfork coins only - message you want in vendor field for share payments
-BLOCK_CHECK = 30             
-### How often you want the script to check for new blocks in seconds. Recommend low value (e.g., 30 seconds for ARK coins, high value for LISK coins)
-COVER_TX_FEE = "Y"           
-### Use this to indicate if you want to cover transaction fees (Y) or not (N)
 VOTE_CAP = 0                 
 ### Use this if you cap voters for how much they can earn with votes. For example 10000 will mean any wallet over 10K will only be paid based on 10K weight
 VOTE_MIN = 0                 
