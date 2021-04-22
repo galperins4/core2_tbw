@@ -52,7 +52,7 @@ Python 3.6+ is required.
 ## Available Configuration Options (True Block Weight)
 
 | Config Option | Default Setting | Description | 
-| :---: | :---: | :--- |
+| :--- | :---: | :--- |
 | START_BLOCK | 0 | Script will start calculations only for blocks after specified start block |
 | NETWORK | network | ark_mainnet or persona_mainnet or qredit_mainnet etc.. |
 | DATABASE_USER | dbname | This is the postgresql database username nodeDB (usually your os username) |
@@ -73,8 +73,8 @@ Python 3.6+ is required.
 | BLACKLIST_ADDR | addr1,addr2,addr3 | Comma seperated list of addresses to block from voter payments |
 | BLACKLIST_ASSIGN | addr | If assign option is picked, this is the address those blacklisted shares go to. DO NOT SET to an account voting for said delegate. It is HIGHLY recommended this is set to the reserve address! |
 | MIN_PAYMENT| 0 | Minimum threshold for payment. If set to 1, any payout less than 1 ARK will be held until the next pay run and accumulated |
-| KEEP | reserve:0.25,your_second:0.25 | These are the percentages for delegates to keep and distribute among x accounts (Note: reserve:your_addr1 is required! all others are optional |
-| PAY_ADDRESSES | N | These are the addresses to go with the keep percentages (Note: reserve:your_addr1 is required! all others are optional) |
+| KEEP | reserve:0.25,second:0.25 | These are the percentages for delegates to keep and distribute among x accounts (Note: reserve:your_addr1 is required! all others are optional |
+| PAY_ADDRESSES | reserve:addr1,second:addr2 | These are the addresses to go with the keep percentages (Note: reserve:your_addr1 is required! all others are optional) |
 | MULTI | N | Change to "Y" if you'd like payments to be made using Multipayments |
 
 
