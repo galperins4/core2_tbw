@@ -88,9 +88,11 @@ Python 3.6+ is required.
 | NETWORK_TO | eth, xrp | Network for the receving swap cryptocurrency - can support one or many |
 | PROVIDER | provider, provider | Provider of the swap - Available options are "SimpleSwap" or "ChangeNow" |
 
-NOTE 1: Exchange address does not currently work with fixed amount/address processing. Do NOT enable exchange for fixed accounts
+**NOTE 1**: Exchange address does not currently work with fixed amount/address processing. Do NOT enable exchange for fixed accounts
 
-NOTE 2: For full disclosure - swap exchanges require an API key to create. All swaps are requested through my affiliate accounts at SimpleSwap / ChangeNow which generates a referral fee. All exchange/swap processing is the responsibility of SimpleSwap and ChangeNow.
+**NOTE 2**: For full disclosure - swap exchanges require an API key to create. All swaps are requested through my affiliate accounts at SimpleSwap / ChangeNow which generates a referral fee. All exchange/swap processing is the responsibility of SimpleSwap and ChangeNow.
+
+**NOTE 3**: exchange_configtest.py (under core folder) has been created to test exchange config to prior to turning on. To execute run `python3 exchange_configtest.py` after setting up configuration as described in the table above
 
 
 ### Pool
