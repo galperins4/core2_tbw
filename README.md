@@ -88,8 +88,9 @@ Python 3.6+ is required.
 | NETWORK_TO | eth, xrp | Network for the receving swap cryptocurrency - can support one or many |
 | PROVIDER | provider, provider | Provider of the swap - Available options are "SimpleSwap" or "ChangeNow" |
 
-Note 1: Exchange address does not currently work with fixed amount / address processing. Do NOT enable exchange for fixed accounts
-Note 2: For full disclosure - swap exchanges require an API key to create. All swaps currently run through my affiliate accounts at SimpleSwap / ChangeNow
+NOTE 1: Exchange address does not currently work with fixed amount / address processing. Do NOT enable exchange for fixed accounts
+
+NOTE 2: For full disclosure - swap exchanges require an API key to create. All swaps currently run through my affiliate accounts at SimpleSwap / ChangeNow
 
 
 ### Pool
