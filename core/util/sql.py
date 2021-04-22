@@ -163,14 +163,17 @@ class SnekDB:
 
     
     def deleteStagedPayment(self):
-        self.cursor.execute("DELETE FROM staging WHERE processed_at NOT NULL")
-        
+        self.cursor.execute("DELETE FROM staging WHERE processed_at NOT NULL")     
         self.commit()
 
-        
+    
+    def deleteTestExchange(self,p_in,p_out,amount):
+        self.cursor.execute(f"DELETE FROM exchange WHERE initial_address = '{p_in}' AND payin_address = '{p_out}' AND payamt = '{amount}'")
+        self.commit()
+    
+    
     def deleteTransactionRecord(self, txid):
         self.cursor.execute(f"DELETE FROM transactions WHERE id = '{txid}'")
-        
         self.commit()
 
         
