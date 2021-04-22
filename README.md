@@ -51,6 +51,11 @@ Python 3.6+ is required.
 
 ## Available Configuration Options (TRUE BLOCK WEIGHT)
 
+| Config Option | Default Setting | Description | 
+| --- | --- | --- |
+| START_BLOCK | 0 | Script will start calculations only for blocks after specified start block |
+
+
 START_BLOCK = 0      
 ### Script will start calculations only for blocks after specified start block
 NETWORK = "network"       
