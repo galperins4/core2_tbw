@@ -19,3 +19,7 @@ if __name__ == '__main__':
         if i in data.convert_address:
             index = data.convert_address.index(i)
             pay_in = exchange.exchange_select(index, i, amount,data.provider[index])
+            
+            #delete exchange record
+            new_amount = exchange.truncate(amount/data.atomic,4)
+            snekdb.deleteTestExchange(i,pay_in,new_amount)
