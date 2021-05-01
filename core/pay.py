@@ -187,9 +187,9 @@ def share_multipay():
         # payment run complete
         print('Payment Run Completed!')
         # sleep 3 minutes between tx blasts
-        time.sleep(300)
+        time.sleep(60)
     else:
-        time.sleep(300)
+        time.sleep(60)
 
 
 def share():
