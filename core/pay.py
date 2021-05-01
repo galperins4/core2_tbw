@@ -145,7 +145,6 @@ def get_nonce():
 
 
 def share_multipay():
-    #while True:
     signed_tx = []
     check = {}       
     
@@ -158,7 +157,7 @@ def share_multipay():
     # set max multipayment
     max_tx = dynamic.get_multipay_limit()
     # hard code multipay for test
-    max_tx = 6
+    #max_tx = 6
     unprocessed_pay = snekdb.stagedArkPayment(multi=data.multi).fetchall()
     if len(unprocessed_pay) == 1:
         share()
@@ -187,13 +186,12 @@ def share_multipay():
         # payment run complete
         print('Payment Run Completed!')
         # sleep 3 minutes between tx blasts
-        time.sleep(60)
+        time.sleep(300)
     else:
-        time.sleep(60)
+        time.sleep(300)
 
 
 def share():
-    #while True:
     signed_tx = []
 
     # get max blast tx and check for unprocessed payments
