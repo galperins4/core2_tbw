@@ -64,7 +64,8 @@ def build_multi_transaction(payments, nonce):
         f = 25000000
         transaction = MultiPayment(fee=f)
     else:
-        transaction = MultiPayment(vendorField=data.voter_msg)
+        f = 10000000
+        transaction = MultiPayment(vendorField=data.voter_msg, fee=f)
     transaction.set_nonce(int(nonce))
 
     for i in payments:
