@@ -474,7 +474,7 @@ if __name__ == '__main__':
 
                     print('\n' + 'Waiting for the next block....' + '\n')
                     # sleep 2 seconds between allocations
-                    time.sleep(2)
+                    time.sleep(10)
 
             arkdb.close_connection()
             # pause 30 seconds between runs
