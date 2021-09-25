@@ -64,7 +64,8 @@ def build_multi_transaction(payments, nonce):
         f = 25000000
         transaction = MultiPayment(fee=f)
     else:
-        transaction = MultiPayment(vendorField=data.voter_msg)
+        f = int(multi_transaction_fee)
+        transaction = MultiPayment(vendorField=data.voter_msg, fee=f)
     transaction.set_nonce(int(nonce))
 
     for i in payments:
@@ -257,6 +258,7 @@ if __name__ == '__main__':
     client = u.get_client(network.api_port)
     build_network()
     dynamic = Dynamic(data.database_user, data.voter_msg, data.network, network.api_port)
+    multi_transaction_fee = data.atomic*data.multi_fee
     #get dot path for load_env and load
     dot = u.core+'/.env'
     load_dotenv(dot)

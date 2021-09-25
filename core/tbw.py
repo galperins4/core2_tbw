@@ -314,7 +314,7 @@ def payout():
                 numtx = round(tx_count/multi_limit)
             else:
                 numtx = round(tx_count//multi_limit)+1
-            tx_fees = int(numtx * transaction_fee)    
+            tx_fees = int(numtx * multi_transaction_fee)    
             
         else:
             numtx = tx_count
@@ -359,10 +359,6 @@ def initialize():
     snekdb.storeBlocks(all_blocks)
         
     # mark all blocks as processed
-    '''for row in all_blocks:
-        if row[4] <= data.start_block:
-            snekdb.markAsProcessed(row[4])
-    '''
     snekdb.markAsProcessed(data.start_block, initial = "Y")
     
     # set block count to rows imported
@@ -422,6 +418,7 @@ if __name__ == '__main__':
 
     dynamic = Dynamic(data.database_user, data.voter_msg, data.network, network.api_port)
     transaction_fee = data.atomic*0.1
+    multi_transaction_fee = data.atomic*data.multi_fee
     
     # initialize db connection
     # get database

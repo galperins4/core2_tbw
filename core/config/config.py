@@ -39,6 +39,7 @@ class Config():
         self.keep = os.getenv("KEEP").split(',')
         self.pay_addresses = os.getenv("PAY_ADDRESSES").split(',')
         self.multi = os.getenv("MULTI")
+        self.multi_fee = float(os.getenv("MULTI_FEE"))
         
     
     def load_experimental_config(self):
