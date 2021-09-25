@@ -65,8 +65,6 @@ def build_multi_transaction(payments, nonce):
         transaction = MultiPayment(fee=f)
     else:
         f = int(multi_transaction_fee)
-        print(f)
-        quit()
         transaction = MultiPayment(vendorField=data.voter_msg, fee=f)
     transaction.set_nonce(int(nonce))
 
