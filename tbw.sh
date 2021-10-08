@@ -16,6 +16,9 @@ install_modules(){
   sudo apt-get install python3-dev
   sudo apt-get install libudev-dev libusb-1.0.0-dev
   sudo apt-get install build-essential
+  sudo apt-get install autoconf
+  sudo apt-get install libtool
+  sudo apt-get install pkgconf
   sudo apt-get install libpq-dev
   pip3 install setuptools
   pip3 install -r requirements.txt
@@ -27,6 +30,13 @@ install(){
 }
  
 initialize(){
+  version=$(python3 -c "import sys; print(''.join(map(str, sys.version_info[:2])))")
+
+  if [[ "$version" -lt 36 ]]; then
+    echo "Python 3.6 minimum version is required"
+    exit 1
+  fi
+
         cd core
 	python3 tbw.py
 	cd ..

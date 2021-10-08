@@ -4,7 +4,7 @@
         "script": "tbw.py",
         "instances": 1,
         "exec_mode": "fork",
-        "exec_interpreter": "python3.6",
+        "exec_interpreter": "python3",
         "log_date_format": "YYYY-MM-DD HH:mm Z",
 	"interpreter_args": "-u"
     },
@@ -13,7 +13,7 @@
         "script": "pay.py",
         "instances": 1,
         "exec_mode": "fork",
-        "exec_interpreter": "python3.6",
+        "exec_interpreter": "python3",
         "log_date_format": "YYYY-MM-DD HH:mm Z",
 	"interpreter_args": "-u"
     },
@@ -22,7 +22,7 @@
         "script": "pool.py",
         "instances": 1,
         "exec_mode": "fork",
-        "exec_interpreter": "python3.6",
+        "exec_interpreter": "python3",
         "log_date_format": "YYYY-MM-DD HH:mm Z",
 	"interpreter_args": "-u"
     },    
@@ -31,7 +31,7 @@
         "script": "custom.py",
         "instances": 1,
         "exec_mode": "fork",
-        "exec_interpreter": "python3.6",
+        "exec_interpreter": "python3",
         "log_date_format": "YYYY-MM-DD HH:mm Z",
 	"interpreter_args": "-u"
     },]
