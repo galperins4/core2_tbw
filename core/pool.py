@@ -25,6 +25,12 @@ def index():
         else:
             s['forging'] = 'Standby'
 
+    if data.network in ['solar_mainnet', 'solar_devnet']:
+        if s['rank'] <= 53:
+            s['forging'] = 'Forging'
+        else:
+            s['forging'] = 'Standby'
+
     snekdb = SnekDB(data.database_user, data.network, data.delegate)
     voter_data = snekdb.voters().fetchall()
     voter_count = client.delegates.voters(data.delegate)    
