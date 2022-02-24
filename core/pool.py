@@ -44,10 +44,18 @@ def index():
             s['forging'] = 'Standby'
 
     snekdb = SnekDB(data.database_user, data.network, data.delegate)
-    voter_data = snekdb.voters().fetchall()
+    voter_ledger = snekdb.voters().fetchall()
 
-    voter_count = client.delegates.voters(data.delegate)
-    s['voters'] = voter_count['meta']['totalCount']
+    voter_stats = []
+    ld          = dict((addr,(pend,paid)) for addr, pend, paid, r in voter_ledger)
+    votetotal   = int(dstats['data']['votes'])
+    voter_data  = client.delegates.voters(data.delegate)
+    for _data in voter_data['data']:
+        _sply = "{:.2f}".format(int(_data['balance'])*100/votetotal)
+        _addr = _data['address']
+        voter_stats.append([_addr,ld[_addr][0], ld[_addr][1], _sply])
+
+    s['voters'] = voter_data['meta']['totalCount']
 
     node_sync_data = client.node.syncing()
     s['synced'] = 'Syncing' if node_sync_data['data']['syncing'] else 'Synced'
@@ -55,9 +63,9 @@ def index():
     s['height'] = node_sync_data['data']['height']
 
     if data.pool_version == "original":
-        return render_template('index.html', node=s, row=voter_data, n=navbar)
+        return render_template('index.html', node=s, row=voter_stats, n=navbar)
     else:
-        return render_template('geops_index.html', node=s, row=voter_data, n=navbar)
+        return render_template('geops_index.html', node=s, row=voter_stats, n=navbar)
 
 
 @app.route('/payments')

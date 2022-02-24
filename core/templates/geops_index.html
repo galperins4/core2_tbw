@@ -102,6 +102,7 @@
                         <th>Address</th>
                         <th>Pending ({{n['coin']}})</th>
                         <th>Paid ({{n['coin']}})</th>
+                        <th>Supply (%)</th>
                 </thead>
                 <tbody>
                   {% for r in row %}
@@ -109,6 +110,7 @@
                         <td><a href="{{ n['explorer'] }}wallets/{{ r[0] }}" target="_blank">{{ r[0] }}</a></td>
                         <td>{{ r[1]/100000000 }}</td>
                         <td>{{ r[2]/100000000 }}</td>
+                        <td>{{ r[3] }}%</td>
                     </tr>
                   {% endfor %}
                 </tbody>
