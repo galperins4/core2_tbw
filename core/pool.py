@@ -1,16 +1,19 @@
+import time
+
 from config.config import Config
 from flask import Flask, render_template, request
 from flask_api import status
 from network.network import Network
 from util.sql import SnekDB
 from util.util import Util
+from lowercase_booleans import true, false
 
 app = Flask(__name__)
 
 
 @app.route('/')
-def index():    
-    s = {} 
+def index():
+    s = {}
     dstats = client.delegates.get(data.public_key)
 
     s['forged'] = dstats['data']['blocks']['produced']
@@ -19,6 +22,15 @@ def index():
     s['rank'] = dstats['data']['rank']
     #s['productivity'] = dstats['data']['production']['productivity']
     s['productivity'] = 100 # temp fix
+    s['handle'] = dstats['data']['username']
+    s['votes'] = "{:.2f}".format(int(dstats['data']['votes'])/100000000)
+    s['rewards'] = dstats['data']['forged']['total']
+    s['approval'] = dstats['data']['production']['approval']
+    s['lastforged_no'] = dstats['data']['blocks']['last']['height']
+    s['lastforged_id'] = dstats['data']['blocks']['last']['id']
+    s['lastforged_ts'] = dstats['data']['blocks']['last']['timestamp']['human']
+    s['lastforged_unix'] = dstats['data']['blocks']['last']['timestamp']['unix']
+    s['lastforged_ago'] = "{:.2f}".format(time.time() - s['lastforged_unix'])
     if data.network in ['ark_mainnet', 'ark_devnet']:
         if s['rank'] <= 51:
             s['forging'] = 'Forging'
@@ -33,9 +45,15 @@ def index():
 
     snekdb = SnekDB(data.database_user, data.network, data.delegate)
     voter_data = snekdb.voters().fetchall()
-    voter_count = client.delegates.voters(data.delegate)    
-    s['votes'] = voter_count['meta']['totalCount']
-    
+
+    voter_count = client.delegates.voters(data.delegate)
+    s['voters'] = voter_count['meta']['totalCount']
+
+    node_sync_data = client.node.syncing()
+    s['synced'] = 'Syncing' if node_sync_data['data']['syncing'] else 'Synced'
+    s['behind'] = node_sync_data['data']['blocks']
+    s['height'] = node_sync_data['data']['height']
+
     if data.pool_version == "original":
         return render_template('index.html', node=s, row=voter_data, n=navbar)
     else:
@@ -50,12 +68,12 @@ def payments():
     for i in data_out:
         data_list = [i[0], int(i[1]), i[2], i[3]]
         tx_data.append(data_list)
-    
+
     if data.pool_version == 'original':
        return render_template('payments.html', row=tx_data, n=navbar)
     else:
        return render_template('geops_payments.html', row=tx_data, n=navbar)
-        
+
 '''
 @app.route('/webhook', methods=['POST'])
 def webhook():

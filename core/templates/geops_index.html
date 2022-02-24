@@ -9,13 +9,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 
   <title>{{n['dname']}} Dashboard</title>
-  
+
   <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
 
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-
-  <!-- Adding a favicon icon to Flask app -->
-  <!-- SEE: https://favicon.io/favicon-converter/-->
   <!--
   <link rel="shortcut icon"
         href="{{ url_for('static', filename='favicon.ico') }}">
@@ -50,7 +47,7 @@
               <a class="nav-link" href="payments">Payments</a>
             </nav>
 
-            <h1><center>Delegate <strong>NAME</strong> Status</center></h1>
+            <h1><center>delegate <strong>{{node['handle']}}</strong> status</center></h1>
 
             <div class="row">
                 <div class="col-md-3">
@@ -60,14 +57,42 @@
                     <div class="alert alert-info" role="alert">Rank: {{node['rank']}}</div>
                 </div>
                 <div class="col-md-3">
-                    <div class="alert alert-info" role="alert">Voters: {{node['votes']}}</div>
+                    <div class="alert alert-info" role="alert">Voters: {{node['voters']}}</div>
                 </div>
                 <div class="col-md-3">
-                    <div class="alert alert-info" role="alert">Productivity: {{node['productivity']}}</div>
+                    <div class="alert alert-info" role="alert">Votes: {{node['votes']}} {{n['coin']}}</div>
                 </div>
             </div>
 
-            <h1><center>Pool Ledger</center></h1>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="alert alert-info" role="alert">Total forged: {{node['forged']}}</div>
+                </div>
+                <!--
+                <div class="col-md-3">
+                    <div class="alert alert-info" role="alert">Rewards: {{node['rewards']}}</div>
+                </div>
+                -->
+                <div class="col-md-3">
+                    <div class="alert alert-info" role="alert">Sync status: {{node['synced']}}/{{node['height']}}/{{node['behind']}}</div>
+                </div>
+                <div class="col-md-3">
+                    <div class="alert alert-info" role="alert">Last forged: <a href="{{ n['explorer'] }}blocks/{{node['lastforged_id']}}" target="_blank">{{node['lastforged_no']}}</a></div>
+                </div>
+                <div class="col-md-3">
+                    <div class="alert alert-info" role="alert">Age: {{node['lastforged_ago']}}&Prime; ago</div>
+                </div>
+            </div>
+
+            <!--
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="alert alert-info" role="alert">Height: {{node['height']}}</div>
+                </div>
+            </div>
+            -->
+
+            <h2><center>Pool Ledger</center></h2>
 
             <input type="text" id="input" onkeyup="Filter()" placeholder="Search by Address...">
 
@@ -108,7 +133,7 @@ function Filter() {
       } else {
         tr[i].style.display = "none";
       }
-    } 
+    }
   }
 }
 </script>

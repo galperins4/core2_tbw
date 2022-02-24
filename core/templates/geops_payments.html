@@ -13,9 +13,6 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
 
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-
-  <!-- Adding a favicon icon to Flask app -->
-  <!-- SEE: https://favicon.io/favicon-converter/-->
   <!--
   <link rel="shortcut icon"
         href="{{ url_for('static', filename='favicon.ico') }}">
@@ -52,7 +49,7 @@
               <a class="nav-link" href="payments">Payments</a>
             </nav>
 
-            <h1><center>Delegate <strong>NAME</strong> Payment History</center></h1>
+            <h1><center>delegate <strong>{{node['handle']}}</strong> status</center></h1>
 
             <input type="text" id="input" onkeyup="Filter()" placeholder="Search by Address...">
 
@@ -103,4 +100,3 @@ function Filter() {
 </body>
 
 </html>
-
