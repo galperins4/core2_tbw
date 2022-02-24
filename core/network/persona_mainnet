@@ -1,8 +1,0 @@
-# network
-EPOCH = "2018,2,1,00,00,00"
-VERSION = 55
-WIF = 80
-API_PORT = 4103
-DATABASE = "persona_mainnet"
-DATABASE_USER = "null"
-DATABASE_PASSWORD = "password"

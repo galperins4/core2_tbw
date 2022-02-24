@@ -1,8 +1,0 @@
-# network
-EPOCH = "2017,3,21,13,00,00"
-VERSION = 75
-WIF = 186
-API_PORT = 7500
-DATABASE = "ripa_devnet"
-DATABASE_USER = "null"
-DATABASE_PASSWORD = "password"
