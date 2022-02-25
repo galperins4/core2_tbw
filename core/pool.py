@@ -11,6 +11,42 @@ from lowercase_booleans import true, false
 app = Flask(__name__)
 
 
+def get_round(height):
+    mod = divmod(height,network.delegates)
+    return (mod[0] + int(mod[1] > 0))
+
+
+def get_yield(netw_height):
+    dblocks = client.delegates.blocks(data.delegate)
+    drounds = dblocks['meta']['count'] #number of forged rounds, max 100
+
+    missed = 0
+    forged = 0
+    netw_round = get_round(netw_height)
+    last_forged_round = get_round(dblocks['data'][0]['height'])
+
+    if netw_round > last_forged_round + 1:
+        missed += netw_round - last_forged_round - 1
+    else:
+        forged += 1
+
+    if drounds > 1:
+        for i in range(0, drounds - 1):
+            cur_round = get_round(dblocks['data'][i]['height'])
+            prev_round = get_round(dblocks['data'][i + 1]['height'])
+            if prev_round < cur_round - 1:
+                if cur_round - prev_round - 1 > drounds - missed - forged:
+                    missed += drounds - missed - forged
+                    break
+                else:
+                    missed += cur_round - prev_round - 1
+            else:
+                forged += 1
+
+    yield_over_drounds = "{:.2f}".format(round((forged * 100)/(forged + missed)))
+    return yield_over_drounds
+
+
 @app.route('/')
 def index():
     s = {}
@@ -23,6 +59,7 @@ def index():
     #s['productivity'] = dstats['data']['production']['productivity']
     s['productivity'] = 100 # temp fix
     s['handle'] = dstats['data']['username']
+    s['wallet'] = dstats['data']['address']
     s['votes'] = "{:.2f}".format(int(dstats['data']['votes'])/100000000)
     s['rewards'] = dstats['data']['forged']['total']
     s['approval'] = dstats['data']['production']['approval']
@@ -30,18 +67,10 @@ def index():
     s['lastforged_id'] = dstats['data']['blocks']['last']['id']
     s['lastforged_ts'] = dstats['data']['blocks']['last']['timestamp']['human']
     s['lastforged_unix'] = dstats['data']['blocks']['last']['timestamp']['unix']
-    s['lastforged_ago'] = "{:.2f}".format(time.time() - s['lastforged_unix'])
-    if data.network in ['ark_mainnet', 'ark_devnet']:
-        if s['rank'] <= 51:
-            s['forging'] = 'Forging'
-        else:
-            s['forging'] = 'Standby'
-
-    if data.network in ['solar_mainnet', 'solar_devnet']:
-        if s['rank'] <= 53:
-            s['forging'] = 'Forging'
-        else:
-            s['forging'] = 'Standby'
+    #s['lastforged_ago'] = "{:.2f}".format(time.time() - s['lastforged_unix'])
+    age = divmod(int(time.time() - s['lastforged_unix']),60)
+    s['lastforged_ago'] = "{0}:{1}".format(age[0],age[1])
+    s['forging'] = 'Forging' if s['rank'] <= network.delegates else 'Standby'
 
     snekdb = SnekDB(data.database_user, data.network, data.delegate)
     voter_ledger = snekdb.voters().fetchall()
@@ -62,6 +91,8 @@ def index():
     s['behind'] = node_sync_data['data']['blocks']
     s['height'] = node_sync_data['data']['height']
 
+    s['yield'] = get_yield(s['height'])
+
     if data.pool_version == "original":
         return render_template('index.html', node=s, row=voter_stats, n=navbar)
     else:
@@ -81,9 +112,9 @@ def payments():
         tx_data.append(data_list)
 
     if data.pool_version == 'original':
-       return render_template('payments.html', row=tx_data, n=navbar)
+       return render_template('payments.html', node=s, row=tx_data, n=navbar)
     else:
-       return render_template('geops_payments.html', row=tx_data, n=navbar)
+       return render_template('geops_payments.html', node=s, row=tx_data, n=navbar)
 
 '''
 @app.route('/webhook', methods=['POST'])

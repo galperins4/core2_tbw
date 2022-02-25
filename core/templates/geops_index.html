@@ -11,6 +11,7 @@
   <title>{{n['dname']}} Dashboard</title>
 
   <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
 
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <!--
@@ -66,7 +67,7 @@
 
             <div class="row">
                 <div class="col-md-3">
-                    <div class="alert alert-info" role="alert">Total forged: {{node['forged']}}</div>
+                    <div class="alert alert-info" role="alert"><a href="{{ n['explorer'] }}wallets/{{node['wallet']}}/blocks" target="_blank">Total forged:</a> {{node['forged']}}</div>
                 </div>
                 <!--
                 <div class="col-md-3">
@@ -74,16 +75,19 @@
                 </div>
                 -->
                 <div class="col-md-3">
-                    <div class="alert alert-info" role="alert">Sync status: {{node['synced']}}/{{node['height']}}/{{node['behind']}}</div>
+                    <!--<div class="alert alert-info" role="alert">Sync status: {{node['synced']}}/{{node['height']}}/{{node['behind']}}</div>-->
+                    <div class="alert alert-info" role="alert">Sync: {{node['synced']}} / {{node['height']}}</div>
                 </div>
                 <div class="col-md-3">
-                    <div class="alert alert-info" role="alert">Last forged: <a href="{{ n['explorer'] }}blocks/{{node['lastforged_id']}}" target="_blank">{{node['lastforged_no']}}</a></div>
+                    <div class="alert alert-info" role="alert"><a href="{{ n['explorer'] }}blocks/{{node['lastforged_id']}}" target="_blank">Last forged:</a> {{node['lastforged_no']}}, {{node['lastforged_ago']}}&Prime; ago</div>
                 </div>
                 <div class="col-md-3">
-                    <div class="alert alert-info" role="alert">Age: {{node['lastforged_ago']}}&Prime; ago</div>
+                    <div class="alert alert-info" role="alert">Yield<sup>(*)</sup>: {{node['yield']}}%</div>
                 </div>
             </div>
-
+            <div class="text-right">
+                <small><i><sup>(*)</sup>Yield calculated over the last 100 rounds</i></small>
+            </div>
             <!--
             <div class="row">
                 <div class="col-md-3">
