@@ -70,6 +70,9 @@ def index():
 
 @app.route('/payments')
 def payments():
+    s = {}
+    dstats = client.delegates.get(data.public_key)
+    s['handle'] = dstats['data']['username']
     snekdb = SnekDB(data.database_user, data.network, data.delegate)
     data_out = snekdb.transactions().fetchall()
     tx_data = []
