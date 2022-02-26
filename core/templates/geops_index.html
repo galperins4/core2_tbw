@@ -110,12 +110,21 @@
                 </thead>
                 <tbody>
                   {% for r in row %}
-                    <tr>
-                        <td><a href="{{ n['explorer'] }}wallets/{{ r[0] }}" target="_blank">{{ r[0] }}</a></td>
-                        <td>{{ r[1]/100000000 }}</td>
-                        <td>{{ r[2]/100000000 }}</td>
-                        <td>{{ r[3] }}%</td>
-                    </tr>
+                    {% if (loop.index > 1) %}
+                      <tr class="summaryrow">
+                          <td>{{ r[0] }}</a></td>
+                          <td class="pending">{{ r[1]/100000000 }}</td>
+                          <td class="paid">{{ r[2]/100000000 }}</td>
+                          <td>{{ r[3] }}%</td>
+                      </tr>
+                    {% else %}
+                      <tr>
+                          <td><a href="{{ n['explorer'] }}wallets/{{ r[0] }}" target="_blank">{{ r[0] }}</a></td>
+                          <td class="pending">{{ r[1]/100000000 }}</td>
+                          <td class="paid">{{ r[2]/100000000 }}</td>
+                          <td>{{ r[3] }}%</td>
+                      </tr>
+                    {% endif %}
                   {% endfor %}
                 </tbody>
             </table>

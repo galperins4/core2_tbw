@@ -1,4 +1,5 @@
 import time
+from functools import cmp_to_key
 
 from config.config import Config
 from flask import Flask, render_template, request
@@ -54,10 +55,10 @@ def index():
 
     s['forged'] = dstats['data']['blocks']['produced']
     #s['missed'] = dstats['data']['blocks']['missed']
-    s['missed'] = 0 # temp fix
+    #s['missed'] = 0 # temp fix
     s['rank'] = dstats['data']['rank']
     #s['productivity'] = dstats['data']['production']['productivity']
-    s['productivity'] = 100 # temp fix
+    #s['productivity'] = 100 # temp fix
     s['handle'] = dstats['data']['username']
     s['wallet'] = dstats['data']['address']
     s['votes'] = "{:.2f}".format(int(dstats['data']['votes'])/100000000)
@@ -76,6 +77,8 @@ def index():
     voter_ledger = snekdb.voters().fetchall()
 
     voter_stats = []
+    pend_total = 0
+    paid_total = 0
     ld          = dict((addr,(pend,paid)) for addr, pend, paid, r in voter_ledger)
     votetotal   = int(dstats['data']['votes'])
     voter_data  = client.delegates.voters(data.delegate)
@@ -83,6 +86,13 @@ def index():
         _sply = "{:.2f}".format(int(_data['balance'])*100/votetotal)
         _addr = _data['address']
         voter_stats.append([_addr,ld[_addr][0], ld[_addr][1], _sply])
+        pend_total += ld[_addr][0]
+        paid_total += ld[_addr][1]
+
+    reverse_key = cmp_to_key(lambda a, b: (a < b) - (a > b))
+    voter_stats.sort(key=lambda rows: (reverse_key(rows[3]),rows[0]))
+    #voter_stats[:0] = (["Total",pend_total, paid_total, "100"])
+    voter_stats.insert(0,["Total",pend_total, paid_total, "100"])
 
     s['voters'] = voter_data['meta']['totalCount']
 
