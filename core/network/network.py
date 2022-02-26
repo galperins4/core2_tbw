@@ -19,5 +19,5 @@ class Network():
          self.database = os.getenv("DATABASE")
          self.database_user = os.getenv("DATABASE_USER")
          self.database_password = os.getenv("DATABASE_PASSWORD")
-         self.delegates = os.getenv("DELEGATES")
-         self.blocktime = os.getenv("BLOCKTIME")
+         self.delegates = int(os.getenv("DELEGATES"))
+         self.blocktime = int(os.getenv("BLOCKTIME"))
