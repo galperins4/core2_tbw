@@ -110,7 +110,7 @@
                 </thead>
                 <tbody>
                   {% for r in row %}
-                    {% if (loop.index > 1) %}
+                    {% if (loop.index == 1) %}
                       <tr class="summaryrow">
                           <td>{{ r[0] }}</a></td>
                           <td class="pending">{{ r[1]/100000000 }}</td>
