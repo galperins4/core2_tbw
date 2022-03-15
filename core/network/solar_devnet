@@ -6,3 +6,5 @@ API_PORT = 6003
 DATABASE = "solar_devnet"
 DATABASE_USER = "null"
 DATABASE_PASSWORD = "password"
+DELEGATES = 53
+BLOCKTIME = 8

@@ -1,0 +1,19 @@
+.alert-info {
+  font-size: 90%;
+}
+
+tr.summaryrow td{
+  /* font-weight: bold; */
+}
+
+tr.summaryrow td:first-child{
+  color: #6495ed; /* cornflowerblue */
+}
+
+td.pending {
+  color: #ffa250; /* #coral */
+}
+
+td.paid {
+  color: #3cb371; /* #mediumseagreen; */
+}
