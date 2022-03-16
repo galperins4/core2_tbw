@@ -422,7 +422,11 @@ if __name__ == '__main__':
     
     # initialize db connection
     # get database
-    arkdb = ArkDB(network.database, data.database_user, network.database_password, data.public_key)
+    arkdb = ArkDB(network.database,
+                  network.database_host,
+                  data.database_user,
+                  network.database_password,
+                  data.public_key)
     
     #conversion check for pre 2.3 databases
     conversion_check()
