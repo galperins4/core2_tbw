@@ -17,6 +17,7 @@ class Network():
          self.wif = int(os.getenv("WIF"))
          self.api_port = os.getenv("API_PORT")
          self.database = os.getenv("DATABASE")
+         self.database_host = os.getenv("DATABASE_HOST")
          self.database_user = os.getenv("DATABASE_USER")
          self.database_password = os.getenv("DATABASE_PASSWORD")
          self.delegates = int(os.getenv("DELEGATES"))
