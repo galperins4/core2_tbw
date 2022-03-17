@@ -6,3 +6,8 @@ core/util/__pycache__/
 core/network/__pycache__/
 core/config/__pycache__/
 
+# Virtual environment
+.venv
+
+# OS Files
+.DS_Store

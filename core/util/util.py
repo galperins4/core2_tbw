@@ -10,10 +10,12 @@ class Util:
     
         self.core = self.home+'/.config/'+coin+'-core/'+network
         self.tbw = self.home+'/core2_tbw'
-        if network == "devnet":
-            self.dposlib = "d."+coin
-        else:
-            self.dposlib = coin
+        #if network == "devnet":
+        #    self.dposlib = "d."+coin
+        #elif network == "testnet":
+        #    self.dposlib = "t."+coin
+        #else:
+        #    self.dposlib = coin
         
         
     def get_client(self, api_port, ip="localhost"):

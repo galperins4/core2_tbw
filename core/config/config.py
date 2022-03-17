@@ -56,7 +56,6 @@ class Config():
         self.pool_ip = os.getenv("POOL_IP")
         self.explorer = os.getenv("EXPLORER")
         self.delegate = os.getenv("DELEGATE")
-        self.coin = os.getenv("COIN")
         self.proposal = os.getenv("PROPOSAL")
         self.pool_port = os.getenv("POOL_PORT")
         self.custom_port = os.getenv("CUSTOM_PORT")

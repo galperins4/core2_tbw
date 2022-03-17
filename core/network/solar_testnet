@@ -1,13 +1,13 @@
 # network
-EPOCH = "2021,12,23,00,00,00"
+EPOCH = "2022,03,16,18,00,00"
 VERSION = 30
 WIF = 252
 API_PORT = 6003
-DATABASE = "solar_devnet"
+DATABASE = "solar_testnet"
 DATABASE_HOST= "${HOME}/.local/share/solar-core/testnet/database"
 DATABASE_USER = "solar"
 DATABASE_PASSWORD = "password"
 DELEGATES = 53
 BLOCKTIME = 8
-COIN = "dSXP"
-EXPLORER = "https://dexplorer.solar.org/"
+COIN = "tSXP"
+EXPLORER = "https://texplorer.solar.org/"

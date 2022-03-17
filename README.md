@@ -1,42 +1,25 @@
 # Python True Block Weight
 
-## Prerequisites
-
-1. Install pip and python3.6 or above
-
-2. Install `pm2`
-
-```bash
-npm install pm2@latest -g
-# or
-yarn global add pm2
-```
-
 ## Clean/New Installation
 
-```sh
-# Install and sync relay server
-git clone https://github.com/galperins4/core2_tbw
-cd ~/core2_tbw
-nano core/config/config
-# fill out config (see below)
-bash tbw.sh
-```
+See [README-FIRST](README-FIRST.md)
+
+<br>
 
 ## Configuration & Usage
 
-1. After the repository has been cloned you need to open the [config](./core/config/config) and change it to your liking (see [Available Configuration Options](#available-configuration-options))
+1. After the repository has been cloned you need to clone the [config](./core/config/config.sample) as config and change it to your liking (see [Available Configuration Options](#available-configuration-options))
 
 Main values to update here are the following:
 
 ```txt
-NETWORK
-DATABASE_USER
-DELEGATE
-PUBLIC_KEY
+START_BLOCK, NETWORK, DATABASE_USER,
+DELEGATE, PUBLIC_KEY,
+INTERVAL, VOTER_SHARE, PASSPHRASE, KEEP, PAY_ADDRESSES,
+POOL_IP, PROPOSAL
 ```
 
-2. Once this has been done navigate to core2_tbw folder and execute `bash tbw.sh` to get to the main menu script. Install required packages with option `1` and `2`. You can then select options `3`-`7` to either run all modules of tbw or parts.
+2. Once this has been done navigate to core2_tbw folder and execute `bash tbw.sh` to get to the main menu script. Initialize with option `0`. You can then select options `1`-`5` to either run all modules of tbw or parts.
 
 _Important_ - pay_addresses and keep keys should match in config. DO NOT delete the reserve key as it is required. All other's can be deleted or more added. In addition, payment is triggered to start based on when total blocks forged / interval is an integer (with no remainder).
 
@@ -100,9 +83,8 @@ Python 3.6+ is required.
 | Config Option | Default Setting | Description | 
 | :--- | :---: | :--- |
 | POOL_IP | xx.xx.xx.xx | IP of the node the pool is installed on |
-| EXPLORER | https://dexplorer.ark.io/ | The address of the explorer for the coin |
-| COIN | DARK | Coin name, DARK, ARK, QREDIT, PRSN etc |
-| PROPOSAL | https://xx.xx.xx/ | Link to delegate proposal (if any) |
+| EXPLORER | https://dexplorer.ark.io/ | The address of the explorer for the coin. If not exists or empty (''), will be read from network definitions|
+| PROPOSAL | https://xx.xx.xx/ | Link to the delegate proposal (if any) |
 | POOL_PORT | 5000 | Port for pool/webhooks |
 | CUSTOM_PORT | 5004 | Custom port for using custom voter share update functionality |
 | POOL_VERSION | original | Set the pool website version - options are "original" or "geops" |

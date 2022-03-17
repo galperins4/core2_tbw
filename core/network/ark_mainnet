@@ -8,3 +8,5 @@ DATABASE_USER = "null"
 DATABASE_PASSWORD = "password"
 DELEGATES = 51
 BLOCKTIME = 8
+COIN = "ARK"
+EXPLORER = "https://explorer.ark.io/"
