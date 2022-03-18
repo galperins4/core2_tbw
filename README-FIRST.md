@@ -29,8 +29,10 @@ pm2 logs twb pay pool
 <br>
 
 ## Overwrite An Existing Installation
-- Stop all pm2 TBW processes
-- Backup your config file
+- Stop all pm2 TBW processes (`pm2 stop tbw pay pool`)
+- Delete all pm2 TBW process (`pm2 delete tbw pay pool`)
+- (Optional) delete logs (`cd ~/.pm2/logs; rm -rf tbw-* pay-* pool-*`)
+- Backup your config file (`cp ~/core2_tbw/core/config/config ~/tbw-config.backup`)
 - Remove core2_tbw folder
 - Follow the [Clean Install](#installation) section above
 - Restore your config file

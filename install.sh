@@ -6,6 +6,18 @@ VENV="$APPHOME/.venv"
 GITREPO="https://github.com/$AUTHOR/$APPNAME.git"
 GITBRANCH="develop"
 
+# Regular Colors
+CBlack='\033[0;30m'  # Black
+CRed='\033[0;31m'    # Red
+CGreen='\033[0;32m'  # Green
+CYellow='\033[0;33m' # Yellow
+CBlue='\033[0;34m'   # Blue
+CPurple='\033[0;35m' # Purple
+CCyan='\033[0;36m'   # Cyan
+CWhite='\033[0;37m'  # White
+NC='\033[0m'         # Text Reset
+
+
 SUDO_USER=$1
 if [ -z "$SUDO_USER" ]
   then
@@ -117,34 +129,36 @@ if [ -n "$SAVEDCPATH" ]; then
     export CPATH=$OLDCPATH
 fi
 
+echo -e ${CGreen}
 echo '====================='
 echo 'installation complete'
 echo '====================='
-echo
+echo -e ${NC}
 echo '>>> next steps:'
 echo '==============='
 echo 'This script requires pm2, which Solar Core already includes'
 echo 'but otherwise you can install it with:'
-echo 'npm install pm2@latest [-g]'
-echo 'or'
-echo 'yarn [global] add pm2'
-echo
+echo -e ${CBlue}'  npm install pm2@latest [-g]'
+echo -e ${NC}'  or'${CBlue}
+echo '  yarn [global] add pm2'
+echo -e ${NC}
 echo 'First, edit core/config/config to set essential parameters like'
-echo '  START_BLOCK, NETWORK, DATABASE_USER,'
+echo -e ${CBlue}'  START_BLOCK, NETWORK, DATABASE_USER,'
 echo '  DELEGATE, PUBLIC_KEY,'
 echo '  INTERVAL, VOTER_SHARE, PASSPHRASE, KEEP, PAY_ADDRESSES,'
 echo '  POOL_IP, PROPOSAL'
-echo 
+echo -e ${NC} 
 echo 'All config parameters are explained in README.md'
 echo 
 echo 'Next do;' 
-echo '  cd '$APPHOME',' 
+echo -e ${CBlue}'  cd '$APPHOME',' 
 echo '  bash tbw.bash'
 echo '  Select menu option [0] for first time initialization'
 echo '  Then, select the menu options for [Start TBW Only], [Start Pay Only] and [Start Pool Only] '
 echo '  to start and register the processes with pm2'
-echo 
+echo -e ${NC} 
 echo 'For subsequent operations you can use;'
-echo '  pm2 start|restart|stop|logs tbw'
+echo -e ${CBlue}'  pm2 start|restart|stop|logs tbw'
 echo '  pm2 start|restart|stop|logs pay'
 echo '  pm2 start|restart|stop|logs pool'
+echo -e ${NC}
