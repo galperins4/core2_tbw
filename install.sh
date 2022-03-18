@@ -21,20 +21,20 @@ NC='\033[0m'         # Text Reset
 SUDO_USER=$1
 if [ -z "$SUDO_USER" ]
   then
-    echo "Error: this script must be called with a sudo user as argument"
+    echo -e "${CRed}Error: this script must be called with a sudo user as argument${NC}"
     echo usage: $0 user
     exit 1
 fi
 
 if  ! id -u $SUDO_USER &>/dev/null
   then
-    echo "Error: user $SUDO_USER does not exist"
+    echo -e "${CRed}Error: user $SUDO_USER does not exist${NC}"
     exit 1
 fi
 
 if [ -z "$(id -Gn $SUDO_USER | grep sudo)" ]
   then
-    echo "Error: $SUDO_USER must have sudo privilage"
+    echo -e "${CRed}Error: $SUDO_USER must have sudo privilage${NC}"
     exit 1
 fi
 
@@ -44,7 +44,7 @@ clear
 echo
 echo installing system dependencies
 echo ==============================
-echo "You will be asked for the SUDOER's password twice; first time for su, and second time for sudo in su environment"
+echo -e "${CRed}You will be asked for the SUDOER's password twice; first time for su, and second time for sudo in su environment${NC}"
 echo Please enter the password for $SUDO_USER
 su - $SUDO_USER -c "echo Please enter the password for $SUDO_USER again
 sudo -S cd ~ # dummy action to submit sudo password
@@ -151,7 +151,7 @@ echo -e ${NC}
 echo 'All config parameters are explained in README.md'
 echo 
 echo 'Next do;' 
-echo -e ${CBlue}'  cd '$APPHOME',' 
+echo -e ${CBlue}'  cd '$APPHOME 
 echo '  bash tbw.bash'
 echo '  Select menu option [0] for first time initialization'
 echo '  Then, select the menu options for [Start TBW Only], [Start Pay Only] and [Start Pool Only] '
