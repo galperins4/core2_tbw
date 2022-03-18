@@ -16,6 +16,7 @@ pause(){
 }
  
 initialize(){
+    . .venv/bin/activate
 	version=$(python3 -c "import sys; print(''.join(map(str, sys.version_info[:2])))")
 
 	if [[ "$version" -lt 36 ]]; then
@@ -26,6 +27,7 @@ initialize(){
 	cd core
 	python3 tbw.py
 	cd ..
+    deactivate
     pause
 }
 

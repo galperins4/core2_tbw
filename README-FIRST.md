@@ -2,10 +2,11 @@
 
 ## Clean Install
 ```bash
-cd && bash <(curl -s https://raw.githubusercontent.com/osrn/core2_tbw/develop/install.sh)
+cd && bash <(curl -s https://raw.githubusercontent.com/osrn/core2_tbw/develop/install.sh) SUDO_USER
 ```
+Replace SUDO_USER above with a user with sudo elevation (i.e. in group sudo)
 
-clone the [sample config](./core/config/config.sample) i.e. `cp core/config/config.example core/config/config`, and modify as explained in [README.md #Configuration Options](README.md#configuration--usage)
+Next, clone the [sample config](./core/config/config.sample) i.e. `cp core/config/config.example core/config/config`, and modify as explained in [README.md #Configuration Options](README.md#configuration--usage)
 
 <br>
 

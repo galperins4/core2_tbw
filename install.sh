@@ -4,6 +4,7 @@ APPNAME="core2_tbw"
 APPHOME="$HOME/$APPNAME"
 VENV="$APPHOME/.venv"
 GITREPO="https://github.com/$AUTHOR/$APPNAME.git"
+GITBRANCH="develop"
 
 SUDO_USER=$1
 if [ -z "$SUDO_USER" ]
@@ -31,6 +32,7 @@ clear
 echo
 echo installing system dependencies
 echo ==============================
+echo "You will be asked for the SUDOER's password twice; first time for su, and second time for sudo in su environment"
 echo Please enter the password for $SUDO_USER
 su - $SUDO_USER -c "echo Please enter the password for $SUDO_USER again
 sudo -S cd ~ # dummy action to submit sudo password
@@ -62,7 +64,7 @@ if [ -d $APPHOME ]; then
     *) echo -e "did not wipe existing installation";;
     esac
 fi
-if (git clone $GITREPO) then
+if (git clone -b $GITBRANCH $GITREPO) then
     echo "package retrieved."
     cd $APPHOME
 else
@@ -70,7 +72,7 @@ else
     cd $APPHOME
     git reset --hard
     git fetch --all
-    git checkout main
+    git checkout $GITBRANCH
     git pull
 fi
 echo done
