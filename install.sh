@@ -78,14 +78,27 @@ echo downloading package from git repo
 echo =================================
 cd ~
 if [ -d $APPHOME ]; then
-    read -p "existing installation found, shall I wipe it? [y/N]> " r
+    read -p "$(echo -e "${CRed}existing installation found, shall I wipe it? [y/N]>${NC}") " r
     case $r in
-    y|Y) rm -rf $APPHOME;;
+    y|Y)
+        echo 'stopping jobs...'
+        pm2 stop core 
+        pm2 stop tbw
+        pm2 stop pay
+        pm2 stop custom
+        echo 'unregistering jobs with pm2...'
+        pm2 delete core 
+        pm2 delete tbw 
+        pm2 delete pay 
+        pm2 delete custom
+        echo 'removing package...'
+        rm -rf $APPHOME
+        ;;
     *) echo -e "did not wipe existing installation";;
     esac
 fi
 if (git clone -b $GITBRANCH $GITREPO) then
-    echo "package retrieved."
+    echo "package retrieved from GIT"
     cd $APPHOME
 else
     echo "local repo found! resetting to remote..."
