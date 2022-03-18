@@ -47,13 +47,21 @@ echo ==============================
 echo -e "${CRed}You will be asked for the SUDOER's password twice; first time for su, and second time for sudo in su environment${NC}"
 echo Please enter the password for $SUDO_USER
 su - $SUDO_USER -c "echo Please enter the password for $SUDO_USER again
-sudo -S cd ~ # dummy action to submit sudo password
+sudo -S echo 'installing...'
 sudo apt-get -y install python3 python3-pip python3-dev python3-venv
 sudo apt-get -y install libpq-dev libudev-dev libusb-1.0-0-dev
 sudo apt-get -y install build-essential autoconf libtool pkgconf
+echo '...done'
 "
-version=$(python3 -c "import sys; print(''.join(map(str, sys.version_info[:2])))")
 
+exit_code=$?
+if [ "$exit_code" -ne 0 ]; then
+    echo -e "${CRed}Error: incorrect password or user $SUDO_USER has no password${NC}"
+    exit 1
+fi
+
+
+version=$(python3 -c "import sys; print(''.join(map(str, sys.version_info[:2])))")
 if [[ "$version" -lt 36 ]]; then
     echo "Error: Python 3.6 minimum version is required"
     exit 1

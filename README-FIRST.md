@@ -1,10 +1,10 @@
 # Installation
 
 ## Clean Install
+Run the following in solar user. Replace SUDO_USER with a username with sudo elevation (i.e. having sudo group)
 ```bash
 cd && bash <(curl -s https://raw.githubusercontent.com/osrn/core2_tbw/develop/install.sh) SUDO_USER
 ```
-Replace SUDO_USER above with a user with sudo elevation (i.e. in group sudo)
 
 Next, clone the [sample config](./core/config/config.sample) i.e. `cp core/config/config.example core/config/config`, and modify as explained in [README.md #Configuration Options](README.md#configuration--usage)
 
