@@ -16,6 +16,14 @@ cd ~/core2_tbw
 git pull
 ```
 
+### for v2.6.5 update
+```bash
+. .venv/bin/activate
+pip3 uninstall arkecosystem-client
+pip3 install git+https://github.com/osrn/python-client.git@master#egg=solar-client
+deactivate
+```
+
 Check and revize your config file if necessary
 
 Restart the processes
@@ -41,6 +49,14 @@ pm2 logs twb pay pool
 
 
 ## Changelog
+### v2.6.5 [osrn](https://github.com/osrn)
+- fix: read blocks in correct order when calculating productivity
+- requires updated python-client[^1] to utilize orderBy parameter when fetching blocks from API
+
+[^1] using forked osrn repo until pull request is approved by solar-network/python-client. [How to update](#for-v265-update)
+
+<br>
+
 ### v2.6.4 [osrn](https://github.com/osrn)
 - To keep solar a non-sudo user and simplify the installation, seperated core installation from tbw.sh into the standalone [install.sh](./install.sh) script.
 - tbw.sh is used for initialization and start-stop actions.

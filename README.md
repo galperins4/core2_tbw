@@ -8,7 +8,7 @@ See [README-FIRST](README-FIRST.md)
 
 ## Configuration & Usage
 
-1. After the repository has been cloned you need to clone the [config](./core/config/config.sample) as config and change it to your liking (see [Available Configuration Options](#available-configuration-options))
+1. After the repository has been cloned you need to clone the [sample config](./core/config/config.sample) as `./core/config/config` and modify as necessary (see [Available Configuration Options](#available-configuration-options))
 
 Main values to update here are the following:
 

@@ -18,8 +18,9 @@ def get_round(height):
 
 
 def get_yield(netw_height):
-    dblocks = client.delegates.blocks(data.delegate)
-    drounds = dblocks['meta']['count'] #number of forged rounds, max 100
+    # get all forged blocks in reverse chronological order, first page, max 100 as default
+    dblocks = client.delegates.blocks(data.delegate, orderBy="height:desc") 
+    drounds = dblocks['meta']['count'] #number of forged blocks 
     dstats = client.delegates.get(data.public_key)
 
     missed = 0
