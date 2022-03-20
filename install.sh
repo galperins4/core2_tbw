@@ -108,7 +108,7 @@ else
     git checkout $GITBRANCH
     git pull
 fi
-echo done
+echo '...done'
 
 
 echo
@@ -126,7 +126,7 @@ if [ -d $VENV ]; then
 else
     python3 -m venv .venv
 fi
-echo done
+echo '...done'
 
 
 echo
@@ -145,10 +145,11 @@ pip3 install wheel
 pip3 install psycopg2
 pip3 install -r requirements.txt
 deactivate
-echo done
+echo '...done'
 if [ -n "$SAVEDCPATH" ]; then
     export CPATH=$OLDCPATH
 fi
+
 
 echo -e ${CGreen}
 echo '====================='

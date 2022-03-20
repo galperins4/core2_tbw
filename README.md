@@ -1,14 +1,70 @@
 # Python True Block Weight
 
-## Clean/New Installation
+## INSTALLATION
 
-See [README-FIRST](README-FIRST.md)
+### A/ Clean Install
+Run the following in relay/forger user. Replace SUDO_USER with a username with sudo elevation (i.e. having sudo group)
+```bash
+cd && bash <(curl -s https://raw.githubusercontent.com/osrn/core2_tbw/master/install.sh) SUDO_USER
+```
+
+Next, clone the [sample config](./core/config/config.sample), then modify as explained in [Configuration & Usage](#configuration--usage)
+```bash
+cd ~/core2_tbw && cp core/config/config.example core/config/config
+```
+---
+<br>
+
+### B/ Update An Existing Installation
+#### update core
+```bash
+cd ~/core2_tbw
+git pull
+```
+
+#### update the python-client package as required for v2.6.5
+```bash
+cd ~/core2_tbw
+. .venv/bin/activate
+pip3 uninstall arkecosystem-client
+pip3 install git+https://github.com/osrn/python-client.git@master#egg=solar-client
+deactivate
+```
+
+#### check config
+and revize as necessary
+
+#### Restart the processes
+```bash
+pm2 restart tbw
+pm2 restart pay
+pm2 restart pool
+pm2 logs twb|pay|pool
+```
+---
+<br>
+
+### C/ Overwrite An Existing Installation/Clean Start
+- Stop all pm2 TBW processes (`pm2 stop tbw pay pool`)
+- Delete all pm2 TBW process (`pm2 delete tbw pay pool`)
+- (Optional) delete logs (`cd ~/.pm2/logs; rm -rf tbw-* pay-* pool-*`)
+- Backup your config file (`cp ~/core2_tbw/core/config/config ~/tbw-config.backup`)
+- Remove core2_tbw folder
+- Follow the [A/ Clean Install](#a-clean-install) section above
+- Restore your config file
 
 <br>
 
-## Configuration & Usage
+---
 
-1. After the repository has been cloned you need to clone the [sample config](./core/config/config.sample) as `./core/config/config` and modify as necessary (see [Available Configuration Options](#available-configuration-options))
+## CONFIGURATION & USAGE
+
+### 1. Configure
+After installation completed, you need to clone the [sample config](./core/config/config.sample) modify according to [Available Configuration Options](#available-configuration-options)
+
+```bash
+cd ~/core2_tbw && cp core/config/config.example core/config/config
+```
 
 Main values to update here are the following:
 
@@ -19,20 +75,51 @@ INTERVAL, VOTER_SHARE, PASSPHRASE, KEEP, PAY_ADDRESSES,
 POOL_IP, PROPOSAL
 ```
 
-2. Once this has been done navigate to core2_tbw folder and execute `bash tbw.sh` to get to the main menu script. Initialize with option `0`. You can then select options `1`-`5` to either run all modules of tbw or parts.
+### 2. Initialize
+Once this has been done you need to execute first time initialization
 
-_Important_ - pay_addresses and keep keys should match in config. DO NOT delete the reserve key as it is required. All other's can be deleted or more added. In addition, payment is triggered to start based on when total blocks forged / interval is an integer (with no remainder).
+```bash
+cd ~/core2_tbw && bash tbw.sh
+```
 
-To use custom voter shares, the following 2 options are available:
+This will get you to the main menu script. 
+- Initialize with option `[0]`. 
+- You can then select options `[1]`-`[5]` to either run all modules at once or in parts. Notice that **tbw is compulsary for pay & pool**.
 
-1) Directly update the column "share" column in the voters table of `your_network`.db
-2) Turn on custom.py and send a POST request to the http://ip:port/updateShare endpoint. See below for example: `{"address":"DKahhVFVJfqCcCmaQHuYzAVFKcWjBu5i6Z", "share":0.10}`
+---
+---
+<br>
 
-IMPORTANT: If at any time you change you share rate you must stop tbw, update your config.json and run the following command `python3 tbw.py --shareChange`
+## AVAILABLE CONFIGURATION OPTIONS
+> **Important!**<br>
+> - Pay_addresses and keep keys should match.
+> - DO NOT delete the reserve key as it is required. All other's can be deleted or more added.
+> - In addition, payment is triggered to start based on when total blocks forged / interval is an integer (with no remainder).
 
-Python 3.6+ is required.
+> **Custom voter shares**<br>
+> To use custom voter shares, following 2 options are available:
+> 1. Directly update the column "share" column in the voters table of `your_network`.db
+> 2. Turn on custom.py and send a POST request to `http://ip:port/updateShare` endpoint.<br>
+>   example: `{"address":"DKahhVFVJfqCcCmaQHuYzAVFKcWjBu5i6Z", "share":0.10}`
 
-## Available Configuration Options 
+> **Important!**<br>
+> If at any time you need to change the share rate in config, 
+> - you must stop tbw
+> - update your config
+> - reconfigure database 
+> ```bash 
+> pm2 stop tbw
+> cd ~/core2_tbw
+> . .venv/bin/activate
+> python3 core/tbw.py --shareChange`
+> deactivate
+> pm2 start tbw
+> ```
+
+> **Python 3.6+ is required**
+---
+<br>
+
 ### True Block Weight
 | Config Option | Default Setting | Description | 
 | :--- | :---: | :--- |
@@ -61,6 +148,8 @@ Python 3.6+ is required.
 | MULTI | N | Change to "Y" if you'd like payments to be made using Multipayments |
 | MULTI_FEE | 0.1 | Experimental setting to adjust default Multipayments fee |
 
+<br>
+
 ### Exchange (Experimental - ark network only)
 | Config Option | Default Setting | Description | 
 | :--- | :---: | :--- |
@@ -78,6 +167,7 @@ Python 3.6+ is required.
 
 **NOTE 3**: exchange_configtest.py (under core folder) has been created to test exchange config to prior to turning on. To execute run `python3 exchange_configtest.py` after setting up configuration as described in the table above
 
+<br>
 
 ### Pool
 | Config Option | Default Setting | Description | 
@@ -89,12 +179,58 @@ Python 3.6+ is required.
 | CUSTOM_PORT | 5004 | Custom port for using custom voter share update functionality |
 | POOL_VERSION | original | Set the pool website version - options are "original" or "geops" |
 
-## To Do
+---
+---
+<br>
+
+## TO-DO
 
 - Add more features as necessary
 - Additional exception handling
 
-## Changelog
+<br>
+
+## CHANGELOG
+
+### 2.6.6 [osrn](https://github.com/osrn)
+- doc: README-FIRST merged to README with updated install & config info 
+
+
+### 2.6.5 [osrn](https://github.com/osrn)
+- fix: read blocks in correct order when calculating productivity
+- requires updated python-client[^1] to utilize orderBy parameter when fetching blocks from API<br>
+[How to update python-client](#update-the-python-client-package-as-required-for-v265)
+
+[^1]: using forked osrn repo until pull request is approved by solar-network/python-client. 
+
+
+### 2.6.4 [osrn](https://github.com/osrn)
+- To keep solar a non-sudo user and simplify the installation, seperated core installation from tbw.sh into the standalone [install.sh](./install.sh) script.
+- install.sh now rewrites CPATH to prevent python package compilation errors (CPATH is restored back afterwards) 
+- tbw.sh is used for initialization and start-stop actions.
+- Ported the app to python virtual environment.
+- Moved COIN definition from core/config/config into core/network/network
+
+**Changes for Solar 3.2.0-next.0 compatibility:** Solar 3.2.0-next.0 no longer accepts TCPIP connections to postgresql, but utilize UNIX-domain-socket connection. Moreover, an isolated instance of Postgresql is now in effect, hence the local socket path needs to be provided.
+- ark.py, tbw.py. Added logic for optional postgresql connection type (UNIX / INET) (*)
+- added solar_testnet under core/network with definitions for DATABASE HOST (unix socket connection), USER, COIN and EXPLORER
+- core/config/config EXPLORER definition will override the same parameter in core/network/network
+- get_yield function adjusted to cope with the change in how delegate blocks listed in 3.2.0-next0 API
+
+*(\*) compatibiliy with other chains preserved by keeping'localhost' as the default postgresql host which defaults to TCPIP connection.*
+
+
+### 2.6.3 [osrn](https://github.com/osrn)
+Pool enhanced with more information retrieved through Solar API
+- Added relay sync status and height
+- Added delegate total votes
+- Forging position correction
+- Added total blocks forged and last forged block, with links to explorer
+- Added productivity calculation
+- Added a Summary (Totals) row and Voter supply ratios column to the pool ledger
+- Added coloring to ending/paid amounts
+- Added delegate name to the page title
+
 
 ### 0.4
  - Added exchange / swap functionality (for ark network only)
@@ -114,16 +250,23 @@ Python 3.6+ is required.
 - ark core_v2 initial release
 - new custom voter share functionality
 
-## Security
+<br>
+
+## SECURITY
 
 If you discover a security vulnerability within this package, please open an issue. All security vulnerabilities will be promptly addressed.
 
-## Credits
+
+<br>
+
+## CREDITS
 
 - [galperins4](https://github.com/galperins4)
 - [All Contributors](../../contributors)
 
-## License
+<br>
+
+## LICENSE
 
 [MIT](LICENSE) © [galperins4](https://github.com/galperins4)
 
