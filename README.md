@@ -5,7 +5,7 @@
 ### A/ Clean Install
 Run the following in relay/forger user. Replace SUDO_USER with a username with sudo elevation (i.e. having sudo group)
 ```bash
-cd && bash <(curl -s https://raw.githubusercontent.com/osrn/core2_tbw/develop/install.sh) SUDO_USER
+cd && bash <(curl -s https://raw.githubusercontent.com/osrn/core2_tbw/master/install.sh) SUDO_USER
 ```
 
 Next, clone the [sample config](./core/config/config.sample), then modify as explained in [Configuration & Usage](#configuration--usage)
@@ -191,6 +191,11 @@ This will get you to the main menu script.
 <br>
 
 ## CHANGELOG
+
+### 2.6.7 [osrn](https://github.com/osrn)
+- changes in installer and tbw.sh for detecting pm2 executable. Compatible with solar 3.2.0-next.2.
+- installer now offers to backup config if reinstalling over existing package. installer stops if backup fails.
+
 
 ### 2.6.6 [osrn](https://github.com/osrn)
 - doc: README-FIRST merged to README with updated install & config info 

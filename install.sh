@@ -4,7 +4,7 @@ APPNAME="core2_tbw"
 APPHOME="$HOME/$APPNAME"
 VENV="$APPHOME/.venv"
 GITREPO="https://github.com/$AUTHOR/$APPNAME.git"
-GITBRANCH="develop"
+GITBRANCH="master"
 
 # Regular Colors
 CBlack='\033[0;30m'  # Black
