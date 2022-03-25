@@ -48,7 +48,7 @@ clear
 echo
 echo installing system dependencies
 echo ==============================
-echo -e "${CRed}You will be asked for the SUDOER's password twice; first time for su, and second time for sudo in su environment${NC}"
+echo -e "${CYellow}Notice that you will be asked for the SUDOER's password twice; first time for su, second time for sudo in su environment${NC}"
 echo Please enter the password for $SUDO_USER
 su - $SUDO_USER -c "echo Please enter the password for $SUDO_USER again
 sudo -S echo 'installing...'
@@ -67,7 +67,7 @@ fi
 
 version=$(python3 -c "import sys; print(''.join(map(str, sys.version_info[:2])))")
 if [[ "$version" -lt 36 ]]; then
-    echo "Error: Python 3.6 minimum version is required"
+    echo -e "${CRed}Error: Python 3.6 minimum version is required${NC}"
     exit 1
 fi
 echo installing latest pip and venv for user
@@ -85,6 +85,7 @@ if [ -d $APPHOME ]; then
     read -p "$(echo -e "${CRed}existing installation found, shall I wipe it? [y/N]>${NC}") " r
     case $r in
     y|Y)
+        # check if pm2 available
         reqd_cmd="pm2"
         if ! cmd_exists $reqd_cmd ; then
             echo -e "${CYellow}Warning: $reqd_cmd command or alias not found!${NC}"
@@ -114,6 +115,29 @@ if [ -d $APPHOME ]; then
         pm2 delete tbw 
         pm2 delete pay 
         pm2 delete custom
+
+        # make a config backup if one exists
+        read -p "$(echo -e "${CYellow}do you want to backup your config? [y/N]>${NC}") " rr
+        case $rr in
+        y|Y)
+            bupsrc="$APPHOME/core/config/config"
+            if [ -f "$bupsrc" ]; then
+                buptgt="$HOME/tbw-config-"$(date +"%s")
+                if cp $bupsrc $buptgt ; then
+                    echo -e "${CBlue}backup created as $buptgt ${NC}"
+                else
+                    read -p "$(echo -e "${CRed}could not backup your config. continue? [y/N]>${NC}") " rrr
+                    case $rrr in
+                    y|Y) ;;
+                    *) exit 1;;
+                    esac
+                fi
+            else
+                echo -e "${CBlue}no config file to backup! ${NC}"
+            fi
+            ;;
+        *) echo -e "${CBlue}will not backup any existing config!${NC}";;
+        esac
         echo 'removing package...'
         rm -rf $APPHOME
         ;;
