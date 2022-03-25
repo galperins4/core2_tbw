@@ -221,7 +221,7 @@ echo 'All config parameters are explained in README.md'
 echo 
 echo 'Next do;' 
 echo -e ${CBlue}'  cd '$APPHOME 
-echo '  bash tbw.bash'
+echo '  bash tbw.sh'
 echo '  Select menu option [0] for first time initialization'
 echo '  Then, select the menu options for [Start TBW Only], [Start Pay Only] and [Start Pool Only] '
 echo '  to start and register the processes with pm2'

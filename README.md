@@ -10,7 +10,7 @@ cd && bash <(curl -s https://raw.githubusercontent.com/osrn/core2_tbw/master/ins
 
 Next, clone the [sample config](./core/config/config.sample), then modify as explained in [Configuration & Usage](#configuration--usage)
 ```bash
-cd ~/core2_tbw && cp core/config/config.example core/config/config
+cd ~/core2_tbw && cp core/config/config.sample core/config/config
 ```
 ---
 <br>
@@ -63,7 +63,7 @@ pm2 logs twb|pay|pool
 After installation completed, you need to clone the [sample config](./core/config/config.sample) modify according to [Available Configuration Options](#available-configuration-options)
 
 ```bash
-cd ~/core2_tbw && cp core/config/config.example core/config/config
+cd ~/core2_tbw && cp core/config/config.sample core/config/config
 ```
 
 Main values to update here are the following:
