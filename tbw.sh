@@ -1,8 +1,8 @@
 #!/bin/bash
-# A menu driven shell script sample template 
-## ----------------------------------
+
+## -------------------------
 # Step #1: Define variables
-# ----------------------------------
+# --------------------------
 APPNAME="core2_tbw"
 APPHOME="$HOME/$APPNAME"
 VENV="$APPHOME/.venv"
@@ -18,9 +18,35 @@ CCyan='\033[0;36m'   # Cyan
 CWhite='\033[0;37m'  # White
 NC='\033[0m'         # Text Reset
 
-# ----------------------------------
+## ----------------
+# Preflight checks
+# -----------------
+cmd_exists () {
+    type -t "$1" > /dev/null 2>&1 ;
+}
+
+reqd_cmd="pm2"
+if ! cmd_exists $reqd_cmd ; then
+    echo -e "${CYellow}Warning: $reqd_cmd command or alias not found!${NC}"
+    echo "seeking possible locations..."
+
+    if [ -f "$HOME/.solarrc" ]; then
+        shopt -s expand_aliases
+        source $HOME/.solarrc
+    #elif
+        # other possible locations
+    fi
+
+    if ! cmd_exists $reqd_cmd ; then
+        echo -e "${CRed}Error: cannot continue without $reqd_cmd!${NC}"
+        exit 1
+    fi
+fi
+sleep 1
+
+# -------------------------------
 # Step #2: User defined function
-# ----------------------------------
+# -------------------------------
 cd $APPHOME
 
 pause(){
@@ -110,7 +136,7 @@ read_options(){
 # ----------------------------------------------
 trap '' SIGINT SIGQUIT SIGTSTP
  
-# -----------------------------------
+# ------------------------------------
 # Step #4: Main logic - infinite loop
 # ------------------------------------
 while true

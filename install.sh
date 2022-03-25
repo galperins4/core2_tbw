@@ -4,7 +4,7 @@ APPNAME="core2_tbw"
 APPHOME="$HOME/$APPNAME"
 VENV="$APPHOME/.venv"
 GITREPO="https://github.com/$AUTHOR/$APPNAME.git"
-GITBRANCH="master"
+GITBRANCH="develop"
 
 # Regular Colors
 CBlack='\033[0;30m'  # Black
@@ -37,6 +37,10 @@ if [ -z "$(id -Gn $SUDO_USER | grep sudo)" ]
     echo -e "${CRed}Error: $SUDO_USER must have sudo privilage${NC}"
     exit 1
 fi
+
+cmd_exists () {
+    type -t "$1" > /dev/null 2>&1 ;
+}
 
 clear
 
@@ -81,6 +85,25 @@ if [ -d $APPHOME ]; then
     read -p "$(echo -e "${CRed}existing installation found, shall I wipe it? [y/N]>${NC}") " r
     case $r in
     y|Y)
+        reqd_cmd="pm2"
+        if ! cmd_exists $reqd_cmd ; then
+            echo -e "${CYellow}Warning: $reqd_cmd command or alias not found!${NC}"
+            echo "seeking possible locations..."
+
+            if [ -f "$HOME/.solarrc" ]; then
+                shopt -s expand_aliases
+                source $HOME/.solarrc
+            #elif
+                # other possible locations
+            fi
+
+            if ! cmd_exists $reqd_cmd ; then
+                echo -e "${CRed}Error: cannot continue without $reqd_cmd!${NC}"
+                exit 1
+            fi
+        fi
+        sleep 1
+
         echo 'stopping jobs...'
         pm2 stop core 
         pm2 stop tbw
