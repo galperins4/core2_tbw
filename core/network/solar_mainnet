@@ -1,0 +1,13 @@
+# network
+EPOCH = "2022,03,28,18,00,00"
+VERSION = 63
+WIF = 252
+API_PORT = 6003
+DATABASE = "solar_mainnet"
+DATABASE_HOST= "${HOME}/.local/share/solar-core/mainnet/database"
+DATABASE_USER = "solar"
+DATABASE_PASSWORD = "password"
+DELEGATES = 53
+BLOCKTIME = 8
+COIN = "SXP"
+EXPLORER = "https://explorer.solar.org/"
