@@ -124,7 +124,10 @@ if [ -d $APPHOME ]; then
             if [ -f "$bupsrc" ]; then
                 buptgt="$HOME/tbw-config-"$(date +"%s")
                 if cp $bupsrc $buptgt ; then
-                    echo -e "${CBlue}backup created as $buptgt ${NC}"
+                    chmod 600 $buptgt
+                    echo -e "${CBlue}backup $buptgt created with user access only"
+                    ls -al $buptgt
+                    echo -e "${NC}"
                 else
                     read -p "$(echo -e "${CRed}could not backup your config. continue? [y/N]>${NC}") " rrr
                     case $rrr in

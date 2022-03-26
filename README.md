@@ -45,13 +45,15 @@ pm2 logs twb|pay|pool
 <br>
 
 ### C/ Overwrite An Existing Installation/Clean Start
-- Stop all pm2 TBW processes (`pm2 stop tbw pay pool`)
-- Delete all pm2 TBW process (`pm2 delete tbw pay pool`)
-- (Optional) delete logs (`cd ~/.pm2/logs; rm -rf tbw-* pay-* pool-*`)
-- Backup your config file (`cp ~/core2_tbw/core/config/config ~/tbw-config.backup`)
-- Remove core2_tbw folder
-- Follow the [A/ Clean Install](#a-clean-install) section above
-- Restore your config file
+Install script does all the following, except restoring the config
+
+- ~~Stop all pm2 TBW processes (`pm2 stop tbw pay pool`)~~
+- ~~Delete all pm2 TBW process (`pm2 delete tbw pay pool`)~~
+- ~~(Optional) delete logs (`cd ~/.pm2/logs; rm -rf tbw-* pay-* pool-*`)~~
+- ~~Backup your config file (`cp ~/core2_tbw/core/config/config ~/tbw-config.backup`)~~
+- ~~Remove core2_tbw folder~~
+- ~~Follow the [A/ Clean Install](#a-clean-install) section above~~
+- Restore config
 
 <br>
 
@@ -193,8 +195,8 @@ This will get you to the main menu script.
 ## CHANGELOG
 
 ### 2.6.7 [osrn](https://github.com/osrn)
-- changes in installer and tbw.sh for detecting pm2 executable. Compatible with solar 3.2.0-next.2.
-- installer now offers to backup config if reinstalling over existing package. installer stops if backup fails.
+- changes in installer and tbw.sh for detecting pm2 executable. Compatible with solar 3.2.0-next.2+.
+- installer now offers to backup the config if detects a reinstall and stops if backup fails.
 
 
 ### 2.6.6 [osrn](https://github.com/osrn)
