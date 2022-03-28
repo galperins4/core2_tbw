@@ -85,7 +85,7 @@ def index():
     votetotal   = int(dstats['data']['votes'])
     voter_data  = client.delegates.voters(data.delegate)
     for _data in voter_data['data']:
-        _sply = "{:.2f}".format(int(_data['balance'])*100/votetotal)
+        _sply = "{:.2f}".format(int(_data['balance'])*100/votetotal) if votetotal > 0 else "-"
         _addr = _data['address']
         voter_stats.append([_addr,ld[_addr][0], ld[_addr][1], _sply])
         pend_total += ld[_addr][0]
