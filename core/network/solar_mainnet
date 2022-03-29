@@ -6,3 +6,4 @@ API_PORT = 6003
 DATABASE = "solar_mainnet"
 DATABASE_USER = "null"
 DATABASE_PASSWORD = "password"
+DATABASE_HOST= "${HOME}/.local/share/solar-core/testnet/database/"

@@ -12,12 +12,12 @@ from pathlib import Path
 from subprocess import run
 
 
-def allocate(lb):    
+def allocate(lb):
     # create temp log / export output for block  rewards
     rewards_check = 0
     voter_check = 0
     delegate_check = 0
-    
+
     block_voters = get_voters()
 
     # get total votes
@@ -39,7 +39,7 @@ def allocate(lb):
         # assign  shares to log and rewards tracking
         keep_addr = data.pay_addresses[k]
         snekdb.updateDelegateBalance(keep_addr, keep)
-        
+
         # increment delegate_check for double check
         delegate_check += keep
 
@@ -109,7 +109,7 @@ def white_list(voters):
     for i in voters:
         if i[0] in  data.whitelist_addr:
             w_adjusted_voters.append((i[0], i[1]))
-            
+
     return w_adjusted_voters
 
 
@@ -122,18 +122,18 @@ def black_list(voters):
                 bl_adjusted_voters.append((i[0], 0))
             else:
                 bl_adjusted_voters.append((i[0], i[1]))
-    
+
     # block voters and keep in reserve account
     elif data.blacklist == "assign":
         bl_adjusted_voters = []
         accum = 0
-        
+
         for i in voters:
             if i[0] in data.blacklist_addr:
                 accum += i[1]
             else:
                 bl_adjusted_voters.append((i[0], i[1]))
-        
+
         bl_adjusted_voters.append((data.blacklist_assign, accum))
 
     else:
@@ -144,7 +144,7 @@ def black_list(voters):
 
 def voter_min(voters):
     min_wallet = int(data.vote_min * data.atomic)
-    
+
     if min_wallet > 0:
         min_adjusted_voters = []
         for i in voters:
@@ -154,7 +154,7 @@ def voter_min(voters):
                 min_adjusted_voters.append((i[0], i[1]))
     else:
         min_adjusted_voters = voters
-        
+
     return min_adjusted_voters
 
 
@@ -162,7 +162,7 @@ def voter_cap(voters):
 
     # cap processing
     max_wallet = int(data.vote_cap * data.atomic)
-    
+
     if max_wallet > 0:
         cap_adjusted_voters = []
         for i in voters:
@@ -170,7 +170,7 @@ def voter_cap(voters):
                 cap_adjusted_voters.append((i[0], max_wallet))
             else:
                 cap_adjusted_voters.append((i[0], i[1]))
-                
+
     else:
         cap_adjusted_voters = voters
 
@@ -181,20 +181,20 @@ def anti_dilute(voters):
     # get unpaid balances and wallets
     b_dilute = snekdb.voters().fetchall()
     undilute = []
-    
+
     if b_dilute:
-        
+
         unpaid = {}
         for i in b_dilute:
             unpaid[i[0]] = i[1]
-    
+
         for j in voters:
             adj = j[1] + unpaid[j[0]]
             undilute.append((j[0], adj))
-    
-    else: 
+
+    else:
         undilute = voters
-    
+
     return undilute
 
 
@@ -214,8 +214,8 @@ def get_voters():
             for j in c['data']:
                 initial_voters.append((j['address'], int(j['balance'])))
         start += 1
-    
-   
+
+
     if data.whitelist == 'Y':
         bl = white_list(initial_voters)
     else:
@@ -223,40 +223,40 @@ def get_voters():
         bl_adjust = black_list(initial_voters)
         bl_adjust_two = voter_cap(bl_adjust)
         bl = voter_min(bl_adjust_two)
-   
+
     snekdb.storeVoters(bl, data.voter_share)
-    
+
     # anti-dulition
     block_voters = anti_dilute(bl)
-    
+
     return block_voters
 
 
 def get_rewards():
-    
+
     rewards = []
     for k, v in data.pay_addresses.items():
         rewards.append(v)
-    
-    snekdb.storeRewards(rewards) 
+
+    snekdb.storeRewards(rewards)
 
 
 def del_address(addr):
     msg = "default"
-    
+
     for k, v in data.pay_addresses.items():
         if addr == v:
             msg = k
-    
+
     return msg
 
 
 def process_voter_pmt(min_amt):
-    # process voters 
+    # process voters
     voters = snekdb.voters().fetchall()
     for row in voters:
         if row[1] > min_amt:
-               
+
             msg = data.voter_msg
             # update staging records
             snekdb.storePayRun(row[0], row[1], msg)
@@ -266,15 +266,15 @@ def process_voter_pmt(min_amt):
 
 def process_delegate_pmt(fee, adjust):
     # process delegate first
-    delreward = snekdb.rewards().fetchall()        
+    delreward = snekdb.rewards().fetchall()
     for row in delreward:
         if row[0] == data.pay_addresses['reserve']:
-            
+
             # adjust reserve payment by factor to account for not all tx being paid due to tx fees or min payments
             del_pay_adjust = int(row[1]*adjust)
 
             net_pay = del_pay_adjust - fee
-            
+
             if net_pay <= 0:
                 snekdb.deleteStagedPayment()
                 print("Not enough in reserve to cover transactions")
@@ -283,10 +283,10 @@ def process_delegate_pmt(fee, adjust):
             else:
                 # update staging records
                 snekdb.storePayRun(row[0], net_pay, del_address(row[0]))
-            
+
                 # adjust sql balances
                 snekdb.updateDelegatePaidBalance(row[0], del_pay_adjust)
-                
+
         else:
             if row[1] > 0:
                 snekdb.storePayRun(row[0], row[1], del_address(row[0]))
@@ -298,15 +298,15 @@ def payout():
 
     # count number of transactions greater than payout threshold
     d_count = len([j for j in snekdb.rewards() if j[1] > 0])
-    
+
     # get total possible payouts before adjusting for accumulated payments
     t_count = len([i for i in snekdb.voters() if i[1] > 0])
     v_count = len([i for i in snekdb.voters() if i[1] > minamt])
     adj_factor = v_count / t_count
-                   
+
     if v_count > 0:
         print('Payout started!')
-        
+
         tx_count = v_count+d_count
         if data.multi =="Y":
             multi_limit = dynamic.get_multipay_limit()
@@ -314,16 +314,16 @@ def payout():
                 numtx = round(tx_count/multi_limit)
             else:
                 numtx = round(tx_count//multi_limit)+1
-            tx_fees = int(numtx * multi_transaction_fee)    
-            
+            tx_fees = int(numtx * multi_transaction_fee)
+
         else:
             numtx = tx_count
             tx_fees = int(numtx * dynamic.get_dynamic_fee())
-    
+
         # process delegate rewards
         process_delegate_pmt(tx_fees, adj_factor)
-        
-        # process voters 
+
+        # process voters
         process_voter_pmt(minamt)
 
 
@@ -335,12 +335,12 @@ def interval_check(bc):
         r = snekdb.voters()
         for row in r:
             total += row[1]
-                
+
         print("Total Voter Unpaid:", total)
-        
+
         if total > 0:
             return True
-        else: 
+        else:
             return False
 
 
@@ -349,29 +349,29 @@ def initialize():
     # initalize sqldb and arkdb connection object
     snekdb.setup()
     arkdb.open_connection()
-    
+
     # connect to DB and grab all blocks
     print("Importing all prior forged blocks...")
     all_blocks = arkdb.blocks("yes")
-        
+
     # store blocks
     print("Storing all historical blocks and marking as processed...")
     snekdb.storeBlocks(all_blocks)
-        
+
     # mark all blocks as processed
     snekdb.markAsProcessed(data.start_block, initial = "Y")
-    
+
     # set block count to rows imported
     b_count = len(all_blocks)
     p_count = block_counter()
-                
+
     print("Imported block count:", b_count)
     print("Processed block count:", p_count)
-    
+
     # initialize voters and delegate rewards accounts
     get_voters()
     get_rewards()
-    
+
     arkdb.close_connection()
     print("Initial Set Up Complete. Please re-run script!")
     quit()
@@ -407,7 +407,7 @@ def conversion_check():
         run(["rm", old_db])
         print("Converted old database to new naming format. Please restart script")
         quit()
-    
+
 if __name__ == '__main__':
 
     # get config data
@@ -419,25 +419,29 @@ if __name__ == '__main__':
     dynamic = Dynamic(data.database_user, data.voter_msg, data.network, network.api_port)
     transaction_fee = data.atomic*0.1
     multi_transaction_fee = data.atomic*data.multi_fee
-    
+
     # initialize db connection
     # get database
-    arkdb = ArkDB(network.database, data.database_user, network.database_password, data.public_key)
-    
+    arkdb = ArkDB(network.database,
+                  network.database_host,
+                  data.database_user,
+                  network.database_password,
+                  data.public_key)
+
     #conversion check for pre 2.3 databases
     conversion_check()
-    
+
     # check to see if db exists, if not initialize db, etc
     db = data.home + '/core2_tbw/'+data.network+'_'+data.delegate+'.db'
     if os.path.exists(db) is False:
         snekdb = SnekDB(data.database_user, data.network, data.delegate)
         initialize()
-    
+
     # check for new rewards accounts to initialize if any changed
     snekdb = SnekDB(data.database_user, data.network, data.delegate)
     get_rewards()
 
-    # set block count        
+    # set block count
     block_count = block_counter()
 
     # no arguments - run as normal
@@ -448,22 +452,22 @@ if __name__ == '__main__':
             # get last height imported
             l_height = snekdb.lastBlock().fetchall()
             blocks = arkdb.blocks(h=l_height[0][0])
-        
+
             # store blocks
             snekdb.storeBlocks(blocks)
 
             # check for unprocessed blocks
             unprocessed = snekdb.unprocessedBlocks().fetchall()
-          
+
             # query not empty means unprocessed blocks
             if unprocessed:
                 for b in unprocessed:
-                
+
                     # allocate
                     allocate(b)
                     # get new block count
                     block_count = block_counter()
-                
+
                     # increment count
                     print('\n')
                     print(f"Current block count : {block_count}")
@@ -474,7 +478,7 @@ if __name__ == '__main__':
 
                     print('\n' + 'Waiting for the next block....' + '\n')
                     # sleep 2 seconds between allocations
-                    time.sleep(10)
+                    time.sleep(5)
 
             arkdb.close_connection()
             # pause 30 seconds between runs
