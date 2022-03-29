@@ -1,35 +1,46 @@
 #!/bin/bash
-# A menu driven shell script sample template 
+shopt -s expand_aliases
+FILE=$HOME/.solarrc && test -f $FILE && source $FILE
+
+# A menu driven shell script sample template
 ## ----------------------------------
 # Step #1: Define variables
 # ----------------------------------
-
+required_packages=("python3-pip" "python3-dev" "python3-venv" "python3-wheel" "libudev-dev" "build-essential" "autoconf" "libtool" "pkgconf" "libpq-dev")
 # ----------------------------------
 # Step #2: User defined function
 # ----------------------------------
-pause(){
+pause() {
   read -p "Press [Enter] key to continue..." fackEnterKey
 }
 
-install_modules(){
-  sudo apt-get install python3-pip
-  sudo apt-get install python3-dev python3-venv python3-wheel
-  sudo apt-get install libudev-dev libusb-1.0.0-dev
-  sudo apt-get install build-essential
-  sudo apt-get install autoconf
-  sudo apt-get install libtool
-  sudo apt-get install pkgconf
-  sudo apt-get install libpq-dev
+install_modules() {
+  sudo -k
+  if sudo true; then
+    sudo apt-get install "${required_packages[@]}" -y
+  fi
+
+  dpkg -s "${required_packages[@]}" >/dev/null 2>&1 || missing_package # For Solar user which isn't in sudoers
+
+  pip3 install --upgrade pip
   pip3 install setuptools
   pip3 install wheel
   pip3 install -r requirements.txt
 }
 
+missing_package() {
+  echo -e "Run the following as root:\n
+apt-get install python3-pip python3-dev python3-venv python3-wheel libudev-dev build-essential autoconf libtool pkgconf libpq-dev -y\n
+Then run again bash tbw.sh"
+  pause
+  exit 1
+}
+
 install(){
         install_modules
-        pause 
+        pause
 }
- 
+
 initialize(){
   version=$(python3 -c "import sys; print(''.join(map(str, sys.version_info[:2])))")
 
@@ -89,7 +100,7 @@ stop(){
 # function to display menus
 show_menus() {
 	clear
-	echo "~~~~~~~~~~~~~~~~~~~~~"	
+	echo "~~~~~~~~~~~~~~~~~~~~~"
 	echo " M A I N - M E N U"
 	echo "~~~~~~~~~~~~~~~~~~~~~"
 	echo "1. Install"
@@ -118,18 +129,18 @@ read_options(){
 		*) echo -e "${RED}Error...${STD}" && sleep 2
 	esac
 }
- 
+
 # ----------------------------------------------
 # Step #3: Trap CTRL+C, CTRL+Z and quit singles
 # ----------------------------------------------
 trap '' SIGINT SIGQUIT SIGTSTP
- 
+
 # -----------------------------------
 # Step #4: Main logic - infinite loop
 # ------------------------------------
 while true
 do
- 
+
 	show_menus
 	read_options
 done
