@@ -11,6 +11,8 @@ cd && bash <(curl -s https://raw.githubusercontent.com/osrn/core2_tbw/master/ins
 Next, clone the [sample config](./core/config/config.sample), then modify as explained in [Configuration & Usage](#configuration--usage)
 ```bash
 cd ~/core2_tbw && cp core/config/config.sample core/config/config
+
+Next, move on to [configuration](#configuration--usage)
 ```
 ---
 <br>
@@ -22,30 +24,24 @@ cd ~/core2_tbw
 git pull
 ```
 
-#### update the python-client package as required for v2.6.5
-```bash
-cd ~/core2_tbw
-. .venv/bin/activate
-pip3 uninstall arkecosystem-client
-pip3 install git+https://github.com/osrn/python-client.git@master#egg=solar-client
-deactivate
-```
+#### update python libraries
+see [changelog](#changelog), if needed
 
 #### check config
-and revize as necessary
+see [changelog](#changelog), if needed
 
 #### Restart the processes
 ```bash
 pm2 restart tbw
 pm2 restart pay
 pm2 restart pool
-pm2 logs twb|pay|pool
+pm2 logs /"(tbw|pay|pool)"/
 ```
 ---
 <br>
 
 ### C/ Overwrite An Existing Installation/Clean Start
-Install script does all the following, except restoring the config
+Assuming you opted to wipe the existing installation when the install script asks, it will already care for the following. Just restore your config afterwards (make sure start block is correct to avoid double payment for previous blocks), and move on to [initialization](#2-initialize)
 
 - ~~Stop all pm2 TBW processes (`pm2 stop tbw pay pool`)~~
 - ~~Delete all pm2 TBW process (`pm2 delete tbw pay pool`)~~
@@ -53,7 +49,6 @@ Install script does all the following, except restoring the config
 - ~~Backup your config file (`cp ~/core2_tbw/core/config/config ~/tbw-config.backup`)~~
 - ~~Remove core2_tbw folder~~
 - ~~Follow the [A/ Clean Install](#a-clean-install) section above~~
-- Restore config
 
 <br>
 
@@ -126,7 +121,7 @@ This will get you to the main menu script.
 | Config Option | Default Setting | Description | 
 | :--- | :---: | :--- |
 | START_BLOCK | 0 | Script will start calculations only for blocks after specified start block |
-| NETWORK | network | ark_mainnet or persona_mainnet or qredit_mainnet etc.. |
+| NETWORK | network | ark_mainnet or persona_mainnet or qredit_mainnet or solar_mainnet etc.. |
 | DATABASE_USER | dbname | This is the postgresql database username nodeDB (usually your os username) |
 | DELEGATE | delegate | Delegate name |
 | PUBLIC_KEY | publicKey | Delegate public key |
@@ -194,6 +189,20 @@ This will get you to the main menu script.
 
 ## CHANGELOG
 
+### 2.7.2 [osrn](https://github.com/osrn)
+- fix: alias expansion needs to be performed earlier in install script
+- fix: dotenv cannot expand variables after quotes in config.sample
+
+
+### 2.7.1 [osrn](https://github.com/osrn)
+- fix: div/0 when votesum is 0
+
+
+### 2.7.0 [osrn](https://github.com/osrn)
+- Solar Mainnet added to networks
+- fix: dotenv cannot expand variables after quotes in config.sample
+
+
 ### 2.6.7 [osrn](https://github.com/osrn)
 - changes in installer and tbw.sh for detecting pm2 executable. Compatible with solar 3.2.0-next.2+.
 - installer now offers to backup the config if detects a reinstall and stops if backup fails.
@@ -205,10 +214,18 @@ This will get you to the main menu script.
 
 ### 2.6.5 [osrn](https://github.com/osrn)
 - fix: read blocks in correct order when calculating productivity
-- requires updated python-client[^1] to utilize orderBy parameter when fetching blocks from API<br>
-[How to update python-client](#update-the-python-client-package-as-required-for-v265)
+- requires a modified python-client[^1] to utilize orderBy parameter when fetching blocks from API<br>
 
-[^1]: using forked osrn repo until pull request is approved by solar-network/python-client. 
+If updating from an earlier version, execute the following after git pull:
+```bash
+cd ~/core2_tbw
+. .venv/bin/activate
+pip3 uninstall arkecosystem-client
+pip3 install git+https://github.com/osrn/python-client.git@master#egg=solar-client
+deactivate
+```
+
+[^1]: using forked repo until pull request is approved at solar-network/python-client. 
 
 
 ### 2.6.4 [osrn](https://github.com/osrn)
@@ -276,8 +293,3 @@ If you discover a security vulnerability within this package, please open an iss
 ## LICENSE
 
 [MIT](LICENSE) © [galperins4](https://github.com/galperins4)
-
-
-
-
-

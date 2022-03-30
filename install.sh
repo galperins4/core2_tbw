@@ -77,6 +77,24 @@ python3 -m pip install --user virtualenv
 echo done.
 
 
+reqd_cmd="pm2"
+if ! cmd_exists $reqd_cmd ; then
+    echo -e "${CYellow}Warning: $reqd_cmd command or alias not found!${NC}"
+    echo "seeking possible locations..."
+
+    if [ -f "$HOME/.solarrc" ]; then
+        shopt -s expand_aliases
+        source $HOME/.solarrc
+    #elif
+        # other possible locations
+    fi
+
+    if ! cmd_exists $reqd_cmd ; then
+        echo -e "${CYellow}$reqd_cmd not found but I can live without it.${NC}"
+    fi
+fi
+sleep 1
+
 echo
 echo downloading package from git repo
 echo =================================
@@ -85,36 +103,14 @@ if [ -d $APPHOME ]; then
     read -p "$(echo -e "${CRed}existing installation found, shall I wipe it? [y/N]>${NC}") " r
     case $r in
     y|Y)
-        # check if pm2 available
-        reqd_cmd="pm2"
-        if ! cmd_exists $reqd_cmd ; then
-            echo -e "${CYellow}Warning: $reqd_cmd command or alias not found!${NC}"
-            echo "seeking possible locations..."
-
-            if [ -f "$HOME/.solarrc" ]; then
-                shopt -s expand_aliases
-                source $HOME/.solarrc
-            #elif
-                # other possible locations
-            fi
-
-            if ! cmd_exists $reqd_cmd ; then
-                echo -e "${CRed}Error: cannot continue without $reqd_cmd!${NC}"
-                exit 1
-            fi
-        fi
-        sleep 1
-
         echo 'stopping jobs...'
-        pm2 stop core 
         pm2 stop tbw
         pm2 stop pay
-        pm2 stop custom
-        echo 'unregistering jobs with pm2...'
-        pm2 delete core 
-        pm2 delete tbw 
-        pm2 delete pay 
-        pm2 delete custom
+        pm2 stop pool
+        #echo 'unregistering jobs with pm2...'
+        #pm2 delete tbw 
+        #pm2 delete pay 
+        #pm2 delete pool 
 
         # make a config backup if one exists
         read -p "$(echo -e "${CYellow}do you want to backup your config? [y/N]>${NC}") " rr

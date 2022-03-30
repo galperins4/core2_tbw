@@ -2,13 +2,13 @@
 *.db
 
 # Config
-core/config/config
+core/config/config*
+!core/config/config.py
+!core/config/config.sample
 
 # Dev environment
 *.code-workspace
-core/util/__pycache__/
-core/network/__pycache__/
-core/config/__pycache__/
+__pycache__/
 
 # Virtual environment
 .venv

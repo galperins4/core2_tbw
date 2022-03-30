@@ -40,7 +40,7 @@ PROVIDER = "provider, provider"
 POOL_IP = "xx.xx.xx.xx"
 # If EXPLORER not exists or empty (''), falls back to definition in core/network/network_definition
 EXPLORER = "http://explorer.xx/" 
-PROPOSAL = "https://xx.xx.xx/"${DELEGATE}
+PROPOSAL = "https://xx.xx.xx/"
 POOL_PORT = 5000
 CUSTOM_PORT = 5004
 POOL_VERSION = "geops"
