@@ -18,11 +18,25 @@ CCyan='\033[0;36m'   # Cyan
 CWhite='\033[0;37m'  # White
 NC='\033[0m'         # Text Reset
 
+
 ## ----------------
 # Preflight checks
 # -----------------
 cmd_exists () {
     type -t "$1" > /dev/null 2>&1 ;
+    
+install_modules(){
+  sudo apt-get install python3-pip
+  sudo apt-get install python3-dev python3-venv python3-wheel
+  sudo apt-get install libudev-dev libusb-1.0.0-dev
+  sudo apt-get install build-essential
+  sudo apt-get install autoconf
+  sudo apt-get install libtool
+  sudo apt-get install pkgconf
+  sudo apt-get install libpq-dev
+  pip3 install setuptools
+  pip3 install wheel
+  pip3 install -r requirements.txt
 }
 
 reqd_cmd="pm2"
