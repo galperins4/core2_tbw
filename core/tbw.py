@@ -11,6 +11,8 @@ from util.util import Util
 from pathlib import Path
 from subprocess import run
 
+__version__     = '2.7.2'
+__version_info__= tuple([ num for num in __version__.split('.')])
 
 def allocate(lb):    
     # create temp log / export output for block  rewards
@@ -422,7 +424,11 @@ if __name__ == '__main__':
     
     # initialize db connection
     # get database
-    arkdb = ArkDB(network.database, data.database_user, network.database_password, data.public_key)
+    arkdb = ArkDB(network.database,
+                  network.database_host,
+                  data.database_user,
+                  network.database_password,
+                  data.public_key)
     
     #conversion check for pre 2.3 databases
     conversion_check()
@@ -474,7 +480,7 @@ if __name__ == '__main__':
 
                     print('\n' + 'Waiting for the next block....' + '\n')
                     # sleep 2 seconds between allocations
-                    time.sleep(10)
+                    time.sleep(5)
 
             arkdb.close_connection()
             # pause 30 seconds between runs

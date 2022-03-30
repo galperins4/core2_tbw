@@ -1,16 +1,30 @@
 #!/bin/bash
-# A menu driven shell script sample template 
-## ----------------------------------
+
+## -------------------------
 # Step #1: Define variables
-# ----------------------------------
+# --------------------------
+APPNAME="core2_tbw"
+APPHOME="$HOME/$APPNAME"
+VENV="$APPHOME/.venv"
 
-# ----------------------------------
-# Step #2: User defined function
-# ----------------------------------
-pause(){
-  read -p "Press [Enter] key to continue..." fackEnterKey
-}
+# Regular Colors
+CBlack='\033[0;30m'  # Black
+CRed='\033[0;31m'    # Red
+CGreen='\033[0;32m'  # Green
+CYellow='\033[0;33m' # Yellow
+CBlue='\033[0;34m'   # Blue
+CPurple='\033[0;35m' # Purple
+CCyan='\033[0;36m'   # Cyan
+CWhite='\033[0;37m'  # White
+NC='\033[0m'         # Text Reset
 
+
+## ----------------
+# Preflight checks
+# -----------------
+cmd_exists () {
+    type -t "$1" > /dev/null 2>&1 ;
+    
 install_modules(){
   sudo apt-get install python3-pip
   sudo apt-get install python3-dev python3-venv python3-wheel
@@ -25,98 +39,110 @@ install_modules(){
   pip3 install -r requirements.txt
 }
 
-install(){
-        install_modules
-        pause 
+reqd_cmd="pm2"
+if ! cmd_exists $reqd_cmd ; then
+    echo -e "${CYellow}Warning: $reqd_cmd command or alias not found!${NC}"
+    echo "seeking possible locations..."
+
+    if [ -f "$HOME/.solarrc" ]; then
+        shopt -s expand_aliases
+        source $HOME/.solarrc
+    #elif
+        # other possible locations
+    fi
+
+    if ! cmd_exists $reqd_cmd ; then
+        echo -e "${CRed}Error: cannot continue without $reqd_cmd!${NC}"
+        exit 1
+    fi
+fi
+sleep 1
+
+# -------------------------------
+# Step #2: User defined function
+# -------------------------------
+cd $APPHOME
+
+pause(){
+  read -p "Press [Enter] key to continue..." fackEnterKey
 }
  
 initialize(){
-  version=$(python3 -c "import sys; print(''.join(map(str, sys.version_info[:2])))")
+    . .venv/bin/activate
+    version=$(python3 -c "import sys; print(''.join(map(str, sys.version_info[:2])))")
 
-  if [[ "$version" -lt 36 ]]; then
-    echo "Python 3.6 minimum version is required"
-    exit 1
-  fi
+    if [[ "$version" -lt 36 ]]; then
+        echo "Python 3.6 minimum version is required"
+        exit 1
+    fi
 
-        cd core
-	python3 tbw.py
-	cd ..
-        pause
+    cd core
+    python3 tbw.py
+    cd ..
+    deactivate
+    pause
 }
 
 all(){
-	cd core
-	pm2 start apps.json
-	cd ..
-	pause
+    pm2 start apps.json
+    pause
 }
 
 tbw(){
-        cd core
-	pm2 start apps.json --only tbw
-	cd ..
-        pause
+    pm2 start apps.json --only tbw
+    pause
 }
 
 pay(){
-	cd core
-	pm2 start apps.json --only pay
-	cd ..
-        pause
+    pm2 start apps.json --only pay
+    pause
 }
 
 custom(){
-	cd core
-	pm2 start apps.json --only custom
-	cd ..
-        pause
+    pm2 start apps.json --only custom
+    pause
 }
 
 pool(){
-	cd core
-	pm2 start apps.json --only pool
-	cd ..
-        pause
+    pm2 start apps.json --only pool
+    pause
 }
 
 stop(){
-	cd core
-	pm2 stop apps.json
-	cd  ..
-	pause
+    pm2 stop apps.json
+    pause
 }
 
 # function to display menus
 show_menus() {
-	clear
-	echo "~~~~~~~~~~~~~~~~~~~~~"	
-	echo " M A I N - M E N U"
-	echo "~~~~~~~~~~~~~~~~~~~~~"
-	echo "1. Install"
-	echo "2. Initialize"
-        echo "3. Start All"
-        echo "4. Start TBW Only"
-	echo "5. Start Pay Only"
-	echo "6. Start Custom Only"
-	echo "7. Start Pool Only"
-	echo "8. Stop All"
-	echo "9. Exit"
+    clear
+    echo "~~~~~~~~~~~~~~~~~~~~~"	
+    echo " M A I N - M E N U"
+    echo "~~~~~~~~~~~~~~~~~~~~~"
+    echo -e "${CRed}0. Initialize${NC}"
+    echo "1. Start All"
+    echo "2. Start TBW Only"
+    echo "3. Start Pay Only"
+    echo "4. Start Custom Only"
+    echo "5. Start Pool Only"
+    echo -e "${CRed}8. Stop All${NC}"
+    echo -e "${CBlue}9. Exit${NC}"
 }
+
 read_options(){
-	local choice
-	read -p "Enter choice [ 1 - 9] " choice
-	case $choice in
-		1) install ;;
-		2) initialize ;;
-                3) all ;;
-                4) tbw ;;
-		5) pay ;;
-		6) custom ;;
-		7) pool ;;
-		8) stop ;;
-                9) exit 0;;
-		*) echo -e "${RED}Error...${STD}" && sleep 2
-	esac
+    local choice
+    read -p "Enter choice [0 - 9] " choice
+    case $choice in
+        0) initialize ;;
+        1) all ;;
+        2) tbw ;;
+        3) pay ;;
+        4) custom ;;
+        5) pool ;;
+        8) stop ;;
+        9) exit 0;;
+        *) echo -e "${RED}Error...${STD}" && sleep 2
+    esac
 }
  
 # ----------------------------------------------
@@ -124,12 +150,11 @@ read_options(){
 # ----------------------------------------------
 trap '' SIGINT SIGQUIT SIGTSTP
  
-# -----------------------------------
+# ------------------------------------
 # Step #4: Main logic - infinite loop
 # ------------------------------------
 while true
 do
- 
-	show_menus
-	read_options
+    show_menus
+    read_options
 done

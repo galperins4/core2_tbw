@@ -1,8 +1,9 @@
 import psycopg2
 
 class ArkDB:
-    def __init__(self, db, u, pw, pk):
+    def __init__(self, db, dbh, u, pw, pk):
         self.db=db
+        self.host=dbh
         self.user=u
         self.password=pw
         self.PublicKey=pk
@@ -13,7 +14,7 @@ class ArkDB:
             dbname = self.db,
             user = self.user,
             password= self.password,
-            host='localhost',
+            host=self.host,
             port='5432')
             
         self.cursor=self.connection.cursor()
