@@ -38,15 +38,6 @@ class ArkDB:
             except Exception as e:
                 print(e)
 
-        # interval check to audit webhook for missing blocks
-        elif i == 'interval':
-            try:
-                self.cursor.execute(f"""SELECT "id","timestamp","reward","total_fee",
-                "height" FROM blocks WHERE "generator_public_key" = '{self.PublicKey}' ORDER BY "height" DESC LIMIT {val}""")
-                return self.cursor.fetchall()
-            except Exception as e:
-                print(e)
-
         #else just grab last x for normal processing
         else:
             try:
