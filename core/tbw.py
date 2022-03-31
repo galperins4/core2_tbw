@@ -26,6 +26,14 @@ def allocate(lb):
     # get block reward
     block_reward = lb[2]
     fee_reward = lb[3]
+
+    # change fee reward if fee is partially burnt
+    try:
+        burnPercentage = int(client.node.configuration()['data']['constants']['burnPercentage'])
+        fee_reward = int(fee_reward - fee_reward * burnPercentage / 100)
+    except:
+        fee_reward = fee_reward
+
     total_reward = block_reward+fee_reward
 
     # calculate delegate/reserve/other shares
