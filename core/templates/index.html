@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
   <meta name="description" content="">
   <title>Home</title>
-
+  
   <link rel="stylesheet" href="{{ url_for('static', filename='css/mobirise-icons.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/tether.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
@@ -17,39 +17,13 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/dropdown-style.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/data-tables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/theme-style.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/mbr-additional.css') }}">
-
-  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-
-  <!-- Adding a favicon icon to Flask app -->
-  <!-- SEE: https://favicon.io/favicon-converter/-->
-  <!--
-  <link rel="shortcut icon"
-        href="{{ url_for('static', filename='favicon.ico') }}">
-
-  <link rel="apple-touch-icon"
-        sizes="180x180"
-        href="{{ url_for('static', filename='apple-touch-icon.png') }}">
-
-  <link rel="icon"
-        type="image/png"
-        sizes="180x180"
-        href="{{ url_for('static', filename='favicon-32x32.png') }}">
-
-  <link rel="icon"
-        type="image/png"
-        sizes="16x16"
-        href="{{ url_for('static', filename='favicon-16x16.png') }}">
-
-  <link rel="manifest"
-        href="site.webmanifest">
-  -->
-
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/mbr-additional.css') }}">  
+  
 </head>
 <body>
   <section class="menu cid-qLo4vYYBDU" once="menu" id="menu1-0">
 
-
+    
 
     <nav class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +36,7 @@
         </button>
         <div class="menu-logo">
             <div class="navbar-brand">
-
+                
                 <span class="navbar-caption-wrap"><a class="navbar-caption text-white display-4" href={{n['proposal']}}>
                         {{n['dname']}} pool</a></span>
             </div>
@@ -73,7 +47,7 @@
                 </li><li class="nav-item">
                     <a class="text-white display-4" href="payments">Payments</a>
                 </li></ul>
-
+            
         </div>
     </nav>
 </section>
@@ -81,8 +55,8 @@
 <section class="engine"><a href="https://mobirise.ws/k">develop your own website</a></section><section class="tabs3 cid-qLobJCLwFO" id="tabs3-i">
 
     <div class="container">
-
-
+        
+        
     </div>
     <div class="container-fluid">
         <div class="row tabcont">
@@ -91,9 +65,9 @@
                         Delegate</a></li>
                 <li class="nav-item mbr-fonts-style"><a class="nav-link  active show display-7" role="tab" data-toggle="tab" href="#tabs3-i_tab1" aria-selected="true">Node Stats</a></li>
                 <li class="nav-item mbr-fonts-style"><a class="nav-link active show display-7" role="tab" data-toggle="tab" href="#tabs3-i_tab2" aria-selected="true">Blockchain</a></li>
-
-
-
+                
+                
+                
             </ul>
         </div>
     </div>
@@ -104,7 +78,7 @@
                 <div id="tab1" class="tab-pane in active mbr-table" role="tabpanel">
                     <div class="row tab-content-row">
                         <div class="col-xs-12 col-md-6">
-
+                            
                             <h4 class="mbr-element-title  align-center mbr-fonts-style pb-2 display-5">
                                 Rank</h4>
                             <p class="mbr-section-text  align-center mbr-fonts-style display-7">
@@ -112,44 +86,44 @@
                         </div>
 
                         <div class="col-xs-12 col-md-6">
-
+                            
                             <h4 class="mbr-element-title  align-center mbr-fonts-style pb-2 display-5">
                                 Voters</h4>
                             <p class="mbr-section-text  align-center mbr-fonts-style display-7">
-                                {{node['voters']}}</p>
+                                {{node['votes']}}</p>
                         </div>
 
+                        
 
-
-
+                        
                     </div>
                 </div>
 
                 <div id="tab2" class="tab-pane  mbr-table" role="tabpanel">
                     <div class="row tab-content-row">
                         <div class="col-xs-12 col-md-6">
-
+                            
                             <h4 class="mbr-element-title  align-center mbr-fonts-style pb-2 display-5">Status</h4>
                             <p class="mbr-section-text  align-center mbr-fonts-style display-7">{{node['forging']}}</p>
                         </div>
 
                         <div class="col-xs-12 col-md-6">
-
+                            
                             <h4 class="mbr-element-title  align-center mbr-fonts-style pb-2 display-5">
                                 Productivity</h4>
                             <p class="mbr-section-text  align-center mbr-fonts-style display-7">{{node['productivity']}}</p>
                         </div>
 
+                        
 
-
-
+                        
                     </div>
                 </div>
 
                 <div id="tab3" class="tab-pane  mbr-table" role="tabpanel">
                     <div class="row tab-content-row">
                         <div class="col-xs-12 col-md-6">
-
+                            
                             <h4 class="mbr-element-title  align-center mbr-fonts-style pb-2 display-5">
                                 Mined Blocks</h4>
                             <p class="mbr-section-text  align-center mbr-fonts-style display-7">
@@ -157,7 +131,7 @@
                         </div>
 
                         <div class="col-xs-12 col-md-6">
-
+                            
                             <h4 class="mbr-element-title  align-center mbr-fonts-style pb-2 display-5">
                                 Missed Blocks</h4>
                             <p class="mbr-section-text  align-center mbr-fonts-style display-7">
@@ -172,11 +146,11 @@
 
 <section class="section-table cid-qLo6FpEke4" id="table1-1">
 
-
-
+  
+  
   <div class="container container-table">
       <h2 class="mbr-section-title mbr-fonts-style align-center pb-3 display-2">Wallet Balances</h2>
-
+      
       <div class="table-wrapper">
         <div class="container">
           <div class="row search">
@@ -194,10 +168,10 @@
           <table class="table isSearch" cellspacing="0">
             <thead>
               <tr class="table-heads ">
-
-
-
-
+                  
+                  
+                  
+                  
               <th class="head-item mbr-fonts-style display-7">
                       Address</th><th class="head-item mbr-fonts-style display-7">
                       Pending ({{n['coin']}})</th><th class="head-item mbr-fonts-style display-7">
@@ -205,8 +179,8 @@
             </thead>
 
             <tbody>
-            {% for r in row %}
-				<tr>
+            {% for r in row %} 
+				<tr> 
 					<td class="body-item mbr-fonts-style display-7"><a href="{{ n['explorer'] }}wallets/{{ r[0] }}">{{ r[0] }}</a></td>
 					<td class="body-item mbr-fonts-style display-7">{{ r[1]/100000000 }}</td>
 					<td class="body-item mbr-fonts-style display-7">{{ r[2]/100000000 }}</td>
@@ -243,7 +217,7 @@
   <script src="{{url_for('static', filename='js/jquery.data-tables.min.js')}}"></script>
   <script src="{{url_for('static', filename='js/data-tables.bootstrap4.min.js')}}"></script>
   <script src="{{url_for('static', filename='js/script.js')}}"></script>
-
-
+  
+  
 </body>
 </html>

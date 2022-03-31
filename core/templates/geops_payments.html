@@ -12,29 +12,6 @@
 
   <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
 
-  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-  <!--
-  <link rel="shortcut icon"
-        href="{{ url_for('static', filename='favicon.ico') }}">
-
-  <link rel="apple-touch-icon"
-        sizes="180x180"
-        href="{{ url_for('static', filename='apple-touch-icon.png') }}">
-
-  <link rel="icon"
-        type="image/png"
-        sizes="180x180"
-        href="{{ url_for('static', filename='favicon-32x32.png') }}">
-
-  <link rel="icon"
-        type="image/png"
-        sizes="16x16"
-        href="{{ url_for('static', filename='favicon-16x16.png') }}">
-
-  <link rel="manifest"
-        href="site.webmanifest">
-  -->
-
   <style>tbody td { font-size: 85%; }</style>
 
 </head>
@@ -49,7 +26,7 @@
               <a class="nav-link" href="payments">Payments</a>
             </nav>
 
-            <h1><center>delegate {{node['handle']}} Payment History</center></h1>
+             <h1><center>Payment History</center></h1>
 
             <input type="text" id="input" onkeyup="Filter()" placeholder="Search by Address...">
 
@@ -100,3 +77,4 @@ function Filter() {
 </body>
 
 </html>
+

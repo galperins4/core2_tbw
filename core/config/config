@@ -38,9 +38,9 @@ PROVIDER = "provider, provider"
 
 # pool
 POOL_IP = "xx.xx.xx.xx"
-# If EXPLORER not exists or empty (''), falls back to definition in core/network/network_definition
-EXPLORER = "http://explorer.xx/" 
+EXPLORER = "https://dexplorer.ark.io/"
+COIN = "DARK"
 PROPOSAL = "https://xx.xx.xx/"
 POOL_PORT = 5000
 CUSTOM_PORT = 5004
-POOL_VERSION = "geops"
+POOL_VERSION = "original"
