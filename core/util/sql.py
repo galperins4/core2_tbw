@@ -31,7 +31,7 @@ class SnekDB:
 
 
     def setup(self):
-        self.cursor.execute("CREATE TABLE IF NOT EXISTS blocks (id varchar(64), timestamp int, reward int, totalFee bigint, height int, processed_at varchar(64) null)")
+        self.cursor.execute("CREATE TABLE IF NOT EXISTS blocks (id varchar(64), timestamp int, reward int, totalFee bigint, height int, burnedFee bigint, processed_at varchar(64) null)")
 
         self.cursor.execute("CREATE TABLE IF NOT EXISTS voters (address varchar(36), u_balance bigint, p_balance bigint, share float )")
 
@@ -71,9 +71,9 @@ class SnekDB:
             self.cursor.execute("SELECT id FROM blocks WHERE id = ?", (block[0],))
 
             if self.cursor.fetchone() is None:
-                newBlocks.append((block[0], block[1], block[2], block[3], block[4], None))
+                newBlocks.append((block[0], block[1], block[2], block[3], block[4], block[5], None))
 
-        self.executemany("INSERT INTO blocks VALUES (?,?,?,?,?,?)", newBlocks)
+        self.executemany("INSERT INTO blocks VALUES (?,?,?,?,?,?,?)", newBlocks)
 
         self.commit()
 
