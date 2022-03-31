@@ -9,32 +9,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 
   <title>{{n['dname']}} Dashboard</title>
-
+  
   <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
 
-  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-  <!--
-  <link rel="shortcut icon"
-        href="{{ url_for('static', filename='favicon.ico') }}">
-
-  <link rel="apple-touch-icon"
-        sizes="180x180"
-        href="{{ url_for('static', filename='apple-touch-icon.png') }}">
-
-  <link rel="icon"
-        type="image/png"
-        sizes="180x180"
-        href="{{ url_for('static', filename='favicon-32x32.png') }}">
-
-  <link rel="icon"
-        type="image/png"
-        sizes="16x16"
-        href="{{ url_for('static', filename='favicon-16x16.png') }}">
-
-  <link rel="manifest"
-        href="site.webmanifest">
-  -->
 
 </head>
 
@@ -48,55 +25,21 @@
               <a class="nav-link" href="payments">Payments</a>
             </nav>
 
-            <h1><center>delegate <strong>{{node['handle']}}</strong> status</center></h1>
+            <h1><center>Delegate Status</center></h1>
 
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="alert alert-info" role="alert">Status: {{node['forging']}}</div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="alert alert-info" role="alert">Rank: {{node['rank']}}</div>
                 </div>
-                <div class="col-md-3">
-                    <div class="alert alert-info" role="alert">Voters: {{node['voters']}}</div>
-                </div>
-                <div class="col-md-3">
-                    <div class="alert alert-info" role="alert">Votes: {{node['votes']}} {{n['coin']}}</div>
+                <div class="col-md-4">
+                    <div class="alert alert-info" role="alert">Voters: {{node['votes']}}</div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="alert alert-info" role="alert"><a href="{{ n['explorer'] }}wallets/{{node['wallet']}}/blocks" target="_blank">Total forged:</a> {{node['forged']}}</div>
-                </div>
-                <!--
-                <div class="col-md-3">
-                    <div class="alert alert-info" role="alert">Rewards: {{node['rewards']}}</div>
-                </div>
-                -->
-                <div class="col-md-3">
-                    <!--<div class="alert alert-info" role="alert">Sync status: {{node['synced']}}/{{node['height']}}/{{node['behind']}}</div>-->
-                    <div class="alert alert-info" role="alert">Sync: {{node['synced']}} / {{node['height']}}</div>
-                </div>
-                <div class="col-md-3">
-                    <div class="alert alert-info" role="alert"><a href="{{ n['explorer'] }}blocks/{{node['lastforged_id']}}" target="_blank">Last forged:</a> {{node['lastforged_no']}}, {{node['lastforged_ago']}}&Prime; ago</div>
-                </div>
-                <div class="col-md-3">
-                    <div class="alert alert-info" role="alert">Yield<sup>(*)</sup>: {{node['yield']}}%</div>
-                </div>
-            </div>
-            <div class="text-right">
-                <small><i><sup>(*)</sup>Yield calculated over the last 100 rounds</i></small>
-            </div>
-            <!--
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="alert alert-info" role="alert">Height: {{node['height']}}</div>
-                </div>
-            </div>
-            -->
-
-            <h2><center>Pool Ledger</center></h2>
+            <h1><center>Pool Ledger</center></h1>
 
             <input type="text" id="input" onkeyup="Filter()" placeholder="Search by Address...">
 
@@ -106,25 +49,14 @@
                         <th>Address</th>
                         <th>Pending ({{n['coin']}})</th>
                         <th>Paid ({{n['coin']}})</th>
-                        <th>Supply (%)</th>
                 </thead>
                 <tbody>
                   {% for r in row %}
-                    {% if (loop.index == 1) %}
-                      <tr class="summaryrow">
-                          <td>{{ r[0] }}</a></td>
-                          <td class="pending">{{ r[1]/100000000 }}</td>
-                          <td class="paid">{{ r[2]/100000000 }}</td>
-                          <td>{{ r[3] }}%</td>
-                      </tr>
-                    {% else %}
-                      <tr>
-                          <td><a href="{{ n['explorer'] }}wallets/{{ r[0] }}" target="_blank">{{ r[0] }}</a></td>
-                          <td class="pending">{{ r[1]/100000000 }}</td>
-                          <td class="paid">{{ r[2]/100000000 }}</td>
-                          <td>{{ r[3] }}%</td>
-                      </tr>
-                    {% endif %}
+                    <tr>
+                        <td><a href="{{ n['explorer'] }}wallets/{{ r[0] }}" target="_blank">{{ r[0] }}</a></td>
+                        <td>{{ r[1]/100000000 }}</td>
+                        <td>{{ r[2]/100000000 }}</td>
+                    </tr>
                   {% endfor %}
                 </tbody>
             </table>
@@ -148,7 +80,7 @@ function Filter() {
       } else {
         tr[i].style.display = "none";
       }
-    }
+    } 
   }
 }
 </script>

@@ -1,0 +1,38 @@
+{
+    "apps": [{
+        "name": "tbw",
+        "script": "tbw.py",
+        "instances": 1,
+        "exec_mode": "fork",
+        "exec_interpreter": "python3",
+        "log_date_format": "YYYY-MM-DD HH:mm Z",
+	"interpreter_args": "-u"
+    },
+    {
+        "name": "pay",
+        "script": "pay.py",
+        "instances": 1,
+        "exec_mode": "fork",
+        "exec_interpreter": "python3",
+        "log_date_format": "YYYY-MM-DD HH:mm Z",
+	"interpreter_args": "-u"
+    },
+    {
+        "name": "pool",
+        "script": "pool.py",
+        "instances": 1,
+        "exec_mode": "fork",
+        "exec_interpreter": "python3",
+        "log_date_format": "YYYY-MM-DD HH:mm Z",
+	"interpreter_args": "-u"
+    },    
+	{
+        "name": "custom",
+        "script": "custom.py",
+        "instances": 1,
+        "exec_mode": "fork",
+        "exec_interpreter": "python3",
+        "log_date_format": "YYYY-MM-DD HH:mm Z",
+	"interpreter_args": "-u"
+    },]
+}

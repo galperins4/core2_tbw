@@ -1,18 +1,8 @@
 # Databases
 *.db
 
-# Config
-core/config/config*
-!core/config/config.py
-!core/config/config.sample
+# pycache files
+core/util/__pycache__/
+core/network/__pycache__/
+core/config/__pycache__/
 
-# Dev environment
-*.code-workspace
-__pycache__/
-
-# Virtual environment
-.venv
-/.venv/
-
-# OS Files
-.DS_Store
