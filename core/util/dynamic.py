@@ -30,7 +30,7 @@ class Dynamic:
     def get_dynamic_fee(self):        
         try:
             node_configs = self.client.node.configuration()['data']['transactionPool']['dynamicFees']
-            if node_configs['enabled'] is "False":
+            if node_configs['enabled'] == "False":
                 transaction_fee = int(0.1 * atomic)
             else:
                 dynamic_offset = node_configs['addonBytes']['transfer']
