@@ -1,7 +1,7 @@
 {
     "apps": [{
         "name": "tbw",
-        "version": "2.7.2",
+        "version": "2.7.3",
         "script": "core/tbw.py",
         "instances": 1,
         "exec_mode": "fork",

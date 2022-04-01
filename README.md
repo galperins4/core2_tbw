@@ -5,7 +5,7 @@
 ### A/ Clean Install
 Run the following in relay/forger user. Replace SUDO_USER with a username with sudo elevation (i.e. having sudo group)
 ```bash
-cd && bash <(curl -s https://raw.githubusercontent.com/osrn/core2_tbw/master/install.sh) SUDO_USER
+cd && bash <(curl -s https://raw.githubusercontent.com/galperins4/core2_tbw/master/install.sh) SUDO_USER
 ```
 
 Next, clone the [sample config](./core/config/config.sample), then modify as explained in [Configuration & Usage](#configuration--usage)
@@ -25,10 +25,12 @@ git pull
 ```
 
 #### update python libraries
-see [changelog](#changelog), if needed
+see [changelog](#changelog) if an update is required
+
 
 #### check config
-see [changelog](#changelog), if needed
+see [changelog](#changelog) if an update is required
+
 
 #### Restart the processes
 ```bash
@@ -38,10 +40,11 @@ pm2 restart pool
 pm2 logs /"(tbw|pay|pool)"/
 ```
 ---
+
 <br>
 
 ### C/ Overwrite An Existing Installation/Clean Start
-Assuming you opted to wipe the existing installation when the install script asks, it will already care for the following. Just restore your config afterwards (make sure start block is correct to avoid double payment for previous blocks), and move on to [initialization](#2-initialize)
+Assuming you opted to wipe the existing installation when the install script asks, it will already care for the following. Just; restore your config afterwards (make sure start block is correct to avoid double payment for previous blocks), and move on to [initialization](#2-initialize)
 
 - ~~Stop all pm2 TBW processes (`pm2 stop tbw pay pool`)~~
 - ~~Delete all pm2 TBW process (`pm2 delete tbw pay pool`)~~
@@ -60,7 +63,7 @@ Assuming you opted to wipe the existing installation when the install script ask
 After installation completed, you need to clone the [sample config](./core/config/config.sample) modify according to [Available Configuration Options](#available-configuration-options)
 
 ```bash
-cd ~/core2_tbw && cp core/config/config.sample core/config/config
+cd ~/core2_tbw && cp core/config/config.sample core/config/config && chmod 600 core/config/config
 ```
 
 Main values to update here are the following:
@@ -189,30 +192,34 @@ This will get you to the main menu script.
 
 ## CHANGELOG
 
-### 2.7.2 [osrn](https://github.com/osrn)
+### 2.7.3
+- fix: fee burn added to reward alloc calculation
+
+
+### 2.7.2
 - fix: alias expansion needs to be performed earlier in install script
 - fix: dotenv cannot expand variables after quotes in config.sample
 
 
-### 2.7.1 [osrn](https://github.com/osrn)
+### 2.7.1
 - fix: div/0 when votesum is 0
 
 
-### 2.7.0 [osrn](https://github.com/osrn)
+### 2.7.0
 - Solar Mainnet added to networks
 - fix: dotenv cannot expand variables after quotes in config.sample
 
 
-### 2.6.7 [osrn](https://github.com/osrn)
+### 2.6.7
 - changes in installer and tbw.sh for detecting pm2 executable. Compatible with solar 3.2.0-next.2+.
 - installer now offers to backup the config if detects a reinstall and stops if backup fails.
 
 
-### 2.6.6 [osrn](https://github.com/osrn)
+### 2.6.6
 - doc: README-FIRST merged to README with updated install & config info 
 
 
-### 2.6.5 [osrn](https://github.com/osrn)
+### 2.6.5
 - fix: read blocks in correct order when calculating productivity
 - requires a modified python-client[^1] to utilize orderBy parameter when fetching blocks from API<br>
 
@@ -228,7 +235,7 @@ deactivate
 [^1]: using forked repo until pull request is approved at solar-network/python-client. 
 
 
-### 2.6.4 [osrn](https://github.com/osrn)
+### 2.6.4
 - To keep solar a non-sudo user and simplify the installation, seperated core installation from tbw.sh into the standalone [install.sh](./install.sh) script.
 - install.sh now rewrites CPATH to prevent python package compilation errors (CPATH is restored back afterwards) 
 - tbw.sh is used for initialization and start-stop actions.
@@ -244,7 +251,7 @@ deactivate
 *(\*) compatibiliy with other chains preserved by keeping'localhost' as the default postgresql host which defaults to TCPIP connection.*
 
 
-### 2.6.3 [osrn](https://github.com/osrn)
+### 2.6.3
 Pool enhanced with more information retrieved through Solar API
 - Added relay sync status and height
 - Added delegate total votes
