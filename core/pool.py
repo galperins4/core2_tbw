@@ -128,6 +128,26 @@ def payments():
     else:
        return render_template('geops_payments.html', node=s, row=tx_data, n=navbar)
 
+'''
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    hook_data = json.loads(request.data)
+    authorization = request.headers['Authorization']
+    token = authorization+second
+
+    if token == webhookToken:
+        # do something with the data like store in database
+        block = [[hook_data['data']['id'], hook_data['data']['timestamp'], hook_data['data']['reward'],
+                 hook_data['data']['totalFee'], hook_data['data']['height']]]
+
+        # store block to get allocated by tbw
+        snekdb = SnekDB(data['dbusername'])
+        snekdb.storeBlocks(block)
+        return "OK"
+
+    # Token does not match
+    return '', status.HTTP_401_UNAUTHORIZED
+'''
 
 if __name__ == '__main__':
     data = Config()
