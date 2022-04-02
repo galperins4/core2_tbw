@@ -4,5 +4,5 @@ flask
 flask-API
 psycopg2
 lowercase-booleans
-arkecosystem-client
+git+https://github.com/osrn/python-client.git@master#egg=solar-client
 arkecosystem-crypto

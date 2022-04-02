@@ -3,6 +3,7 @@ import psycopg2
 class ArkDB:
     def __init__(self, db, dbh, u, pw, pk):
         self.db=db
+        self.host=dbh
         self.user=u
         self.password=pw
         self.PublicKey=pk

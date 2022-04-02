@@ -18,13 +18,15 @@ def get_round(height):
 
 
 def get_yield(netw_height):
-    dblocks = client.delegates.blocks(data.delegate)
-    drounds = dblocks['meta']['count'] #number of forged rounds, max 100
+    # get all forged blocks in reverse chronological order, first page, max 100 as default
+    dblocks = client.delegates.blocks(data.delegate, orderBy="height:desc") 
+    drounds = dblocks['meta']['count'] #number of forged blocks 
+    dstats = client.delegates.get(data.public_key)
 
     missed = 0
     forged = 0
     netw_round = get_round(netw_height)
-    last_forged_round = get_round(dblocks['data'][0]['height'])
+    last_forged_round = get_round(dstats['data']['blocks']['last']['height'])
 
     if netw_round > last_forged_round + 1:
         missed += netw_round - last_forged_round - 1
@@ -61,7 +63,7 @@ def index():
     #s['productivity'] = 100 # temp fix
     s['handle'] = dstats['data']['username']
     s['wallet'] = dstats['data']['address']
-    s['votes'] = "{:.2f}".format(int(dstats['data']['votes'])/100000000)
+    s['votes'] = "{:.2f}".format(int(dstats['data']['votes'])/data.atomic)
     s['rewards'] = dstats['data']['forged']['total']
     s['approval'] = dstats['data']['production']['approval']
     s['lastforged_no'] = dstats['data']['blocks']['last']['height']
@@ -83,7 +85,7 @@ def index():
     votetotal   = int(dstats['data']['votes'])
     voter_data  = client.delegates.voters(data.delegate)
     for _data in voter_data['data']:
-        _sply = "{:.2f}".format(int(_data['balance'])*100/votetotal)
+        _sply = "{:.2f}".format(int(_data['balance'])*100/votetotal) if votetotal > 0 else "-"
         _addr = _data['address']
         voter_stats.append([_addr,ld[_addr][0], ld[_addr][1], _sply])
         pend_total += ld[_addr][0]
@@ -126,26 +128,6 @@ def payments():
     else:
        return render_template('geops_payments.html', node=s, row=tx_data, n=navbar)
 
-'''
-@app.route('/webhook', methods=['POST'])
-def webhook():
-    hook_data = json.loads(request.data)
-    authorization = request.headers['Authorization']
-    token = authorization+second
-
-    if token == webhookToken:
-        # do something with the data like store in database
-        block = [[hook_data['data']['id'], hook_data['data']['timestamp'], hook_data['data']['reward'],
-                 hook_data['data']['totalFee'], hook_data['data']['height']]]
-
-        # store block to get allocated by tbw
-        snekdb = SnekDB(data['dbusername'])
-        snekdb.storeBlocks(block)
-        return "OK"
-
-    # Token does not match
-    return '', status.HTTP_401_UNAUTHORIZED
-'''
 
 if __name__ == '__main__':
     data = Config()
@@ -155,6 +137,7 @@ if __name__ == '__main__':
     navbar = {
        'dname': data.delegate,
        'proposal': data.proposal,
-       'explorer': data.explorer,
-       'coin': data.coin}
+       'explorer': network.explorer if ((data.explorer is None) or (data.explorer == '')) else data.explorer,
+       'coin': network.coin}
+
     app.run(host=data.pool_ip, port=data.pool_port)
