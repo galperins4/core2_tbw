@@ -5,7 +5,7 @@
 ### A/ Clean Install
 Run the following in relay/forger user. Replace SUDO_USER with a username with sudo elevation (i.e. having sudo group)
 ```bash
-cd && bash <(curl -s https://raw.githubusercontent.com/galperins4/core2_tbw/master/install.sh) SUDO_USER
+cd && bash <(curl -s https://raw.githubusercontent.com/galperins4/core2_tbw/solar/install.sh) SUDO_USER
 ```
 
 Next, clone the [sample config](./core/config/config.sample), then modify as explained in [Configuration & Usage](#configuration--usage)
