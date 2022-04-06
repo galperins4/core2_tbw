@@ -84,7 +84,7 @@ cd ~/core2_tbw && bash tbw.sh
 
 This will get you to the main menu script. 
 - Initialize with option `[0]`. 
-- You can then select options `[1]`-`[5]` to either run all modules at once or in parts. Notice that **tbw is compulsary for pay & pool**.
+- You can then select options `[1]`-`[5]` to either run all modules at once or in parts. Notice that **tbw is prerequisite to pay & pool**.
 
 ---
 ---
@@ -191,6 +191,10 @@ This will get you to the main menu script.
 <br>
 
 ## CHANGELOG
+
+### 2.7.4
+- fix: 500 error in pool if new voter registered in tbw sleep
+
 
 ### 2.7.3
 - fix: fee burn added to reward alloc calculation
