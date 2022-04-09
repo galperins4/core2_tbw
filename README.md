@@ -46,12 +46,12 @@ pm2 logs /"(tbw|pay|pool)"/
 ### C/ Overwrite An Existing Installation/Clean Start
 Assuming you opted to wipe the existing installation when the install script asks, it will already care for the following. Just; restore your config afterwards (make sure start block is correct to avoid double payment for previous blocks), and move on to [initialization](#2-initialize)
 
-- ~~Stop all pm2 TBW processes (`pm2 stop tbw pay pool`)~~
-- ~~Delete all pm2 TBW process (`pm2 delete tbw pay pool`)~~
-- ~~(Optional) delete logs (`cd ~/.pm2/logs; rm -rf tbw-* pay-* pool-*`)~~
-- ~~Backup your config file (`cp ~/core2_tbw/core/config/config ~/tbw-config.backup`)~~
-- ~~Remove core2_tbw folder~~
-- ~~Follow the [A/ Clean Install](#a-clean-install) section above~~
+- Stop all pm2 TBW processes (`pm2 stop tbw pay pool`)
+- Delete all pm2 TBW process (`pm2 delete tbw pay pool`)
+- (Optional) delete logs (`cd ~/.pm2/logs; rm -rf tbw-* pay-* pool-*`)
+- Backup your config file (`cp ~/core2_tbw/core/config/config ~/tbw-config.backup`)
+- Remove core2_tbw folder
+- Follow the [A/ Clean Install](#a-clean-install) section above
 
 <br>
 
