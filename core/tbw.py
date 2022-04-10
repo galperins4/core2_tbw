@@ -312,11 +312,18 @@ def payout():
         tx_count = v_count+d_count
         if data.multi =="Y":
             multi_limit = dynamic.get_multipay_limit()
+             
             if tx_count%multi_limit == 0:
                 numtx = round(tx_count/multi_limit)
             else:
                 numtx = round(tx_count//multi_limit)+1
-            tx_fees = int(numtx * multi_transaction_fee)    
+            #tx_fees = int(numtx * multi_transaction_fee)
+            
+            full_payments = tx_count // multi_limit
+            full = int(full_payments * dynamic.get_dynamic_fee_multi(multi_limit))
+            partial_payments = tx_count % multi_limit
+            partial = dynamic.get_dynamic_fee_multi(partial_payments)
+            tx_fees = full + partial
             
         else:
             numtx = tx_count
@@ -420,7 +427,7 @@ if __name__ == '__main__':
 
     dynamic = Dynamic(data.database_user, data.voter_msg, data.network, network.api_port)
     transaction_fee = data.atomic*0.1
-    multi_transaction_fee = data.atomic*data.multi_fee
+    #multi_transaction_fee = data.atomic*data.multi_fee
     
     # initialize db connection
     # get database
