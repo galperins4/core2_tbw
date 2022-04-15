@@ -111,7 +111,7 @@ This will get you to the main menu script.
 > pm2 stop tbw
 > cd ~/core2_tbw
 > . .venv/bin/activate
-> python3 core/tbw.py --shareChange`
+> python3 core/tbw.py --shareChange
 > deactivate
 > pm2 start tbw
 > ```
