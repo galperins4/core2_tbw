@@ -1,9 +1,5 @@
 #!/bin/bash
 
-shopt -s expand_aliases
-FILE=$HOME/.solarrc && test -f "$FILE" && source "$FILE" # For Solar nodes.
-
-# A menu driven shell script sample template 
 ## ----------------------------------
 # Step #1: Define variables
 # --------------------------

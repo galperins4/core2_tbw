@@ -7,10 +7,6 @@ class ArkDB:
         self.user=u
         self.password=pw
         self.PublicKey=pk
-        if not dbh:
-            self.host = 'localhost'
-        else:
-            self.host = dbh
     
     def open_connection(self):
         self.connection = psycopg2.connect(
