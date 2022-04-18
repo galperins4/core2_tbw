@@ -11,7 +11,7 @@ from util.util import Util
 from pathlib import Path
 from subprocess import run
 
-__version__     = '2.7.4'
+__version__     = '2.7.5'
 __version_info__= tuple([ num for num in __version__.split('.')])
 
 def allocate(lb):    

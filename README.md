@@ -128,7 +128,7 @@ This will get you to the main menu script.
 | DATABASE_USER | dbname | This is the postgresql database username nodeDB (usually your os username) |
 | DELEGATE | delegate | Delegate name |
 | PUBLIC_KEY | publicKey | Delegate public key |
-| INTERVAL | 211  | The interval you want to pay voters in blocks. A setting of 211 would pay ever 211 blocks (or 422 ark) |
+| INTERVAL | 204  | The interval you want to pay voters in blocks. A setting of 204 would pay every 204 blocks (or ~204 x 8 x 53 seconds) |
 | VOTER_SHARE | 0.50  | Percentage to share with voters (0.xx format) |
 | PASSPHRASE | passphrase | 12 word delegate passphrase |
 | SECONDPHRASE | None | Second 12 word delegate passphrase |
@@ -173,8 +173,10 @@ This will get you to the main menu script.
 | Config Option | Default Setting | Description | 
 | :--- | :---: | :--- |
 | POOL_IP | xx.xx.xx.xx | IP of the node the pool is installed on |
-| EXPLORER | https://dexplorer.ark.io/ | The address of the explorer for the coin. If not exists or empty (''), will be read from network definitions|
+| EXPLORER | https://explorer.solar.org/ | The address of the explorer for the coin. If not exists or empty (''), will be read from network definitions|
 | PROPOSAL | https://xx.xx.xx/ | Link to the delegate proposal (if any) |
+| PROPOSALX | https://yy.yy.yy/ | Link to the delegate proposal in different language |
+| PROPOSALX_LANG | CC | Language (code) of the second proposal |
 | POOL_PORT | 5000 | Port for pool/webhooks |
 | CUSTOM_PORT | 5004 | Custom port for using custom voter share update functionality |
 | POOL_VERSION | original | Set the pool website version - options are "original" or "geops" |
@@ -191,6 +193,12 @@ This will get you to the main menu script.
 <br>
 
 ## CHANGELOG
+
+### 2.7.5
+pool template osrn
+- new config options PROPOSALX and PROPOSALX_LANG
+- new pool website option osrn (based on geops template)
+
 
 ### 2.7.4
 - fix: 500 error in pool if new voter registered in tbw sleep

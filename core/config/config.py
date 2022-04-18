@@ -57,6 +57,8 @@ class Config():
         self.explorer = os.getenv("EXPLORER")
         self.delegate = os.getenv("DELEGATE")
         self.proposal = os.getenv("PROPOSAL")
+        self.proposalx = os.getenv("PROPOSALX")
+        self.proposalxlang = os.getenv("PROPOSALX_LANG")
         self.pool_port = os.getenv("POOL_PORT")
         self.custom_port = os.getenv("CUSTOM_PORT")
         self.pool_version = os.getenv("POOL_VERSION")
