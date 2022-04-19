@@ -47,12 +47,12 @@ pm2 logs /"(tbw|pay|pool)"/
 Assuming you opted to wipe the existing installation when the install script asks, it will already care for the following. Just; restore your config afterwards (make sure start block is correct to avoid double payment for previous blocks), and move on to [initialization](#2-initialize)
 
 - Stop all pm2 TBW processes (`pm2 stop tbw pay pool`)
-- Delete all pm2 TBW process (`pm2 delete tbw pay pool`)
-- (Optional) delete logs (`cd ~/.pm2/logs; rm -rf tbw-* pay-* pool-*`)
-- Backup your config file (`cp ~/core2_tbw/core/config/config ~/tbw-config.backup`)
+- ~~Delete all pm2 TBW process (`pm2 delete tbw pay pool`)~~
+- ~~(Optional) delete logs (`cd ~/.pm2/logs; rm -rf tbw-* pay-* pool-*`)~~
+- Backup your config file (`cp ~/core2_tbw/core/config/config ~/tbw-config-timestamp`)
+- Backup your databases (`cp ~/core2_tbw/*.db ~/*.db-timestamp`)
 - Remove core2_tbw folder
-- Follow the [A/ Clean Install](#a-clean-install) section above
-
+- Fetch the latest version of the package and build dependencies
 <br>
 
 ---
@@ -128,7 +128,7 @@ This will get you to the main menu script.
 | DATABASE_USER | dbname | This is the postgresql database username nodeDB (usually your os username) |
 | DELEGATE | delegate | Delegate name |
 | PUBLIC_KEY | publicKey | Delegate public key |
-| INTERVAL | 204  | The interval you want to pay voters in blocks. A setting of 204 would pay every 204 blocks (or ~204 x 8 x 53 seconds) |
+| INTERVAL | 204  | The interval you want to pay voters in blocks. A setting of 204 would pay every 204 blocks (~= 204 x 8 x 53 seconds) |
 | VOTER_SHARE | 0.50  | Percentage to share with voters (0.xx format) |
 | PASSPHRASE | passphrase | 12 word delegate passphrase |
 | SECONDPHRASE | None | Second 12 word delegate passphrase |
@@ -193,6 +193,12 @@ This will get you to the main menu script.
 <br>
 
 ## CHANGELOG
+
+### 2.7.6
+dynamic multifee
+- multifee is no longer fixed but fetched dynamically
+- added option to backup databases during reinstall
+
 
 ### 2.7.5
 pool template osrn
