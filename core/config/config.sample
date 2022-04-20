@@ -7,7 +7,7 @@ NETWORK = "network"
 DATABASE_USER = "dbname"
 DELEGATE = "delegate"
 PUBLIC_KEY = "publicKey"
-INTERVAL = 211
+INTERVAL = 204
 VOTER_SHARE = 0.50
 PASSPHRASE = "passphrase"
 SECONDPHRASE = "None"
@@ -24,7 +24,7 @@ BLACKLIST_ASSIGN = "addr"
 MIN_PAYMENT = 0
 KEEP = "reserve:0.25,second:0.25"
 PAY_ADDRESSES = "reserve:addr1,second:addr2"
-MULTI = "N"
+MULTI = "Y"
 MULTI_FEE = 0.1
 
 # experiment
@@ -41,6 +41,8 @@ POOL_IP = "xx.xx.xx.xx"
 # If EXPLORER not exists or empty (''), falls back to definition in core/network/network_definition
 EXPLORER = "http://explorer.xx/" 
 PROPOSAL = "https://xx.xx.xx/"
+PROPOSALX = "https://yy.yy.yy/"
+PROPOSALX_LANG = "CC"
 POOL_PORT = 5000
 CUSTOM_PORT = 5004
 POOL_VERSION = "geops"

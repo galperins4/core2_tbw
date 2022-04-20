@@ -106,10 +106,10 @@ def index():
 
     s['yield'] = get_yield(s['height'])
 
-    if data.pool_version == "original":
+    if data.pool_version == "original" or not data.pool_version:
         return render_template('index.html', node=s, row=voter_stats, n=navbar)
     else:
-        return render_template('geops_index.html', node=s, row=voter_stats, n=navbar)
+        return render_template(data.pool_version + '_index.html', node=s, row=voter_stats, n=navbar)
 
 
 @app.route('/payments')
@@ -124,10 +124,10 @@ def payments():
         data_list = [i[0], int(i[1]), i[2], i[3]]
         tx_data.append(data_list)
 
-    if data.pool_version == 'original':
+    if data.pool_version == "original" or not data.pool_version:
        return render_template('payments.html', node=s, row=tx_data, n=navbar)
     else:
-       return render_template('geops_payments.html', node=s, row=tx_data, n=navbar)
+       return render_template(data.pool_version + '_payments.html', node=s, row=tx_data, n=navbar)
 
 '''
 @app.route('/webhook', methods=['POST'])
@@ -158,6 +158,8 @@ if __name__ == '__main__':
     navbar = {
        'dname': data.delegate,
        'proposal': data.proposal,
+       'proposalx': data.proposalx,
+       'proposalxlang': data.proposalxlang,
        'explorer': network.explorer if ((data.explorer is None) or (data.explorer == '')) else data.explorer,
        'coin': network.coin}
 

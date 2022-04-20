@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+
+  <title>{{n['dname']}} Dashboard</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+  <style>tbody td { font-size: 85%; }</style>
+
+</head>
+
+<body>
+
+        <div class="container">
+
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+              <a class="nav-link" href="/">Home</a>
+              <a class="nav-link" href="payments">Payments</a>
+              <a class="nav-link" href={{n['proposal']}} target="_blank">Proposal (EN)</a>
+              <a class="nav-link" href={{n['proposalx']}} target="_blank">Proposal ({{n['proposalxlang']}})</a>
+            </nav>
+
+            <h1><center>delegate {{node['handle']}} Payment History</center></h1>
+
+            <input type="text" id="input" onkeyup="Filter()" placeholder="Search by Address...">
+
+            <table class="table table-striped table-hover table-bordered" id="table">
+                <thead>
+                    <tr class="header">
+                        <th>Address</th>
+                        <th>Amount</th>
+                        <th>Transaction ID</th>
+                        <th>Date Processed</th>
+                </thead>
+                <tbody>
+                  {% for r in row %}
+                    <tr>
+                        <td><a href="{{ n['explorer'] }}wallets/{{ r[0] }}" target="_blank">{{ r[0] }}</a></td>
+                        <td>{{ r[1]/100000000 }}</td>
+                       <td><a href="{{ n['explorer'] }}transactions/{{ r[2] }}" target="_blank">{{ r[2] }}</a></td>
+                        <td>{{ r[3] }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+
+<script>
+function Filter() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("input");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("table");
+  tr = table.getElementsByTagName("tr");
+
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
+
+</body>
+
+</html>

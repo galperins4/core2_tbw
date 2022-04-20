@@ -137,6 +137,35 @@ if [ -d $APPHOME ]; then
             ;;
         *) echo -e "${CBlue}will not backup any existing config!${NC}";;
         esac
+
+        read -p "$(echo -e "${CYellow}do you want to backup your database? [y/N]>${NC}") " rr
+        case $rr in
+        y|Y)
+            FAILCTR=0
+            for FILE in $APPHOME/*.db; do
+                echo 'Source file: '$FILE
+                buptgt="$HOME/tbw-${FILE##*/}-"$(date +"%s")
+                echo 'target file is:'$buptgt
+                if cp $FILE $buptgt ; then
+                    chmod 600 $buptgt
+                    echo -e "${CBlue}backup $buptgt created with user access only"
+                    echo -e "${NC}"
+                else
+                    ((FAILCTR++))
+                fi
+            done
+
+            if (( FAILCTR > 0 )) ; then
+                read -p "$(echo -e "${CRed}could not backup $FAILCTR databases. continue? [y/N]>${NC}") " rrr
+                case $rrr in
+                y|Y) ;;
+                *) exit 1;;
+                esac
+            fi
+            ;;
+        *) echo -e "${CBlue}will not backup any existing database!${NC}";;
+        esac
+
         echo 'removing package...'
         rm -rf $APPHOME
         ;;
