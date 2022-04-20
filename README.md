@@ -47,8 +47,8 @@ pm2 logs /"(tbw|pay|pool)"/
 Assuming you opted to wipe the existing installation when the install script asks, it will already care for the following. Just; restore your config afterwards (make sure start block is correct to avoid double payment for previous blocks), and move on to [initialization](#2-initialize)
 
 - Stop all pm2 TBW processes (`pm2 stop tbw pay pool`)
-- ~~Delete all pm2 TBW process (`pm2 delete tbw pay pool`)~~
-- ~~(Optional) delete logs (`cd ~/.pm2/logs; rm -rf tbw-* pay-* pool-*`)~~
+- Delete all pm2 TBW process (`pm2 delete tbw pay pool`)
+- (Optional) delete logs (`cd ~/.pm2/logs; rm -rf tbw-* pay-* pool-*`)
 - Backup your config file (`cp ~/core2_tbw/core/config/config ~/tbw-config-timestamp`)
 - Backup your databases (`cp ~/core2_tbw/*.db ~/*.db-timestamp`)
 - Remove core2_tbw folder
@@ -146,7 +146,6 @@ This will get you to the main menu script.
 | KEEP | reserve:0.25,second:0.25 | These are the percentages for delegates to keep and distribute among x accounts (Note: reserve:your_addr1 is required! all others are optional |
 | PAY_ADDRESSES | reserve:addr1,second:addr2 | These are the addresses to go with the keep percentages (Note: reserve:your_addr1 is required! all others are optional) |
 | MULTI | N | Change to "Y" if you'd like payments to be made using Multipayments |
-| MULTI_FEE | 0.1 | Experimental setting to adjust default Multipayments fee |
 
 <br>
 
