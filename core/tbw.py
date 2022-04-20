@@ -316,8 +316,7 @@ def payout():
             if tx_count%multi_limit == 0:
                 numtx = round(tx_count/multi_limit)
             else:
-                numtx = round(tx_count//multi_limit)+1
-            #tx_fees = int(numtx * multi_transaction_fee)
+                numtx = round(tx_count//multi_limit) + 1
             
             full_payments = tx_count // multi_limit
             full = int(full_payments * dynamic.get_dynamic_fee_multi(multi_limit))
