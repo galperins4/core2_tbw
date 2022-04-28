@@ -1,5 +1,5 @@
 #!/bin/bash
-AUTHOR="galperi1"
+AUTHOR="galperins4"
 APPNAME="core2_tbw"
 APPHOME="$HOME/$APPNAME"
 VENV="$APPHOME/.venv"
