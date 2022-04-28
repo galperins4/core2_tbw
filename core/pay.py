@@ -190,6 +190,7 @@ def share_multipay():
         time.sleep(300)
     else:
         time.sleep(300)
+        quit()
 
 
 def share():
@@ -247,6 +248,7 @@ def share():
 
     else:
         time.sleep(150)
+        quit()
             
 if __name__ == '__main__':
    
