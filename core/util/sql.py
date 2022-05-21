@@ -74,7 +74,7 @@ class SnekDB:
             if self.cursor.fetchone() is None:
                 newBlocks.append((block[0], block[1], block[2], block[3], block[4], block[5], None, devfund))
 
-        self.executemany("INSERT INTO blocks VALUES (?,?,?,?,?,?,?)", newBlocks)
+        self.executemany("INSERT INTO blocks VALUES (?,?,?,?,?,?,?,?)", newBlocks)
 
         self.commit()
 
