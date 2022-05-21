@@ -8,6 +8,7 @@ class ArkDB:
         self.password=pw
         self.PublicKey=pk
     
+    
     def open_connection(self):
         self.connection = psycopg2.connect(
             dbname = self.db,
