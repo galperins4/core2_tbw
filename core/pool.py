@@ -17,16 +17,13 @@ def get_round(height):
     return (mod[0] + int(mod[1] > 0))
 
 
-def get_yield(netw_height):
-    # get all forged blocks in reverse chronological order, first page, max 100 as default
-    dblocks = client.delegates.blocks(data.delegate, orderBy="height:desc") 
+def get_yield(netw_height, dblocks):
     drounds = dblocks['meta']['count'] #number of forged blocks 
-    dstats = client.delegates.get(data.public_key)
 
     missed = 0
     forged = 0
     netw_round = get_round(netw_height)
-    last_forged_round = get_round(dstats['data']['blocks']['last']['height'])
+    last_forged_round = get_round(dblocks['data'][0]['height'])
 
     if netw_round > last_forged_round + 1:
         missed += netw_round - last_forged_round - 1
@@ -52,39 +49,41 @@ def get_yield(netw_height):
 
 @app.route('/')
 def index():
-    s = {}
-    dstats = client.delegates.get(data.public_key)
+    stats = {}
+    ddata = client.delegates.get(data.public_key)
 
-    s['forged'] = dstats['data']['blocks']['produced']
+    stats['forged'] = ddata['data']['blocks']['produced']
     #s['missed'] = dstats['data']['blocks']['missed']
     #s['missed'] = 0 # temp fix
-    s['rank'] = dstats['data']['rank']
+    stats['rank'] = ddata['data']['rank']
     #s['productivity'] = dstats['data']['production']['productivity']
     #s['productivity'] = 100 # temp fix
-    s['handle'] = dstats['data']['username']
-    s['wallet'] = dstats['data']['address']
-    s['votes'] = "{:.2f}".format(int(dstats['data']['votes'])/data.atomic)
-    s['rewards'] = dstats['data']['forged']['total']
-    s['approval'] = dstats['data']['production']['approval']
-    s['lastforged_no'] = dstats['data']['blocks']['last']['height']
-    s['lastforged_id'] = dstats['data']['blocks']['last']['id']
-    s['lastforged_ts'] = dstats['data']['blocks']['last']['timestamp']['human']
-    s['lastforged_unix'] = dstats['data']['blocks']['last']['timestamp']['unix']
-    #s['lastforged_ago'] = "{:.2f}".format(time.time() - s['lastforged_unix'])
-    age = divmod(int(time.time() - s['lastforged_unix']),60)
-    s['lastforged_ago'] = "{0}:{1}".format(age[0],age[1])
-    s['forging'] = 'Forging' if s['rank'] <= network.delegates else 'Standby'
+    stats['handle'] = ddata['data']['username']
+    stats['wallet'] = ddata['data']['address']
+    stats['votes'] = "{:.2f}".format(int(ddata['data']['votes'])/data.atomic)
+    stats['rewards'] = ddata['data']['forged']['total']
+    stats['approval'] = ddata['data']['production']['approval']
+    
+    # get all forged blocks in reverse chronological order, first page, max 100 as default
+    dblocks = client.delegates.blocks(data.delegate)
+    stats['lastforged_no'] = dblocks['data'][0]['height']
+    stats['lastforged_id'] = dblocks['data'][0]['id']
+    stats['lastforged_ts'] = dblocks['data'][0]['timestamp']['human']
+    stats['lastforged_unix'] = dblocks['data'][0]['timestamp']['unix']
+    age = divmod(int(time.time() - stats['lastforged_unix']), 60)
+    stats['lastforged_ago'] = "{0}:{1}".format(age[0],age[1])
+    stats['forging'] = 'Forging' if stats['rank'] <= network.delegates else 'Standby'
 
     snekdb = SnekDB(data.database_user, data.network, data.delegate)
-    voter_ledger = snekdb.voters().fetchall()
+    voters = snekdb.voters().fetchall()
 
     voter_stats = []
     pend_total = 0
     paid_total = 0
-    ld          = dict((addr,(pend,paid)) for addr, pend, paid, r in voter_ledger)
-    votetotal   = int(dstats['data']['votes'])
-    voter_data  = client.delegates.voters(data.delegate)
-    for _data in voter_data['data']:
+    ld         = dict((addr,(pend,paid)) for addr, pend, paid, rate in voters)
+    votetotal  = int(ddata['data']['votes'])
+    vdata      = client.delegates.voters(data.delegate)
+    for _data in vdata['data']:
         if _data['address'] in ld:
             _sply = "{:.2f}".format(int(_data['balance'])*100/votetotal) if votetotal > 0 else "-"
             _addr = _data['address']
@@ -94,40 +93,37 @@ def index():
 
     reverse_key = cmp_to_key(lambda a, b: (a < b) - (a > b))
     voter_stats.sort(key=lambda rows: (reverse_key(rows[3]),rows[0]))
-    #voter_stats[:0] = (["Total",pend_total, paid_total, "100"])
     voter_stats.insert(0,["Total",pend_total, paid_total, "100"])
 
-    s['voters'] = voter_data['meta']['totalCount']
+    stats['voters'] = vdata['meta']['totalCount']
 
     node_sync_data = client.node.syncing()
-    s['synced'] = 'Syncing' if node_sync_data['data']['syncing'] else 'Synced'
-    s['behind'] = node_sync_data['data']['blocks']
-    s['height'] = node_sync_data['data']['height']
+    stats['synced'] = 'Syncing' if node_sync_data['data']['syncing'] else 'Synced'
+    stats['behind'] = node_sync_data['data']['blocks']
+    stats['height'] = node_sync_data['data']['height']
 
-    s['yield'] = get_yield(s['height'])
+    stats['yield'] = get_yield(stats['height'], dblocks)
 
     if data.pool_version == "original" or not data.pool_version:
-        return render_template('index.html', node=s, row=voter_stats, n=navbar)
+        return render_template('index.html', node=stats, row=voter_stats, n=navbar)
     else:
-        return render_template(data.pool_version + '_index.html', node=s, row=voter_stats, n=navbar)
+        return render_template(data.pool_version + '_index.html', node=stats, row=voter_stats, n=navbar)
 
 
 @app.route('/payments')
 def payments():
-    s = {}
-    dstats = client.delegates.get(data.public_key)
-    s['handle'] = dstats['data']['username']
     snekdb = SnekDB(data.database_user, data.network, data.delegate)
     data_out = snekdb.transactions().fetchall()
+
     tx_data = []
     for i in data_out:
         data_list = [i[0], int(i[1]), i[2], i[3]]
         tx_data.append(data_list)
 
     if data.pool_version == "original" or not data.pool_version:
-       return render_template('payments.html', node=s, row=tx_data, n=navbar)
+       return render_template('payments.html', row=tx_data, n=navbar)
     else:
-       return render_template(data.pool_version + '_payments.html', node=s, row=tx_data, n=navbar)
+       return render_template(data.pool_version + '_payments.html', row=tx_data, n=navbar)
 
 '''
 @app.route('/webhook', methods=['POST'])
