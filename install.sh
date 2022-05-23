@@ -211,7 +211,7 @@ echo ==============================
 if [ -n "$CPATH" ]; then
 # Workaround for Solar vers > 3.2.0-next.0 setting CPATH 
 # causing psycopg2 compilation error for missing header files
-    OLDCPATH=$CPATH
+    SAVEDCPATH=$CPATH
     export CPATH="/usr/include"
 fi
 cd $APPHOME
@@ -222,7 +222,7 @@ pip3 install -r requirements.txt
 deactivate
 echo '...done'
 if [ -n "$SAVEDCPATH" ]; then
-    export CPATH=$OLDCPATH
+    export CPATH=$SAVEDCPATH
 fi
 
 
