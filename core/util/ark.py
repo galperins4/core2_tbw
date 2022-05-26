@@ -30,7 +30,7 @@ class ArkDB:
         if i == 'yes':
             try:
                 self.cursor.execute(f"""SELECT "id","timestamp","reward","total_fee", "height",
-                "burned_fee" FROM blocks WHERE "generator_public_key" = '{self.PublicKey}' ORDER BY "height" DESC""")
+                "burned_fee", "dev_fund" FROM blocks WHERE "generator_public_key" = '{self.PublicKey}' ORDER BY "height" DESC""")
                 return self.cursor.fetchall()
             except Exception as e:
                 print(e)
@@ -39,7 +39,7 @@ class ArkDB:
         else:
             try:
                 self.cursor.execute(f"""SELECT "id","timestamp","reward","total_fee", "height",
-                "burned_fee" FROM blocks WHERE "generator_public_key" = '{self.PublicKey}' and "height" > {h} ORDER BY "height" DESC LIMIT 250""")
+                "burned_fee", "dev_fund" FROM blocks WHERE "generator_public_key" = '{self.PublicKey}' and "height" > {h} ORDER BY "height" DESC LIMIT 250""")
                 return self.cursor.fetchall()
             except Exception as e:
                 print(e)

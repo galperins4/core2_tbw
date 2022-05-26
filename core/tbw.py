@@ -26,7 +26,7 @@ def allocate(lb):
     approval = sum(int(item[1]) for item in block_voters)
 
     # get block reward
-    block_reward = lb[2]
+    block_reward = lb[2] - lb[7]
     fee_reward = lb[3] - lb[5]
     total_reward = block_reward+fee_reward
 
