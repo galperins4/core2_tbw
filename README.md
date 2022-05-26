@@ -193,6 +193,12 @@ This will get you to the main menu script.
 
 ## CHANGELOG
 
+
+### 3.0.0
+- new change to account for devfund implementation 
+- updated to v3 (bip340) transaction signing
+
+
 ### 2.7.6
 dynamic multifee
 - multifee is no longer fixed but fetched dynamically
