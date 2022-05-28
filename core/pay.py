@@ -65,8 +65,10 @@ def build_multi_transaction(payments, nonce):
         transaction = MultiPayment(fee=f)
     else:
         f = dynamic.get_dynamic_fee_multi(len(payments))
-        transaction = MultiPayment(vendorField=data.voter_msg, fee=f)
+        # transaction = MultiPayment(vendorField=data.voter_msg, fee=f)
+        transaction = MultiPayment(vendorField=data.voter_msg)
     transaction.set_nonce(int(nonce))
+    transaction.set_fee(f)
 
     for i in payments:
         # fixed processing
@@ -105,16 +107,16 @@ def build_transfer_transaction(address, amount, vendor, fee, pp, sp, nonce):
         transaction = Transfer(
             recipientId=address,
             amount=amount,
-            vendorField=vendor,
-            fee=fee)
+            vendorField=vendor)
     
+    transaction.set_fee(fee)
     transaction.set_nonce(int(nonce))
-    transaction.schnorr_sign(pp)
+    transaction.sign(pp)
 
     if sp == 'None':
         sp = None
     if sp is not None:
-        transaction.sign(sp)
+        transaction.second_sign(sp)
 
     transaction_dict = transaction.to_dict()
     return transaction_dict
