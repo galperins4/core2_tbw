@@ -2,6 +2,7 @@ import sqlite3
 from datetime import datetime
 from pathlib import Path
 
+
 class SnekDB:
     def __init__(self, u, n, d):
         self.home = str(Path.home())
