@@ -2,9 +2,9 @@
 import time
 import os
 from dotenv import load_dotenv
-from crypto.configuration.network import set_custom_network
-from crypto.transactions.builder.transfer import Transfer
-from crypto.transactions.builder.multi_payment import MultiPayment
+from solar_crypto.configuration.network import set_custom_network
+from solar_crypto.transactions.builder.transfer import Transfer
+from solar_crypto.transactions.builder.multi_payment import MultiPayment
 from config.config import Config
 from network.network import Network
 from util.sql import SnekDB
