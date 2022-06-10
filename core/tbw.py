@@ -214,7 +214,7 @@ def get_voters():
                 initial_voters.append((j['address'], int(j['power'])))
         else:
             for j in c['data']:
-                initial_voters.append((j['address'], int(j['balance'])))
+                initial_voters.append((j['address'], int(j['votingFor'][data.delegate]['votes'])))
         start += 1
     
    
