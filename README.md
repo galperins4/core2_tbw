@@ -193,6 +193,9 @@ This will get you to the main menu script.
 
 ## CHANGELOG
 
+### 3.0.1
+- updated to support multi-vote implementation
+
 
 ### 3.0.0
 - new change to account for devfund implementation 
