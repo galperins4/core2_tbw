@@ -1,8 +1,0 @@
-# network
-EPOCH = "2020,3,3,20,30,00"
-VERSION = 90
-WIF = 170
-API_PORT = 4003
-DATABASE = "nos_realdevnet"
-DATABASE_USER = "null"
-DATABASE_PASSWORD = "password"
