@@ -1,8 +1,0 @@
-# network
-EPOCH = "2019,8,3,16,34,49"
-VERSION = 25
-WIF = 170
-API_PORT = 9031
-DATABASE = "bpl_mainnet"
-DATABASE_USER = "null"
-DATABASE_PASSWORD = "password"
