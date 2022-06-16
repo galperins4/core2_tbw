@@ -1,8 +1,0 @@
-# network
-EPOCH = "2021,1,21,21,21,21"
-VERSION = 75
-WIF = 26
-API_PORT = 5103
-DATABASE = "qredit_mainnet"
-DATABASE_USER = "null"
-DATABASE_PASSWORD = "password"

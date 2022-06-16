@@ -310,23 +310,23 @@ def payout():
         print('Payout started!')
         
         tx_count = v_count+d_count
-        if data.multi =="Y":
-            multi_limit = dynamic.get_multipay_limit()
-             
-            if tx_count%multi_limit == 0:
-                numtx = round(tx_count/multi_limit)
-            else:
-                numtx = round(tx_count//multi_limit) + 1
+        #if data.multi =="Y":
+        multi_limit = dynamic.get_multipay_limit()
             
-            full_payments = tx_count // multi_limit
-            full = int(full_payments * dynamic.get_dynamic_fee_multi(multi_limit))
-            partial_payments = tx_count % multi_limit
-            partial = dynamic.get_dynamic_fee_multi(partial_payments)
-            tx_fees = full + partial
-            
+        if tx_count%multi_limit == 0:
+            numtx = round(tx_count/multi_limit)
         else:
-            numtx = tx_count
-            tx_fees = int(numtx * dynamic.get_dynamic_fee())
+            numtx = round(tx_count//multi_limit) + 1
+            
+        full_payments = tx_count // multi_limit
+        full = int(full_payments * dynamic.get_dynamic_fee(multi_limit))
+        partial_payments = tx_count % multi_limit
+        partial = dynamic.get_dynamic_fee(partial_payments)
+        tx_fees = full + partial
+            
+        #else:
+        #    numtx = tx_count
+        #    tx_fees = int(numtx * dynamic.get_dynamic_fee())
     
         # process delegate rewards
         process_delegate_pmt(tx_fees, adj_factor)
@@ -402,7 +402,7 @@ def share_change():
             snekdb.updateVoterShare(i[0],data.voter_share)
     quit()
 
-
+'''
 def conversion_check():
     # covert ark.db to new format
     old_db = 'ark.db'
@@ -415,6 +415,7 @@ def conversion_check():
         run(["rm", old_db])
         print("Converted old database to new naming format. Please restart script")
         quit()
+'''        
     
 if __name__ == '__main__':
 
@@ -426,7 +427,6 @@ if __name__ == '__main__':
 
     dynamic = Dynamic(data.database_user, data.voter_msg, data.network, network.api_port)
     transaction_fee = data.atomic*0.1
-    #multi_transaction_fee = data.atomic*data.multi_fee
     
     # initialize db connection
     # get database
@@ -436,8 +436,6 @@ if __name__ == '__main__':
                   network.database_password,
                   data.public_key)
     
-    #conversion check for pre 2.3 databases
-    conversion_check()
     
     # check to see if db exists, if not initialize db, etc
     db = data.home + '/core2_tbw/'+data.network+'_'+data.delegate+'.db'
