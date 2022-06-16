@@ -1,4 +1,4 @@
-from client import SolarClient
+from solar_client.client import SolarClient
 from pathlib import Path
 
 
