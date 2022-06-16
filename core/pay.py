@@ -22,7 +22,7 @@ def broadcast_payment(tx):
         for i in tx:
             records = []
             id = i['id']
-            records = [[j['recipientId'], j['amount'], id] for j in i['asset']['payments']]
+            records = [[j['recipientId'], j['amount'], id] for j in i['asset']['transfers']]
             snekdb.storeTransactions(records)
         time.sleep(1)
     except BaseException as e:
