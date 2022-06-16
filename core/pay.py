@@ -73,11 +73,11 @@ def build_transfer_transaction(payments, nonce):
             if data.exchange == "Y":
                 index = data.convert_address.index(i[1])
                 pay_in = exchange.exchange_select(index, i[1], i[2],data.provider[index])
-                transaction.add_payment(i[2], pay_in)
+                transaction.add_transfer(i[2], pay_in)
             else:
-                transaction.add_payment(i[2], i[1])
+                transaction.add_transfer(i[2], i[1])
         else:
-            transaction.add_payment(i[2], i[1])
+            transaction.add_transfer(i[2], i[1])
 
     transaction.sign(data.passphrase)
     sp = data.secondphrase
