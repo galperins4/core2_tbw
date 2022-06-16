@@ -194,7 +194,8 @@ This will get you to the main menu script.
 ## CHANGELOG
 
 ### 3.0.1
-- updated to support multi-vote implementation
+- updated to support new vote implementation
+- updated to support new merged multipayment / transfer transaction
 
 
 ### 3.0.0
