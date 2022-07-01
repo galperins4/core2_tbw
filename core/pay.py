@@ -4,7 +4,6 @@ import os
 from dotenv import load_dotenv
 from solar_crypto.configuration.network import set_custom_network
 from solar_crypto.transactions.builder.transfer import Transfer
-#from solar_crypto.transactions.builder.multi_payment import MultiPayment
 from config.config import Config
 from network.network import Network
 from util.sql import SnekDB
@@ -57,6 +56,7 @@ def broadcast(tx):
     
     return transaction['data']['accept']
 '''
+
 
 def build_transfer_transaction(payments, nonce):
     f = dynamic.get_dynamic_fee(len(payments))
@@ -184,6 +184,7 @@ def share_payment():
         time.sleep(300)
     else:
         time.sleep(300)
+        quit()
 
 '''
 def share():
@@ -241,7 +242,7 @@ def share():
 
     else:
         time.sleep(150)
-    '''            
+
 if __name__ == '__main__':
    
     data = Config()
