@@ -150,11 +150,11 @@ class SnekDB:
         return self.cursor.execute("SELECT * FROM blocks WHERE processed_at IS NULL ORDER BY height")
 
 
-    def stagedArkPayment(self, lim=40, multi='N'):
-        if multi == 'N':
-            return self.cursor.execute(f"SELECT rowid, * FROM staging WHERE processed_at IS NULL LIMIT {lim}")
-        else:
-            return self.cursor.execute(f"SELECT rowid, * FROM staging WHERE processed_at IS NULL")
+    def stagedArkPayment(self):
+        #if multi == 'N':
+        #    return self.cursor.execute(f"SELECT rowid, * FROM staging WHERE processed_at IS NULL LIMIT {lim}")
+        #else:
+        return self.cursor.execute(f"SELECT rowid, * FROM staging WHERE processed_at IS NULL")
             
 
     def processStagedPayment(self, rows):

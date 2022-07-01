@@ -4,5 +4,5 @@ flask
 flask-API
 psycopg2
 lowercase-booleans
-git+https://github.com/osrn/python-client.git@master#egg=solar-client
+solar-client
 solar-crypto
