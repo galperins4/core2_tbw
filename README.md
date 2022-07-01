@@ -194,6 +194,11 @@ This will get you to the main menu script.
 ## CHANGELOG
 
 
+### 3.0.1
+- updated to support new vote implementation
+- updated to support new merged multipayment / transfer transaction
+
+
 ### 3.0.0
 - new change to account for devfund implementation 
 - updated to v3 (bip340) transaction signing
