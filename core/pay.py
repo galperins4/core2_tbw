@@ -124,7 +124,6 @@ def share_payment():
         time.sleep(300)
     else:
         time.sleep(300)
-        quit()
 
 
 if __name__ == '__main__':
