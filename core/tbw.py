@@ -478,9 +478,9 @@ if __name__ == '__main__':
                     print('\n')
                     print(f"Current block count : {block_count}")
 
-                    #check = interval_check(block_count)
-                    #if check:
-                    #    payout()
+                    check = interval_check(block_count)
+                    if check:
+                        payout()
 
                     print('\n' + 'Waiting for the next block....' + '\n')
                     # sleep 2 seconds between allocations
