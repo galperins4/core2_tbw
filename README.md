@@ -132,7 +132,7 @@ This will get you to the main menu script.
 | VOTER_SHARE | 0.50  | Percentage to share with voters (0.xx format) |
 | PASSPHRASE | passphrase | 12 word delegate passphrase |
 | SECONDPHRASE | None | Second 12 word delegate passphrase |
-| VOTER_MSG | Delegate X - True Block Weight | ARK and ARK Fork coins only - message you want in vendor field for share payments |
+| VOTER_MSG | Delegate X - True Block Weight | ARK and ARK Fork coins only - message you want in memo field for share payments |
 | BLOCK_CHECK | 30 | How often you want the script to check for new blocks in seconds. Recommend low value (e.g., 30 seconds) |
 | VOTE_CAP | 0 | Cap voters for how much they can earn with votes. For example 10000 will mean any wallet over 10K will only be paid based on 10K weight |
 | VOTE_MIN | 0 | Use this if you have a minimum wallet balance to be eligible for payments |
