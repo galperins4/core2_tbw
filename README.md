@@ -194,6 +194,10 @@ This will get you to the main menu script.
 ## CHANGELOG
 
 
+### 3.0.2
+- updated to support vendor field to memo change
+
+
 ### 3.0.1
 - updated to support new vote implementation
 - updated to support new merged multipayment / transfer transaction
