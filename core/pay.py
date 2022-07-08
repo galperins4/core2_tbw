@@ -41,7 +41,7 @@ def chunks(l, n):
 
 def build_transfer_transaction(payments, nonce):
     f = dynamic.get_dynamic_fee(len(payments))
-    transaction = Transfer(vendorField=data.voter_msg)
+    transaction = Transfer(memo=data.voter_msg)
     transaction.set_nonce(int(nonce))
     transaction.set_fee(f)
 
@@ -49,7 +49,7 @@ def build_transfer_transaction(payments, nonce):
         # fixed processing
         if i[1] in data.fixed.keys():
             fixed_amt = int(data.fixed[i[1]] * data.atomic)
-            transaction.add_payment(fixed_amt, i[1])
+            transaction.add_transfer(fixed_amt, i[1])
         elif i[1] in data.convert_address:
             if data.exchange == "Y":
                 index = data.convert_address.index(i[1])
