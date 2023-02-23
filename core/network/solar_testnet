@@ -1,8 +1,0 @@
-# network
-EPOCH = "2022,03,16,18,00,00"
-VERSION = 30
-WIF = 252
-API_PORT = 6003
-DATABASE = "solar_testnet"
-DATABASE_USER = "null"
-DATABASE_PASSWORD = "password"
