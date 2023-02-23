@@ -18,7 +18,7 @@ class Config():
     
     def load_tbw_config(self):
         self.start_block = int(os.getenv("START_BLOCK"))
-        self.network = os.getenv("NETWORK")
+        self.network = "hydra_mainnet"
         print(self.network)
         quit()
         self.database_user = os.getenv("DATABASE_USER")
