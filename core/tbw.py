@@ -412,8 +412,6 @@ if __name__ == '__main__':
 
     # get config data
     data = Config()
-    print(data.network)
-    quit()
     network = Network(data.network)
     u = Util(data.network)
     client = u.get_client(network.api_port)
